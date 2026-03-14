@@ -3,29 +3,27 @@ import { I18nManager } from 'react-native';
 
 export type Language = 'en' | 'ar';
 
-interface RTLContextType {
-  isRTL: boolean;
+interface LanguageContextType {
   language: Language;
   setLanguage: (language: Language) => void;
 }
 
-const RTLContext = createContext<RTLContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-interface RTLProviderProps {
+interface LanguageProviderProps {
   children: ReactNode;
   defaultLanguage?: Language;
 }
 
 /**
- * Provider for managing RTL layout and language state
+ * Provider for managing language state and RTL layout
  * Automatically updates React Native's I18nManager for proper RTL layout
  */
-export const RTLProvider: React.FC<RTLProviderProps> = ({ 
+export const RTLProvider: React.FC<LanguageProviderProps> = ({ 
   children, 
   defaultLanguage = 'en' 
 }) => {
   const [language, setLanguage] = React.useState<Language>(defaultLanguage);
-  const isRTL = language === 'ar';
 
   React.useEffect(() => {
     // Force RTL layout when language is Arabic
@@ -37,24 +35,23 @@ export const RTLProvider: React.FC<RTLProviderProps> = ({
   }, [language]);
 
   const value = {
-    isRTL,
     language,
     setLanguage,
   };
 
   return (
-    <RTLContext.Provider value={value}>
+    <LanguageContext.Provider value={value}>
       {children}
-    </RTLContext.Provider>
+    </LanguageContext.Provider>
   );
 };
 
 /**
- * Hook to access RTL context
- * @returns RTL context with language and layout state
+ * Hook to access language context
+ * @returns Language context with language state
  */
-export const useRTL = (): RTLContextType => {
-  const context = useContext(RTLContext);
+export const useRTL = (): LanguageContextType => {
+  const context = useContext(LanguageContext);
   if (!context) {
     throw new Error('useRTL must be used within an RTLProvider');
   }
