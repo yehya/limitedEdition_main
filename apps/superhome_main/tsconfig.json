@@ -18,9 +18,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./"],
-      "@/types/*": ["./types/*"],
-      "@/hooks/*": ["./hooks/*"],
-      "@/locales/*": ["./locales/*"]
+      "@/components/*": ["./components/*"]
     }
   },
   "exclude": [
