@@ -19,11 +19,13 @@ always_on: true
 
 ## Golden Rules
 
-1. **Small Files** - Max 200 lines. When in doubt, create a new file.
-2. **3-Layer Architecture** - API → Service → Repository. Never skip layers.
-3. **Database Agnostic** - Business logic knows nothing about Firestore/Supabase.
-4. **Interface Everything** - Repositories use interfaces. Easy to swap implementations.
-5. **Single Responsibility** - One file, one purpose.
+1. **Framework-Only** - Build infrastructure, not business logic. Add logic when decided.
+2. **Small Files** - Max 200 lines. When in doubt, create a new file.
+3. **3-Layer Architecture** - API → Service → Repository. Never skip layers.
+4. **Database Agnostic** - Business logic knows nothing about Firestore/Supabase.
+5. **Interface Everything** - Repositories use interfaces. Easy to swap implementations.
+6. **Single Responsibility** - One file, one purpose.
+7. **No Barrel Files** - Explicit imports only (except function exports).
 
 ## Layers
 

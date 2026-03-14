@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "superhome-testing",
+    "production": "superhome-production"
+  }
+}
