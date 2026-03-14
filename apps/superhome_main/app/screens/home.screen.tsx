@@ -6,8 +6,20 @@ import { theme } from '@/theme/index';
 import { homeStyles } from './home.screen.styles';
 
 export default function Home() {
-  const { language, isRTL, setLanguage } = useRTL();
+  const { language, isRTL, isLoading, setLanguage } = useRTL();
   const { t } = useTranslation();
+
+  // Show loading state while language preference is being loaded
+  if (isLoading) {
+    return (
+      <View style={homeStyles.container}>
+        <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
+        <View style={homeStyles.content}>
+          <Text variant="body" language="en">Loading...</Text>
+        </View>
+      </View>
+    );
+  }
 
   return (
     <View style={homeStyles.container}>

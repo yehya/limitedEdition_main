@@ -11,6 +11,8 @@ export const homeStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: theme.spacing.lg,
+    paddingStart: theme.spacing.lg,
+    paddingEnd: theme.spacing.lg,
     paddingTop: 60,
     paddingBottom: theme.spacing.lg,
   },
@@ -45,6 +47,8 @@ export const homeStyles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: theme.spacing.lg,
+    paddingStart: theme.spacing.lg,
+    paddingEnd: theme.spacing.lg,
   },
   heroSection: {
     marginTop: theme.spacing.lg,

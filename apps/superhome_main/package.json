@@ -21,6 +21,7 @@
     "release:ios": "eas build --profile production --platform ios --auto-submit"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^3.0.1",
     "expo": "~51.0.28",
     "expo-localization": "^55.0.8",
     "expo-router": "~3.5.23",
