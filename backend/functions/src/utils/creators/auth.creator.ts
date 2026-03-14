@@ -2,14 +2,18 @@
 // is logged in before executing handler. Supports CallableOptions for secrets.
 
 import { onCall, CallableRequest, CallableOptions } from "firebase-functions/v2/https";
-import { checkUserIsAuthenticated } from "../../middleware/auth.middleware";
+import { checkUserIsAuthenticated, AuthenticatedContext } from "../../middleware/auth.middleware";
 import { logger } from "../logger.util";
 
 export type AuthenticatedRequest<T> = CallableRequest<T> & {
   auth: NonNullable<CallableRequest<T>["auth"]>;
+  language: import("../../types/localization.types").SupportedLanguage;
 };
 
-export type AuthenticatedFunction<T, R> = (data: T, context: AuthenticatedRequest<T>) => Promise<R>;
+export type AuthenticatedFunction<T, R> = (
+  data: T, 
+  context: AuthenticatedRequest<T>
+) => Promise<R>;
 
 /**
  * Create an authenticated callable function.
@@ -23,8 +27,16 @@ export const createAuthenticatedFunction = <T, R>(
   
   return onCall<T>(mergedOptions, async (request) => {
     try {
-      checkUserIsAuthenticated(request);
-      return await handler(request.data, request as AuthenticatedRequest<T>);
+      const authContext = checkUserIsAuthenticated(request);
+      
+      // Augment request with auth and language
+      const augmentedRequest: AuthenticatedRequest<T> = {
+        ...request,
+        auth: authContext.auth,
+        language: authContext.language,
+      };
+      
+      return await handler(request.data, augmentedRequest);
     } catch (error) {
       logger.error("Authenticated function error", { error });
       throw error;

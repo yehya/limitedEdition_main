@@ -10,6 +10,7 @@
 ## Product & Design
 **system-design.md** - App vision, user types, flows
 **design-dna.md** - UI/UX principles (NEVER break)
+**localization.md** - i18n support for Arabic/English, extensible design
 
 ---
 
