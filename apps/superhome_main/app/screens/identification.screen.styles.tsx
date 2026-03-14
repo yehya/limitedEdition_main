@@ -124,6 +124,23 @@ export const identificationStyles = StyleSheet.create({
     paddingEnd: theme.spacing.xl,
     paddingBottom: theme.spacing['2xl'],
   },
+  buttonRow: {
+    gap: theme.spacing.md,
+  },
+  noButton: {
+    backgroundColor: theme.colors.neutral[50],
+    borderWidth: 2,
+    borderColor: theme.colors.neutral[300],
+    paddingVertical: 24,
+    paddingHorizontal: 32,
+    borderRadius: theme.borderRadius.xl,
+    alignItems: 'center',
+  },
+  noButtonText: {
+    color: theme.colors.text.secondary,
+    fontSize: 20,
+    fontWeight: '600',
+  },
   continueButton: {
     backgroundColor: theme.colors.primary[500],
     paddingVertical: 24,

@@ -17,6 +17,10 @@ export default function IdentificationScreen() {
     router.push('/availability');
   };
 
+  const handleNo = () => {
+    router.push('/home');
+  };
+
   if (isLoading) {
     return (
       <View style={identificationStyles.container}>
@@ -87,14 +91,24 @@ export default function IdentificationScreen() {
 
       {/* Bottom CTA */}
       <View style={identificationStyles.bottomSection}>
-        <Pressable 
-          style={identificationStyles.continueButton}
-          onPress={handleContinue}
-        >
-          <Text variant="body" weight="medium" style={identificationStyles.continueButtonText}>
-            Yes, Continue
-          </Text>
-        </Pressable>
+        <View style={identificationStyles.buttonRow}>
+          <Pressable 
+            style={identificationStyles.continueButton}
+            onPress={handleContinue}
+          >
+            <Text variant="body" weight="medium" style={identificationStyles.continueButtonText}>
+              Yes, Continue
+            </Text>
+          </Pressable>
+          <Pressable 
+            style={identificationStyles.noButton}
+            onPress={handleNo}
+          >
+            <Text variant="body" weight="medium" style={identificationStyles.noButtonText}>
+              No
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );

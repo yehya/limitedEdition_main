@@ -13,11 +13,38 @@ export default function AvailabilityScreen() {
   const { request } = useLocalSearchParams<{ request: string }>();
   const { language, isLoading } = useRTL();
   const [selectedTime, setSelectedTime] = useState<string>('');
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // Get tomorrow's date dynamically
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrowDate = tomorrow.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
   const timeSlots = [
-    { id: '1', time: 'Right Now (On-demand)', available: true },
-    { id: '2', time: 'Tomorrow Afternoon', available: true },
-    { id: '3', time: 'Tomorrow Evening', available: true },
+    { 
+      id: '1', 
+      time: 'Right Now', 
+      subtitle: 'On-demand service',
+      estimate: '30-60 min arrival',
+      date: 'Today',
+      available: true 
+    },
+    { 
+      id: '2', 
+      time: 'Tomorrow Afternoon', 
+      subtitle: '2:00 PM - 6:00 PM',
+      estimate: '1-2 hour job',
+      date: tomorrowDate,
+      available: true 
+    },
+    { 
+      id: '3', 
+      time: 'Tomorrow Evening', 
+      subtitle: '6:00 PM - 10:00 PM',
+      estimate: '1-2 hour job',
+      date: tomorrowDate,
+      available: true 
+    },
   ];
 
   const handleTimeSelect = (timeId: string) => {
@@ -27,15 +54,19 @@ export default function AvailabilityScreen() {
   const handleReserve = () => {
     if (!selectedTime) return;
     
+    setIsProcessing(true);
+    
     const selectedSlot = timeSlots.find(slot => slot.id === selectedTime);
     const urgency = selectedSlot?.time.includes('Tomorrow') ? 'Tomorrow' : 'Today';
     
+    // Navigate to processing screen first
     router.push({
-      pathname: '/confirmation',
+      pathname: '/processing',
       params: {
         request,
         time: selectedSlot?.time,
         urgency,
+        nextScreen: 'confirmation'
       }
     });
   };
@@ -73,6 +104,9 @@ export default function AvailabilityScreen() {
             <TimeSlot
               key={slot.id}
               time={slot.time}
+              subtitle={slot.subtitle}
+              estimate={slot.estimate}
+              date={slot.date}
               available={slot.available}
               selected={selectedTime === slot.id}
               onPress={() => handleTimeSelect(slot.id)}

@@ -99,6 +99,26 @@ export const homeStyles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '600',
   },
+  whyButtonContainer: {
+    marginBottom: theme.spacing.lg,
+  },
+  whyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.neutral[50],
+    paddingVertical: theme.spacing.md,
+    paddingHorizontal: theme.spacing.lg,
+    borderRadius: theme.borderRadius.xl,
+    borderWidth: 1,
+    borderColor: theme.colors.neutral[200],
+    gap: theme.spacing.sm,
+  },
+  whyButtonText: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: theme.colors.primary[500],
+  },
   inputContainer: {
     backgroundColor: theme.colors.neutral[50],
     borderRadius: theme.borderRadius.xl,

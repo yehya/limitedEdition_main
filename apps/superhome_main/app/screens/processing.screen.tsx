@@ -9,7 +9,12 @@ import { processingStyles } from './processing.screen.styles';
 
 export default function ProcessingScreen() {
   const router = useRouter();
-  const { request } = useLocalSearchParams<{ request: string }>();
+  const { request, nextScreen, time, urgency } = useLocalSearchParams<{ 
+    request: string; 
+    nextScreen?: string;
+    time: string;
+    urgency: string;
+  }>();
   const { language, isLoading } = useRTL();
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -33,7 +38,19 @@ export default function ProcessingScreen() {
 
     // Navigate to next screen after all steps
     setTimeout(() => {
-      router.push('/identification');
+      const targetScreen = nextScreen || 'identification';
+      if (targetScreen === 'confirmation') {
+        router.push({
+          pathname: '/confirmation',
+          params: { 
+            request,
+            time,
+            urgency
+          }
+        });
+      } else {
+        router.push(`/${targetScreen}`);
+      }
     }, 1500 * processingSteps.length + 1000);
   };
 

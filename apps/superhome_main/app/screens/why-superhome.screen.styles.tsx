@@ -1,0 +1,226 @@
+import { StyleSheet } from 'react-native';
+import { theme } from '@/theme/index';
+
+export const whySuperHomeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.surface.background,
+  },
+  header: {
+    paddingTop: 20,
+    paddingBottom: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.xl,
+    paddingStart: theme.spacing.xl,
+    paddingEnd: theme.spacing.xl,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingHorizontal: theme.spacing.xl,
+    paddingStart: theme.spacing.xl,
+    paddingEnd: theme.spacing.xl,
+    paddingBottom: theme.spacing['3xl'],
+  },
+  heroSection: {
+    alignItems: 'center',
+    paddingTop: theme.spacing.xl,
+    paddingBottom: theme.spacing['2xl'],
+  },
+  titleContainer: {
+    alignItems: 'center',
+  },
+  title: {
+    color: theme.colors.text.primary,
+    textAlign: 'center',
+    marginBottom: theme.spacing.md,
+    fontSize: 32,
+    fontWeight: '700',
+    letterSpacing: -0.5,
+  },
+  brandBold: {
+    color: theme.colors.primary[500],
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+  brandThin: {
+    color: theme.colors.text.primary,
+    fontSize: 32,
+    fontWeight: '300',
+  },
+  subtitle: {
+    color: theme.colors.text.secondary,
+    textAlign: 'center',
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  statsSection: {
+    marginBottom: theme.spacing['2xl'],
+  },
+  statsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing.xl,
+    borderWidth: 1,
+    borderColor: theme.colors.neutral[200],
+  },
+  statItem: {
+    width: '50%',
+    alignItems: 'center',
+    marginBottom: theme.spacing.lg,
+  },
+  statNumber: {
+    fontSize: 28,
+    fontWeight: '800',
+    color: theme.colors.primary[500],
+    marginBottom: theme.spacing.xs,
+  },
+  statLabel: {
+    fontSize: 13,
+    color: theme.colors.text.secondary,
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+  featuresSection: {
+    marginBottom: theme.spacing['2xl'],
+  },
+  sectionTitle: {
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.lg,
+    fontSize: 24,
+    fontWeight: '700',
+  },
+  featureCard: {
+    flexDirection: 'row',
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.lg,
+    marginBottom: theme.spacing.md,
+    borderWidth: 1,
+    borderColor: theme.colors.neutral[200],
+  },
+  featureCardExpanded: {
+    paddingVertical: theme.spacing.xl,
+  },
+  featureIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: theme.colors.primary[50],
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: theme.spacing.md,
+  },
+  featureContent: {
+    flex: 1,
+  },
+  featureTitle: {
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.xs,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  featureDescription: {
+    color: theme.colors.text.secondary,
+    lineHeight: 20,
+  },
+  featureDescriptionExpanded: {
+    lineHeight: 24,
+    fontSize: 15,
+  },
+  contactSection: {
+    marginBottom: theme.spacing['2xl'],
+  },
+  contactCards: {
+    gap: theme.spacing.md,
+  },
+  contactCard: {
+    flexDirection: 'row',
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing.lg,
+    borderWidth: 1,
+    borderColor: theme.colors.neutral[200],
+    alignItems: 'center',
+  },
+  contactIconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: theme.colors.primary[500],
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: theme.spacing.md,
+  },
+  contactContent: {
+    flex: 1,
+  },
+  contactTitle: {
+    color: theme.colors.text.primary,
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: theme.spacing.xs / 2,
+  },
+  contactSubtitle: {
+    color: theme.colors.text.secondary,
+    fontSize: 13,
+    marginBottom: theme.spacing.xs,
+  },
+  contactNumber: {
+    color: theme.colors.primary[500],
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  ctaSection: {
+    paddingTop: theme.spacing.lg,
+  },
+  ctaCard: {
+    backgroundColor: theme.colors.primary[50],
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing.xl,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: theme.colors.primary[200],
+  },
+  ctaQuestion: {
+    color: theme.colors.text.primary,
+    textAlign: 'center',
+    marginBottom: theme.spacing.md,
+    fontSize: 18,
+    fontWeight: '600',
+  },
+  ctaBrandContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: theme.spacing.lg,
+  },
+  ctaBrandBold: {
+    color: theme.colors.primary[500],
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  ctaBrandThin: {
+    color: theme.colors.text.primary,
+    fontSize: 24,
+    fontWeight: '300',
+  },
+  ctaButton: {
+    backgroundColor: theme.colors.primary[500],
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: theme.borderRadius.xl,
+    alignItems: 'center',
+    shadowColor: theme.colors.primary[500],
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 6,
+  },
+  ctaButtonText: {
+    color: theme.colors.text.inverse,
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+  },
+});

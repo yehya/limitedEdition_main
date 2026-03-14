@@ -8,6 +8,7 @@ import { Footer } from '../components/home/Footer';
 import { useRTL } from '@/contexts/RTLContext';
 import { theme } from '@/theme/index';
 import { homeStyles } from './home.screen.styles';
+import { Info, ChevronRight } from 'lucide-react-native';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -72,6 +73,17 @@ export default function HomeScreen() {
         <BrandHeader />
 
         <View style={homeStyles.content}>
+          <View style={homeStyles.whyButtonContainer}>
+            <Pressable 
+              style={homeStyles.whyButton}
+              onPress={() => router.push('/why-superhome')}
+            >
+              <Info size={20} color={theme.colors.primary[500]} />
+              <Text style={homeStyles.whyButtonText}>Why SuperHome?</Text>
+              <ChevronRight size={16} color={theme.colors.primary[500]} />
+            </Pressable>
+          </View>
+
           <View style={homeStyles.inputContainer}>
             <TextInput
               style={homeStyles.textInput}

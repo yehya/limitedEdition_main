@@ -11,7 +11,7 @@ export const BrandHeader = () => {
         <Text variant="title" style={styles.brandNameThin}>Home</Text>
       </View>
       <Text variant="caption" style={styles.tagline}>
-        Professional home services, on-demand
+        The most premium home services platform in Cairo
       </Text>
     </View>
   );
@@ -26,16 +26,16 @@ const styles = StyleSheet.create({
   brandContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: theme.spacing.xs,
+    marginBottom: theme.spacing.lg,
   },
   brandNameBold: {
     color: theme.colors.primary[500],
-    fontSize: 36,
+    fontSize: 48,
     fontWeight: 'bold',
   },
   brandNameThin: {
     color: theme.colors.text.primary,
-    fontSize: 36,
+    fontSize: 48,
     fontWeight: '300',
   },
   tagline: {
