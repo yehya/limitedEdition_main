@@ -18,8 +18,12 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-localization"
     ],
+    "extra": {
+      "supportsRTL": true
+    },
     "scheme": "expo-firebase-app-hosting"
   }
 }

@@ -6,7 +6,7 @@ import { theme } from '@/theme/index';
 import { homeStyles } from './home.screen.styles';
 
 export default function Home() {
-  const { language, setLanguage } = useRTL();
+  const { language, isRTL, setLanguage } = useRTL();
   const { t } = useTranslation();
 
   return (

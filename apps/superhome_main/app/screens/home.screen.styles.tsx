@@ -25,7 +25,7 @@ export const homeStyles = StyleSheet.create({
     backgroundColor: theme.colors.primary[500],
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: theme.spacing.md,
+    marginEnd: theme.spacing.md,
   },
   logoText: {
     color: theme.colors.text.inverse,
@@ -74,7 +74,7 @@ export const homeStyles = StyleSheet.create({
     borderRadius: theme.borderRadius.lg,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: theme.spacing.md,
+    marginEnd: theme.spacing.md,
   },
   featureIconText: {
     fontSize: 20,
