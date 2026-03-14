@@ -1,4 +1,5 @@
 import { View, Pressable, StatusBar } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Text } from '@/components/Text';
 import { useRTL } from '@/contexts/RTLContext';
 import { useTranslation } from '@/locales/useTranslation';
@@ -6,6 +7,7 @@ import { theme } from '@/theme/index';
 import { homeStyles } from './home.screen.styles';
 
 export default function Home() {
+  const router = useRouter();
   const { language, isRTL, isLoading, setLanguage } = useRTL();
   const { t } = useTranslation();
 
@@ -95,8 +97,16 @@ export default function Home() {
         </View>
 
         <View style={homeStyles.ctaSection}>
-          <Text variant="body" weight="medium" style={homeStyles.ctaSubtitle} language={language}>
-            {t('home.comingSoon')}
+          <Pressable 
+            style={homeStyles.demoButton}
+            onPress={() => router.push('/demo')}
+          >
+            <Text variant="body" weight="medium" style={homeStyles.demoButtonText} language={language}>
+              🚀 Try AI Demo
+            </Text>
+          </Pressable>
+          <Text variant="caption" style={homeStyles.ctaSubtitle} language={language}>
+            See how SuperHome AI handles your home service requests instantly
           </Text>
         </View>
       </View>

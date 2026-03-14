@@ -96,8 +96,24 @@ export const homeStyles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: theme.spacing['3xl'],
   },
+  demoButton: {
+    backgroundColor: theme.colors.primary[500],
+    paddingHorizontal: theme.spacing.xl,
+    paddingVertical: theme.spacing.md,
+    borderRadius: theme.borderRadius.lg,
+    marginBottom: theme.spacing.md,
+    shadowColor: theme.colors.primary[500],
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+  },
+  demoButtonText: {
+    color: theme.colors.text.inverse,
+  },
   ctaSubtitle: {
     color: theme.colors.text.secondary,
     textAlign: 'center',
+    paddingHorizontal: theme.spacing.xl,
   },
 });
