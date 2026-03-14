@@ -1,7 +1,22 @@
 import React, { createContext, useContext, ReactNode } from 'react';
-import { I18nManager, Platform } from 'react-native';
-import * as Updates from 'expo-updates';
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Platform-specific imports
+let I18nManager: any;
+let Updates: any;
+
+if (Platform.OS !== 'web') {
+  const RN = require('react-native');
+  I18nManager = RN.I18nManager;
+  
+  try {
+    Updates = require('expo-updates');
+  } catch (error) {
+    console.warn('expo-updates not available');
+    Updates = null;
+  }
+}
 
 export type Language = 'en' | 'ar';
 
@@ -65,7 +80,7 @@ export const RTLProvider: React.FC<LanguageProviderProps> = ({
     
     // Development-only dynamic RTL switching
     // Production: Let OS handle RTL based on device locale
-    if (__DEV__ && Platform.OS !== 'web') {
+    if (__DEV__ && Platform.OS !== 'web' && I18nManager && Updates) {
       const shouldBeRTL = newLanguage === 'ar';
       if (shouldBeRTL !== I18nManager.isRTL) {
         I18nManager.allowRTL(shouldBeRTL);
