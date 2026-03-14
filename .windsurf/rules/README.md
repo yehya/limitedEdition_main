@@ -11,10 +11,6 @@
 **system-design.md** - App vision, user types, flows
 **design-dna.md** - UI/UX principles (NEVER break)
 
-## Database & Migration
-**database-migration.md** - Coupling analysis and migration strategy
-**supabase-migration-guide.md** - Step-by-step migration to Supabase
-
 ---
 
 ## Quick Start for LLMs
@@ -26,7 +22,7 @@
 6. Framework-only: no business logic until decided
 
 ## Rules Philosophy
-- **Essential only** - No operational docs, no outdated information
+- **Essential only** - No operational docs, no implementation guides
 - **Timeless** - Rules that won't change with technology
 - **Actionable** - Clear do's and don'ts
-- **Minimal** - 7 files covering everything needed
+- **Minimal** - 6 files covering everything needed
