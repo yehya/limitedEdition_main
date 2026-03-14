@@ -3,53 +3,29 @@ description: Code and component conventions for SuperHome
 always_on: true
 ---
 
-# SuperHome - Code Conventions
+# Code Conventions
 
-## File Structure
-
+## Structure
 ```
 app/
-├── (auth)/              # Auth flow (phone login, one screen per step)
-│   ├── phone.tsx        # Enter phone number
-│   ├── otp.tsx          # Enter OTP
-│   └── name.tsx         # Enter name
-├── (customer)/          # Customer screens
-│   ├── chat.tsx         # AI chat interface (main screen)
-│   ├── time-slots.tsx   # Pick time slot (3 options)
-│   ├── confirm.tsx      # Confirm booking
-│   └── tracking.tsx     # Job status tracking
-├── (provider)/          # Provider screens
-│   ├── jobs.tsx         # Available jobs
-│   ├── active.tsx       # Active job
-│   └── earnings.tsx     # Earnings
-├── _layout.tsx          # Root layout
-├── index.tsx            # Entry (redirect based on auth/role)
-└── home.tsx             # Home screen
+├── (auth)/: phone.tsx, otp.tsx, name.tsx
+├── (customer)/: chat.tsx, time-slots.tsx, confirm.tsx, tracking.tsx
+├── (provider)/: jobs.tsx, active.tsx, earnings.tsx
+├── _layout.tsx, index.tsx, home.tsx
 ```
 
-## Component Rules
-
-- All screens are full-screen, no nested scrollable areas
-- Primary CTA always at bottom of screen
-- Use `SafeAreaView` on every screen
-- Minimum touch target: 48x48
-- All text inputs are full-width
-- One input per screen for onboarding flows
+## Rules
+- Full-screen, no nested scrolling
+- Primary CTA at bottom
+- `SafeAreaView` on every screen
+- Min touch target: 48x48
+- Full-width inputs, one per screen
 
 ## Naming
+**Screens:** kebab-case | **Components:** PascalCase | **Hooks:** usePrefix | **Services:** camelCase
 
-- Screens: kebab-case filenames (`time-slots.tsx`)
-- Components: PascalCase (`ChatBubble.tsx`)
-- Hooks: camelCase with `use` prefix (`useAuth.ts`)
-- Services: camelCase (`firebaseService.ts`)
+## State
+**Global:** Zustand | **Firebase:** React Query/hooks | **Props:** Max 1 level drilling
 
-## State Management
-
-- Zustand for global state
-- React Query / hooks for Firebase data
-- No prop drilling beyond 1 level
-
-## Environment
-
-- All Firebase config via `EXPO_PUBLIC_*` env vars
-- Never hardcode API keys or project IDs
+## Env
+All Firebase config via `EXPO_PUBLIC_*`. Never hardcode keys.
