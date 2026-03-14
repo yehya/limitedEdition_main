@@ -19,7 +19,7 @@ export interface Location {
 }
 
 export interface Provider extends BaseModel {
-  userId: string; // Firebase Auth UID
+  userId: string; // Provider-agnostic user ID (could be Firebase UID, AWS Cognito, etc.)
   services: ServiceType[];
   rating: number; // 0-5
   totalJobs: number;

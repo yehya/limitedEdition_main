@@ -4,6 +4,7 @@
 
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import type { ScheduleOptions } from "firebase-functions/v2/scheduler";
+import { logger } from "../logger.util";
 
 /**
  * Create a scheduled function that runs on a cron schedule.
@@ -34,7 +35,7 @@ export const createScheduledFunction = (
       try {
         await handler();
       } catch (error) {
-        console.error("Scheduled function error:", error);
+        logger.error("Scheduled function error", { error });
         throw error;
       }
     }

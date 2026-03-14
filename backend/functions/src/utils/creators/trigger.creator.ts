@@ -4,6 +4,7 @@
 
 import { onDocumentWritten, onDocumentCreated, onDocumentUpdated, onDocumentDeleted } from "firebase-functions/v2/firestore";
 import type { FirestoreEvent } from "firebase-functions/v2/firestore";
+import { logger } from '../logger.util';
 
 /**
  * Create a Firestore document write trigger (create, update, or delete).

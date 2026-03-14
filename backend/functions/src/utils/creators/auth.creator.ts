@@ -3,6 +3,7 @@
 
 import { onCall, CallableRequest, CallableOptions } from "firebase-functions/v2/https";
 import { checkUserIsAuthenticated } from "../../middleware/auth.middleware";
+import { logger } from "../logger.util";
 
 export type AuthenticatedRequest<T> = CallableRequest<T> & {
   auth: NonNullable<CallableRequest<T>["auth"]>;
@@ -25,7 +26,7 @@ export const createAuthenticatedFunction = <T, R>(
       checkUserIsAuthenticated(request);
       return await handler(request.data, request as AuthenticatedRequest<T>);
     } catch (error) {
-      console.error("Authenticated function error:", error);
+      logger.error("Authenticated function error", { error });
       throw error;
     }
   });

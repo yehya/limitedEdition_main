@@ -5,7 +5,7 @@ import { BaseModel } from './base.model';
 export type UserRole = 'customer' | 'provider' | 'admin';
 
 export interface User extends BaseModel {
-  userId: string; // Firebase Auth UID
+  userId: string; // Provider-agnostic user ID (could be Firebase UID, AWS Cognito, etc.)
   role: UserRole;
   name: string;
   phone: string;

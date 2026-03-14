@@ -1,7 +1,8 @@
-// CONTEXT: Centralized collection name constants. Single source of truth
-// for all collection names. Makes renaming easier and prevents typos.
+// CONTEXT: Centralized table/collection name constants. Single source of truth
+// for all data entity names. Makes renaming easier and prevents typos.
+// Works with any database (Firestore collections, Supabase tables, etc.)
 
-export const COLLECTIONS = {
+export const ENTITIES = {
   USERS: 'users',
   CUSTOMERS: 'customers',
   PROVIDERS: 'providers',
@@ -9,4 +10,8 @@ export const COLLECTIONS = {
   CONVERSATIONS: 'conversations',
 } as const;
 
-export type CollectionName = typeof COLLECTIONS[keyof typeof COLLECTIONS];
+export type EntityName = typeof ENTITIES[keyof typeof ENTITIES];
+
+// Backward compatibility
+export const COLLECTIONS = ENTITIES;
+export type CollectionName = EntityName;

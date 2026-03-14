@@ -12,7 +12,7 @@ export interface Address {
 }
 
 export interface Customer extends BaseModel {
-  userId: string; // Firebase Auth UID
+  userId: string; // Provider-agnostic user ID (could be Firebase UID, AWS Cognito, etc.)
   addresses: Address[];
   defaultAddressId?: string;
   abTestGroup: 'control' | 'variant';

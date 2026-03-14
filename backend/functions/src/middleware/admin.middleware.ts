@@ -2,6 +2,7 @@
 // admin privileges. Used by createAdminFunction creator.
 // TODO: Implement admin check when user repository is created.
 
+import { logger } from "../utils/logger.util";
 import { HttpsError, CallableRequest } from "firebase-functions/v2/https";
 import { checkUserIsAuthenticated } from "./auth.middleware";
 
@@ -15,5 +16,6 @@ export const checkIsAdmin = async (request: CallableRequest) => {
   //   throw new HttpsError("permission-denied", "User must be an admin");
   // }
   
+  logger.info("Admin access granted", { userId: auth.uid });
   return auth;
 };

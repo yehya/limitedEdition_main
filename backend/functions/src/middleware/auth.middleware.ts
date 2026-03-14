@@ -1,7 +1,7 @@
 // CONTEXT: Authentication middleware. Checks if user is logged in.
 // Used by createAuthenticatedFunction creator. Throws error if no auth.
 
-import { logger } from "firebase-functions/v1";
+import { logger } from "../utils/logger.util";
 import { CallableRequest, HttpsError } from "firebase-functions/v2/https";
 
 export const checkUserIsAuthenticated = (request: CallableRequest) => {

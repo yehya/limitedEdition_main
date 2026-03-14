@@ -3,6 +3,7 @@
 // functions, use createAuthenticatedFunction instead.
 
 import { CallableRequest, onCall } from "firebase-functions/v2/https";
+import { logger } from "../logger.util";
 
 export type CallableFunction<T, R> = (data: T, context: CallableRequest<T>) => Promise<R>;
 
@@ -11,7 +12,7 @@ export const createFunction = <T, R>(handler: CallableFunction<T, R>) => {
     try {
       return await handler(request.data, request);
     } catch (error) {
-      console.error("Function error:", error);
+      logger.error("Function error", { error });
       throw error;
     }
   });

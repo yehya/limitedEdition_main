@@ -2,6 +2,7 @@
 // a verified provider. Used by createProviderFunction creator.
 // TODO: Implement provider check when provider repository is created.
 
+import { logger } from "../utils/logger.util";
 import { HttpsError, CallableRequest } from "firebase-functions/v2/https";
 import { checkUserIsAuthenticated } from "./auth.middleware";
 
@@ -15,5 +16,6 @@ export const checkIsProvider = async (request: CallableRequest) => {
   //   throw new HttpsError("failed-precondition", "Provider must be verified");
   // }
   
+  logger.info("Provider access granted", { userId: auth.uid });
   return auth;
 };

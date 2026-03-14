@@ -5,7 +5,7 @@
 import { onCall, CallableOptions } from "firebase-functions/v2/https";
 import { checkIsProvider } from "../../middleware/provider.middleware";
 import { CallableFunction } from "./base.creator";
-import { logger } from "firebase-functions/v1";
+import { logger } from "../logger.util";
 
 /**
  * Create a provider-only callable function.
