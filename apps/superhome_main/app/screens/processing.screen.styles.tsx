@@ -7,7 +7,7 @@ export const processingStyles = StyleSheet.create({
     backgroundColor: theme.colors.surface.background,
   },
   header: {
-    paddingTop: 60,
+    paddingTop: 20,
     paddingBottom: theme.spacing.lg,
     paddingHorizontal: theme.spacing.xl,
     paddingStart: theme.spacing.xl,
@@ -42,17 +42,8 @@ export const processingStyles = StyleSheet.create({
     fontWeight: '500',
     marginTop: theme.spacing.xl,
   },
-  loadingDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: theme.colors.primary[500],
-    marginHorizontal: theme.spacing.xs,
-  },
-  loadingContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+  spinner: {
+    marginBottom: theme.spacing.lg,
   },
   trustText: {
     color: theme.colors.text.secondary,

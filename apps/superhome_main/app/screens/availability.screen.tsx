@@ -83,12 +83,6 @@ export default function AvailabilityScreen() {
 
       {/* Bottom CTA */}
       <View style={availabilityStyles.bottomSection}>
-        {selectedTime && (
-          <Text variant="body" style={availabilityStyles.selectionInfo}>
-            ✓ {timeSlots.find(s => s.id === selectedTime)?.time}
-          </Text>
-        )}
-        
         <Pressable 
           style={[
             availabilityStyles.reserveButton,

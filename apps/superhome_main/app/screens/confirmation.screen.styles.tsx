@@ -30,16 +30,18 @@ export const confirmationStyles = StyleSheet.create({
   title: {
     color: theme.colors.text.primary,
     textAlign: 'center',
-    marginBottom: theme.spacing.sm,
-    fontSize: 28,
-    fontWeight: '600',
+    marginBottom: theme.spacing.md,
+    fontSize: 32,
+    fontWeight: '700',
+    letterSpacing: -0.5,
   },
   bookingRef: {
     color: theme.colors.text.secondary,
     textAlign: 'center',
-    marginBottom: theme.spacing.xl,
+    marginBottom: theme.spacing['2xl'],
     fontSize: 14,
     fontFamily: 'monospace',
+    fontWeight: '500',
   },
   detailsContainer: {
     width: '100%',

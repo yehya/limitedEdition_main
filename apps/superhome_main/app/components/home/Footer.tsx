@@ -5,14 +5,14 @@ import { theme } from '@/theme/index';
 
 export const Footer = () => {
   return (
-    <Text variant="caption" style={styles.text}>
-      Available in Cairo & Alexandria • EGP 950/hour
+    <Text variant="caption" style={styles.footerText}>
+      Available in Cairo • EGP 950/hour
     </Text>
   );
 };
 
 const styles = StyleSheet.create({
-  text: {
+  footerText: {
     color: theme.colors.text.tertiary,
     textAlign: 'center',
     fontSize: 12,

@@ -43,4 +43,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
   },
+  taglineBold: {
+    color: theme.colors.text.primary,
+    fontWeight: 'bold',
+  },
 });

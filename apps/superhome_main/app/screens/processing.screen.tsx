@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, ActivityIndicator } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Text } from '@/components/Text';
 import { BackButton } from '../components/shared/BackButton';
@@ -57,11 +57,11 @@ export default function ProcessingScreen() {
       {/* Main Content */}
       <View style={processingStyles.content}>
         <View style={processingStyles.processingContainer}>
-          <View style={processingStyles.loadingContainer}>
-            <View style={processingStyles.loadingDot} />
-            <View style={processingStyles.loadingDot} />
-            <View style={processingStyles.loadingDot} />
-          </View>
+          <ActivityIndicator 
+            size="large" 
+            color={theme.colors.primary[500]}
+            style={processingStyles.spinner}
+          />
           <Text variant="body" weight="medium" style={processingStyles.processingText}>
             {processingSteps[currentStep]}
           </Text>

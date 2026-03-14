@@ -87,8 +87,8 @@ export default function HomeScreen() {
           </View>
 
           <View style={homeStyles.trustContainer}>
-            <TrustBadge icon="✓" text="Verified & Trained" />
-            <TrustBadge icon="⭐" text="Premium Service" />
+            <TrustBadge icon="check-circle" text="Verified & Trained" />
+            <TrustBadge icon="award" text="Premium Service" />
           </View>
         </View>
 

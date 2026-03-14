@@ -50,8 +50,38 @@ export default function IdentificationScreen() {
           </Text>
           
           <Text variant="body" style={identificationStyles.subtitle}>
-            Estimated: 1-2 hours • EGP 950/hour
+            EGP 950/hour
           </Text>
+        </View>
+
+        {/* Trust Signals */}
+        <View style={identificationStyles.trustSignalsContainer}>
+          <View style={identificationStyles.trustSignal}>
+            <Text style={identificationStyles.trustIcon}>✓</Text>
+            <View style={identificationStyles.trustTextContainer}>
+              <Text variant="caption" style={identificationStyles.trustText}>
+                All{' '}
+                <Text variant="caption" style={identificationStyles.trustTextBold}>professionals</Text>
+                {' '}trained by{' '}
+              </Text>
+              <View style={identificationStyles.brandContainer}>
+                <Text variant="caption" style={identificationStyles.brandBold}>Super</Text>
+                <Text variant="caption" style={identificationStyles.brandThin}>Home</Text>
+              </View>
+            </View>
+          </View>
+          <View style={identificationStyles.trustSignal}>
+            <Text style={identificationStyles.trustIcon}>⭐</Text>
+            <Text variant="caption" style={identificationStyles.trustText}>
+              <Text variant="caption" style={identificationStyles.trustTextBold}>Premium</Text>{' '}service guarantee
+            </Text>
+          </View>
+          <View style={identificationStyles.trustSignal}>
+            <Text style={identificationStyles.trustIcon}>💰</Text>
+            <Text variant="caption" style={identificationStyles.trustText}>
+              <Text variant="caption" style={identificationStyles.trustTextBold}>100%</Text>{' '}money back guarantee
+            </Text>
+          </View>
         </View>
       </View>
 
