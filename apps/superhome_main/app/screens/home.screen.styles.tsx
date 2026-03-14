@@ -6,9 +6,6 @@ export const homeStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.surface.background,
   },
-  rtl: {
-    direction: 'rtl',
-  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',

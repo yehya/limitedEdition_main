@@ -10,7 +10,7 @@ export default function Home() {
   const { t } = useTranslation();
 
   return (
-    <View style={[homeStyles.container, isRTL && homeStyles.rtl]}>
+    <View style={homeStyles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
       
       <View style={homeStyles.header}>
