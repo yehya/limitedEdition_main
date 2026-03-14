@@ -7,8 +7,8 @@
       "dependencies": {
         "expo": "~51.0.28",
         "expo-router": "~3.5.23",
-        "react": "18.3.1",
-        "react-dom": "18.3.1",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
         "react-native": "0.74.5",
         "react-native-web": "~0.19.10",
         "superstatic": "^9.2.0",
@@ -1592,11 +1592,11 @@
 
     "re2": ["re2@1.23.3", "", { "dependencies": { "install-artifact-from-github": "^1.4.0", "nan": "^2.25.0", "node-gyp": "^12.2.0" } }, "sha512-5jh686rmj/8dYpBo72XYgwzgG8Y9HNDATYZ1x01gqZ6FvXVUP33VZ0+6GLCeavaNywz3OkXBU8iNX7LjiuisPg=="],
 
-    "react": ["react@18.3.1", "", { "dependencies": { "loose-envify": "^1.1.0" } }, "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ=="],
+    "react": ["react@18.2.0", "", { "dependencies": { "loose-envify": "^1.1.0" } }, "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="],
 
     "react-devtools-core": ["react-devtools-core@5.3.2", "", { "dependencies": { "shell-quote": "^1.6.1", "ws": "^7" } }, "sha512-crr9HkVrDiJ0A4zot89oS0Cgv0Oa4OG1Em4jit3P3ZxZSKPMYyMjfwMqgcJna9o625g8oN87rBm8SWWrSTBZxg=="],
 
-    "react-dom": ["react-dom@18.3.1", "", { "dependencies": { "loose-envify": "^1.1.0", "scheduler": "^0.23.2" }, "peerDependencies": { "react": "^18.3.1" } }, "sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw=="],
+    "react-dom": ["react-dom@18.2.0", "", { "dependencies": { "loose-envify": "^1.1.0", "scheduler": "^0.23.0" }, "peerDependencies": { "react": "^18.2.0" } }, "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="],
 
     "react-fast-compare": ["react-fast-compare@3.2.2", "", {}, "sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ=="],
 
