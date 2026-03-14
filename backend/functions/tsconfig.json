@@ -9,6 +9,7 @@
     "target": "es2017",
     "esModuleInterop": true,
     "baseUrl": "./src",
+    "types": ["node"],
     "paths": {
       "@/*": ["./*"],
       "@models/*": ["./models/*"],

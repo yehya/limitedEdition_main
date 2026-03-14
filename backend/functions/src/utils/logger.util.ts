@@ -3,13 +3,6 @@
 
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
-interface LogEntry {
-  level: LogLevel;
-  message: string;
-  metadata?: any;
-  timestamp: Date;
-}
-
 export class Logger {
   private context?: string;
 
@@ -18,13 +11,6 @@ export class Logger {
   }
 
   private log(level: LogLevel, message: string, metadata?: any) {
-    const logEntry: LogEntry = {
-      level,
-      message,
-      metadata,
-      timestamp: new Date(),
-    };
-
     const prefix = this.context ? `[${this.context}]` : '';
     const logMessage = `${prefix} ${message}`;
 

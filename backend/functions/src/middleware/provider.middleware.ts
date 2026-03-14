@@ -3,7 +3,7 @@
 // TODO: Implement provider check when provider repository is created.
 
 import { logger } from "../utils/logger.util";
-import { HttpsError, CallableRequest } from "firebase-functions/v2/https";
+import { CallableRequest } from "firebase-functions/v2/https";
 import { checkUserIsAuthenticated } from "./auth.middleware";
 
 export const checkIsProvider = async (request: CallableRequest) => {

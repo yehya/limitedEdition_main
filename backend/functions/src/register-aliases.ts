@@ -4,6 +4,7 @@
 
 import 'module-alias/register';
 import { resolve } from 'path';
+import { addAlias } from 'module-alias';
 
 // Register path aliases for runtime
 const aliases = {
@@ -17,5 +18,5 @@ const aliases = {
 
 // Register aliases with module-alias
 for (const [alias, path] of Object.entries(aliases)) {
-  module.addAlias(alias, path);
+  addAlias(alias, path);
 }
