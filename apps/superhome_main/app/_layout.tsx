@@ -1,10 +1,13 @@
 import { Stack } from 'expo-router';
+import { RTLProvider } from '@/contexts/RTLContext';
 
 export default function RootLayout() {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="home" />
-    </Stack>
+    <RTLProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="home" />
+      </Stack>
+    </RTLProvider>
   );
 }

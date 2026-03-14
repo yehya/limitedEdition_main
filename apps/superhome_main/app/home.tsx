@@ -1,14 +1,9 @@
-import { useState } from 'react';
 import { View, StyleSheet, Pressable, StatusBar } from 'react-native';
 import { Text } from '@/components/Text';
+import { useRTL } from '@/contexts/RTLContext';
 
 export default function Home() {
-  const [language, setLanguage] = useState<'en' | 'ar'>('en');
-  const isRTL = language === 'ar';
-
-  const changeLanguage = (lang: 'en' | 'ar') => {
-    setLanguage(lang);
-  };
+  const { language, isRTL, setLanguage } = useRTL();
 
   return (
     <View style={[styles.container, isRTL && styles.rtl]}>
@@ -24,7 +19,7 @@ export default function Home() {
         
         <Pressable 
           style={styles.languageButton}
-          onPress={() => changeLanguage(language === 'en' ? 'ar' : 'en')}
+          onPress={() => setLanguage(language === 'en' ? 'ar' : 'en')}
         >
           <Text variant="caption" weight="medium" style={styles.languageText} language={language}>
             {language === 'en' ? 'العربية' : 'English'}

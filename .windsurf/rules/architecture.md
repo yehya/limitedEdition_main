@@ -97,6 +97,22 @@ export class UserService {
 }
 ```
 
+### RTL/Localization Rules
+
+### Required RTL Patterns
+✅ Use custom Text component for all text (handles Arabic scaling)
+✅ Pass language prop to Text components for proper RTL
+✅ Use RTLContext for app-wide language state
+✅ Use rtl utility functions for layout adjustments
+✅ Test both LTR and RTL layouts
+
+### RTL Anti-Patterns
+❌ Hard-coded text alignment (use rtl.getTextAlign)
+❌ Hard-coded flex direction (use rtl.getFlexDirection)
+❌ Manual margin calculations (use rtl.getHorizontalMargin)
+❌ React Native Text without language prop
+❌ Ignoring Arabic font scaling requirements
+
 ### Required Patterns
 ✅ Interfaces for all repositories
 ✅ Database-agnostic business logic
@@ -106,3 +122,4 @@ export class UserService {
 ✅ Pure utility functions
 ✅ Injectable dependencies
 ✅ Test files next to source files
+✅ RTL-aware components and layouts
