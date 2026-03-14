@@ -21,7 +21,9 @@
       "@/components/*": ["./components/*"],
       "@/hooks/*": ["./hooks/*"],
       "@/contexts/*": ["./contexts/*"],
-      "@/utils/*": ["./utils/*"]
+      "@/utils/*": ["./utils/*"],
+      "@/theme/*": ["./theme/*"],
+      "@/locales/*": ["./locales/*"]
     }
   },
   "exclude": [

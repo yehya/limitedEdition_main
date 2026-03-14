@@ -113,6 +113,42 @@ export class UserService {
 ❌ React Native Text without language prop
 ❌ Ignoring Arabic font scaling requirements
 
+### Design System Rules
+
+### Required Design Patterns
+✅ Use theme colors instead of hard-coded values
+✅ Use spacing scale instead of arbitrary numbers
+✅ Use modular translation files (split by feature)
+✅ Use custom Text component with language prop
+✅ Use styling utilities for consistent patterns
+✅ Use TypeScript for translation paths
+✅ Follow naming conventions (camelCase for translations)
+
+### File Naming Convention Rules
+
+### Required File Structure
+✅ Screen files: `[name].screen.tsx` (e.g., `home.screen.tsx`)
+✅ Style files: `[name].screen.styles.tsx` (e.g., `home.screen.styles.tsx`)
+✅ Component files: `[Name].tsx` (e.g., `CustomButton.tsx`)
+✅ Component styles: `[Name].styles.tsx` (e.g., `CustomButton.styles.tsx`)
+✅ Separate styles from component logic
+✅ Clear, descriptive file names
+
+### File Naming Anti-Patterns
+❌ Inline styles in component files
+❌ Monolithic files with mixed concerns
+❌ Unclear file names (e.g., `stuff.tsx`)
+❌ Styles embedded in component logic
+❌ Mixed naming conventions
+
+### Design System Anti-Patterns
+❌ Monolithic translation files (use modular structure)
+❌ Hard-coded colors or spacing values
+❌ React Native Text without language prop
+❌ Mixed styling approaches
+❌ Ignoring Arabic font scaling
+❌ Skipping TypeScript for translations
+
 ### Required Patterns
 ✅ Interfaces for all repositories
 ✅ Database-agnostic business logic
@@ -123,3 +159,5 @@ export class UserService {
 ✅ Injectable dependencies
 ✅ Test files next to source files
 ✅ RTL-aware components and layouts
+✅ Theme-aware styling
+✅ Modular localization structure

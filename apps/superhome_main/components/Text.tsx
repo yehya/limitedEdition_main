@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text as RNText, TextStyle, StyleSheet, Platform } from 'react-native';
+import { theme } from '@/theme/index';
 
 export interface ScaledTextProps {
   children: React.ReactNode;
   style?: TextStyle;
-  variant?: 'heading' | 'title' | 'subtitle' | 'body' | 'caption';
+  variant?: keyof typeof theme.typography.variants;
   color?: string;
-  weight?: 'light' | 'normal' | 'medium' | 'semibold' | 'bold';
+  weight?: keyof typeof theme.typography.fontWeight;
   numberOfLines?: number;
   textAlign?: 'auto' | 'left' | 'right' | 'center' | 'justify';
   /** Disable Arabic scaling for this text (useful for large headlines) */
@@ -109,58 +110,12 @@ export const Text: React.FC<ScaledTextProps> = ({
   );
 };
 
-function getVariantStyle(variant: string): TextStyle {
-  switch (variant) {
-    case 'heading':
-      return {
-        fontSize: 36,
-        fontWeight: 'bold' as const,
-        lineHeight: 44,
-      };
-    case 'title':
-      return {
-        fontSize: 24,
-        fontWeight: 'bold' as const,
-        lineHeight: 32,
-      };
-    case 'subtitle':
-      return {
-        fontSize: 18,
-        fontWeight: '600' as const,
-        lineHeight: 26,
-      };
-    case 'body':
-      return {
-        fontSize: 16,
-        fontWeight: 'normal' as const,
-        lineHeight: 24,
-      };
-    case 'caption':
-      return {
-        fontSize: 14,
-        fontWeight: 'normal' as const,
-        lineHeight: 20,
-      };
-    default:
-      return {};
-  }
+function getVariantStyle(variant: keyof typeof theme.typography.variants): TextStyle {
+  return theme.typography.variants[variant];
 }
 
-function getWeightStyle(weight: string): TextStyle {
-  switch (weight) {
-    case 'light':
-      return { fontWeight: '300' as const };
-    case 'normal':
-      return { fontWeight: 'normal' as const };
-    case 'medium':
-      return { fontWeight: '500' as const };
-    case 'semibold':
-      return { fontWeight: '600' as const };
-    case 'bold':
-      return { fontWeight: 'bold' as const };
-    default:
-      return {};
-  }
+function getWeightStyle(weight: keyof typeof theme.typography.fontWeight): TextStyle {
+  return { fontWeight: theme.typography.fontWeight[weight] };
 }
 
 function getColorStyle(color?: string): TextStyle {
