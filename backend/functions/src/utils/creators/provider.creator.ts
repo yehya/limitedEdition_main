@@ -1,7 +1,3 @@
-// CONTEXT: Creates provider-only callable functions. Auto-checks that user
-// is authenticated AND is a verified provider. Supports CallableOptions for
-// secrets (e.g., { secrets: ["SMS_API_KEY"] }).
-
 import { onCall, CallableOptions } from "firebase-functions/v2/https";
 import { checkIsProvider } from "../../middleware/provider.middleware";
 import { CallableFunction } from "./base.creator";

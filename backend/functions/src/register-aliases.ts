@@ -1,12 +1,7 @@
-// CONTEXT: Runtime path alias registration. tsconfig.json paths only work
-// at compile time. This makes @/ imports work at runtime in Cloud Functions.
-// MUST be imported first in index.ts.
-
 import 'module-alias/register';
 import { resolve } from 'path';
 import { addAlias } from 'module-alias';
 
-// Register path aliases for runtime
 const aliases = {
   '@': resolve(__dirname),
   '@models': resolve(__dirname, 'models'),
@@ -16,7 +11,6 @@ const aliases = {
   '@config': resolve(__dirname, 'config'),
 };
 
-// Register aliases with module-alias
 for (const [alias, path] of Object.entries(aliases)) {
   addAlias(alias, path);
 }

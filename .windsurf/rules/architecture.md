@@ -1,142 +1,108 @@
 ---
-description: SuperHome backend architecture and design patterns
+description: Timeless architecture rules
 always_on: true
 ---
 
 # Architecture Rules
-
-## CRITICAL: Framework-Only Approach
-**This codebase is a FRAMEWORK, not a complete application.**
-
-- ✅ Infrastructure setup (repositories, query builders, middleware, creators)
-- ✅ Interfaces and abstractions
-- ✅ Database-agnostic patterns
-- ❌ NO business logic until decided
-- ❌ NO premature service implementations
-- ❌ NO concrete function implementations with business rules
-
-**Build the foundation. Business logic comes later.**
 
 ## Golden Rules
 
 1. **Framework-Only** - Build infrastructure, not business logic. Add logic when decided.
 2. **Small Files** - Max 200 lines. When in doubt, create a new file.
 3. **3-Layer Architecture** - API → Service → Repository. Never skip layers.
-4. **Database Agnostic** - Business logic knows nothing about Firestore/Supabase.
+4. **Database Agnostic** - Business logic knows nothing about database specifics.
 5. **Interface Everything** - Repositories use interfaces. Easy to swap implementations.
 6. **Single Responsibility** - One file, one purpose.
 7. **No Barrel Files** - Explicit imports only (except function exports).
+8. **Testable-First** - Write code that's easy to unit test. Small, pure functions.
 
-## Layers
+## Layer Rules
 
-### API Layer (Functions)
-- **Purpose:** HTTP/callable endpoints
-- **Location:** `firebase/functions/src/functions/`
-- **Naming:** `*.functions.ts`
-- **Responsibility:** Request validation, response formatting
-- **Never:** Business logic, database calls
+### API Layer
+- Handles HTTP/callable endpoints
+- Request validation, response formatting
+- Never: Business logic, database calls
 
-### Service Layer (Business Logic)
-- **Purpose:** Core business rules
-- **Location:** `firebase/functions/src/services/`
-- **Naming:** `*.service.ts`
-- **Responsibility:** Business logic, orchestration, validation
-- **Never:** Direct database calls, HTTP concerns
+### Service Layer  
+- Core business rules
+- Business logic, orchestration, validation
+- Never: Direct database calls, HTTP concerns
 
-### Repository Layer (Database)
-- **Purpose:** Data persistence
-- **Location:** `firebase/functions/src/db/`
-- **Naming:** `*.repository.ts`
-- **Responsibility:** CRUD operations, queries
-- **Never:** Business logic
+### Repository Layer
+- Data persistence
+- CRUD operations, queries
+- Never: Business logic
 
-## File Structure
+## Forbidden Patterns
+❌ Business logic in API layer
+❌ Database calls in service layer
+❌ Direct database dependencies in business logic
+❌ Barrel files (except function exports)
+❌ Files over 200 lines
 
+### Testing Anti-Patterns
+❌ Creating dependencies inside functions (new Database(), etc.)
+❌ Hard-coded external services (Firebase Admin, APIs)
+❌ Global state or singletons in business logic
+❌ Mixed concerns (validation + database calls)
+❌ Complex private functions that can't be tested
+
+## Testing Rules
+
+### Testable Code Patterns
+- **Pure functions** - No side effects, easy to test
+- **Dependency injection** - Pass dependencies, don't create them
+- **Interface dependencies** - Mock interfaces, not implementations
+- **Small functions** - One responsibility, easy to assert
+- **No external calls** - Database, APIs, file I/O in test scope
+
+### Testing Structure
 ```
-firebase/functions/src/
-├── config/
-│   ├── collections.ts          # Collection names constant
-│   └── env.ts                  # Environment config
-├── models/
-│   ├── base.model.ts           # Base interface
-│   ├── user.model.ts           # User types
-│   ├── job.model.ts            # Job types
-│   └── provider.model.ts       # Provider types
-├── db/
-│   ├── interfaces/
-│   │   ├── base.repository.interface.ts
-│   │   ├── user.repository.interface.ts
-│   │   └── job.repository.interface.ts
-│   └── firebase/
-│       ├── base.repository.ts
-│       ├── user.repository.ts
-│       └── job.repository.ts
+src/
+├── utils/validators/
+│   └── user.validator.ts
+├── __tests__/
+│   └── user.validator.test.ts
 ├── services/
-│   ├── user.service.ts
-│   ├── job.service.ts
-│   ├── ai.service.ts
-│   └── matching.service.ts
-├── middleware/
-│   ├── auth.middleware.ts
-│   ├── admin.middleware.ts
-│   └── provider.middleware.ts
-├── utils/
-│   ├── creators/
-│   │   ├── base.creator.ts
-│   │   ├── auth.creator.ts
-│   │   ├── admin.creator.ts
-│   │   └── provider.creator.ts
-│   └── validators/
-│       └── *.validator.ts
-└── functions/
-    ├── user.functions.ts
-    ├── job.functions.ts
-    └── ai.functions.ts
+│   └── user.service.ts
+└── __tests__/
+    └── user.service.test.ts
 ```
 
-## Naming Conventions
+### Testable vs Non-Testable Examples
 
-**Files:**
-- Repositories: `user.repository.ts`
-- Services: `user.service.ts`
-- Models: `user.model.ts`
-- Middleware: `auth.middleware.ts`
-- Functions: `user.functions.ts`
-- Interfaces: `user.repository.interface.ts`
-
-**Classes:**
-- Repositories: `FirebaseUserRepository implements IUserRepository`
-- Services: `UserService`
-- Creators: `createAuthenticatedFunction`
-
-**Variables:**
-- Instances: `userService`, `jobRepository`
-- Constants: `COLLECTIONS`, `MAX_RETRIES`
-
-## Dependency Injection
-
-Services receive repository interfaces:
+❌ **Hard to test:**
 ```typescript
-class JobService {
-  constructor(
-    private jobRepo: IJobRepository,
-    private userRepo: IUserRepository
-  ) {}
+// Creates dependencies, can't mock
+export class UserService {
+  async createUser(data: UserData) {
+    const db = firestore(); // Hard-coded
+    const user = await db.collection('users').add(data);
+    return user;
+  }
 }
 ```
 
-## Migration Path
+✅ **Easy to test:**
+```typescript
+// Dependencies injected, interfaces used
+export class UserService {
+  constructor(
+    private userRepo: IUserRepository // Interface
+  ) {}
+  
+  async createUser(data: UserData): Promise<User> {
+    return await this.userRepo.create(data);
+  }
+}
+```
 
-**Firestore → Supabase:**
-1. Create `db/supabase/user.repository.ts`
-2. Implement `IUserRepository`
-3. Swap in DI container
-4. Zero service layer changes
-
-## Rules
-
-- Repository methods: `create`, `update`, `findById`, `findMany`, `delete`
-- Service methods: Business domain language (`matchProvider`, `processAIChat`)
-- Never import Firestore types in services
-- Never import service logic in repositories
-- Always use interfaces for cross-layer communication
+### Required Patterns
+✅ Interfaces for all repositories
+✅ Database-agnostic business logic
+✅ Small, focused files
+✅ Clear layer separation
+✅ Explicit imports
+✅ Pure utility functions
+✅ Injectable dependencies
+✅ Test files next to source files

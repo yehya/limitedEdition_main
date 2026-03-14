@@ -1,8 +1,5 @@
-// CONTEXT: Creates authenticated callable functions. Auto-checks that user
-// is logged in before executing handler. Supports CallableOptions for secrets.
-
 import { onCall, CallableRequest, CallableOptions } from "firebase-functions/v2/https";
-import { checkUserIsAuthenticated, AuthenticatedContext } from "../../middleware/auth.middleware";
+import { checkUserIsAuthenticated } from "../../middleware/auth.middleware";
 import { logger } from "../logger.util";
 
 export type AuthenticatedRequest<T> = CallableRequest<T> & {
@@ -29,7 +26,6 @@ export const createAuthenticatedFunction = <T, R>(
     try {
       const authContext = checkUserIsAuthenticated(request);
       
-      // Augment request with auth and language
       const augmentedRequest: AuthenticatedRequest<T> = {
         ...request,
         auth: authContext.auth,

@@ -1,7 +1,3 @@
-// CONTEXT: Creates Firestore trigger functions. Triggers fire automatically
-// when documents are created, updated, or deleted. Use for keeping data
-// in sync (e.g., updating summaries, sending notifications).
-
 import { onDocumentWritten, onDocumentCreated, onDocumentUpdated, onDocumentDeleted } from "firebase-functions/v2/firestore";
 import type { FirestoreEvent } from "firebase-functions/v2/firestore";
 

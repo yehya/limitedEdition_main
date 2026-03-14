@@ -1,6 +1,3 @@
-// CONTEXT: Provider-agnostic logger. Works with any cloud provider.
-// Uses console.log by default, can be configured for provider-specific logging.
-
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 export class Logger {
@@ -47,5 +44,4 @@ export class Logger {
   }
 }
 
-// Default logger instance
 export const logger = new Logger();

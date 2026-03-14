@@ -1,5 +1,3 @@
-// CONTEXT: Provider model with services, rating, and verification status.
-
 import { BaseModel } from './base.model';
 import { Localized } from '../types/localization.types';
 
@@ -14,7 +12,6 @@ export type ServiceType =
   | 'moving'
   | 'other';
 
-// Service type configurations with localized names
 export const SERVICE_TYPES: Record<ServiceType, Localized<string>> = {
   plumbing: { en: 'Plumbing', ar: 'السباكة' },
   electrical: { en: 'Electrical', ar: 'الكهرباء' },

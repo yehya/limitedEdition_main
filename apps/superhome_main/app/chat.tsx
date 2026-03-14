@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, FlatList, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from '@/hooks/useTranslation';
 
 type Message = {
   id: string;
@@ -8,16 +9,11 @@ type Message = {
   text: string;
 };
 
-const AI_GREETING = "Hi! I'm your SuperHome assistant. What do you need help with at home?";
-
-const DEMO_RESPONSES: Record<string, string> = {
-  default: "Got it! Let me find the best person for that. Let me suggest some times for you.",
-};
-
 export default function Chat() {
   const router = useRouter();
+  const { t, language, changeLanguage, isRTL } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([
-    { id: '1', role: 'ai', text: AI_GREETING },
+    { id: '1', role: 'ai', text: t('chat.greeting') },
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -41,7 +37,7 @@ export default function Chat() {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'ai',
-        text: DEMO_RESPONSES.default,
+        text: t('chat.defaultResponse'),
       };
       setMessages(prev => [...prev, aiMessage]);
       setIsTyping(false);

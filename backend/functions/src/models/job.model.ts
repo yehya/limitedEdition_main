@@ -1,5 +1,3 @@
-// CONTEXT: Job model with status, service type, AI summary, address, and time slot.
-
 import { BaseModel } from './base.model';
 import { ServiceType } from './provider.model';
 import { Localized } from '../types/localization.types';
@@ -13,7 +11,6 @@ export type JobStatus =
   | 'completed'
   | 'cancelled';
 
-// Job status configurations with localized names
 export const JOB_STATUSES: Record<JobStatus, Localized<string>> = {
   pending: { en: 'Pending', ar: 'في الانتظار' },
   matching: { en: 'Matching', ar: 'المطابقة' },

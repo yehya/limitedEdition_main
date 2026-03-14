@@ -1,34 +1,42 @@
 ---
-description: SuperHome system design and architecture
+description: Timeless system design principles
 always_on: true
 ---
 
-# SuperHome - System Design
+# System Design Rules
 
-**Vision:** Easiest home services app. Zero decision fatigue. AI-powered.
-
-**Core:** User tells AI what they need → AI handles everything → Service happens.
+## Core Vision
+AI-powered home services with zero decision fatigue.
 
 ## User Types
+- **Customer:** Requests services via AI chat
+- **Provider:** Accepts and completes jobs  
+- **Admin:** Manages platform and users
 
-**Customer (Mobile):** AI chat → Pick time slot → Service happens → Auto-payment
-**Provider (Mobile):** See jobs → Accept → Navigate → Complete → Get paid
-**Admin (Web):** Manage providers/customers/services, monitor jobs, analytics, A/B tests
+## Core Flow
+1. Customer tells AI what they need
+2. AI handles matching and scheduling
+3. Service happens automatically
+4. Payment and rating follow
 
-## Customer Flow
-1. AI: "What do you need?"
-2. User: "Kitchen sink leaking"
-3. AI suggests 3 time slots
-4. User taps one
-5. Confirmed
-6. Service + auto-payment + rating
+## Design Principles
+- Zero decision fatigue for users
+- AI handles all complexity
+- One action per screen
+- Instant progress feedback
+- Mobile-first for customers/providers
+- Web dashboard for admins
 
-## A/B Test
-**A (Default):** AI chat interface
-**B:** Category grid → Describe → Pick time
+## Required Features
+- AI chat interface
+- Service provider matching
+- Automated scheduling
+- Payment processing
+- Rating system
+- Admin analytics
 
-## Services
-Plumbing, Electrical, Cleaning, AC/HVAC, Painting, Handyman, Pest Control, Carpentry
-
-## Revenue
-Commission per job, service fee, premium scheduling
+## Forbidden Patterns
+❌ Complex decision flows
+❌ Manual provider selection
+❌ Multi-step forms
+❌ Customer handles logistics

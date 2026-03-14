@@ -1,7 +1,3 @@
-// CONTEXT: Creates scheduled (cron) functions. These run on a schedule
-// (e.g., daily, hourly) for background tasks like cleanup, aggregation,
-// sending notifications. Uses standard cron syntax.
-
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import type { ScheduleOptions } from "firebase-functions/v2/scheduler";
 import { logger } from "../logger.util";

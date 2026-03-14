@@ -1,7 +1,3 @@
-// CONTEXT: Base callable function creator. No auth checks - use for
-// public endpoints only (e.g., health checks, public data). For most
-// functions, use createAuthenticatedFunction instead.
-
 import { CallableRequest, onCall } from "firebase-functions/v2/https";
 import { logger } from "../logger.util";
 

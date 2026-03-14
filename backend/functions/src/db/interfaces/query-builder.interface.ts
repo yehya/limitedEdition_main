@@ -1,7 +1,3 @@
-// CONTEXT: Database-agnostic query builder interface. Abstracts away
-// Firestore-specific query syntax. Any database (Firestore, Supabase, etc.)
-// can implement this interface with their own query syntax.
-
 export type QueryOperator = "==" | "!=" | ">" | ">=" | "<" | "<=" | "in" | "array-contains";
 export type OrderDirection = "asc" | "desc";
 

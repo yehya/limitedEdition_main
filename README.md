@@ -12,13 +12,11 @@ royalhome_app/
 │       ├── package.json
 │       ├── app.json
 │       └── ...
-├── firebase/                    # Firebase Cloud Functions
-│   ├── functions/
-│   │   ├── src/
-│   │   ├── package.json
-│   │   └── tsconfig.json
-│   ├── firebase.json
-│   └── .firebaserc
+├── backend/                     # Backend services
+│   └── functions/               # Cloud Functions
+│       ├── src/                 # Source code
+│       ├── package.json
+│       └── tsconfig.json
 ├── .windsurf/                   # Project rules and documentation
 │   └── rules/
 └── README.md
@@ -35,10 +33,10 @@ bun run dev:testing    # Testing environment
 bun run dev:production # Production environment
 ```
 
-### Firebase Functions
+### Backend Functions
 
 ```bash
-cd firebase/functions
+cd backend/functions
 npm install
 npm run build
 npm run serve          # Local emulator
@@ -52,13 +50,14 @@ npm run deploy         # Deploy to Firebase
 
 ## Documentation
 
-All project rules and documentation are in `.windsurf/rules/`:
+All project rules are in `.windsurf/rules/`:
 
-- `system-design.md` - App vision, user flows, A/B testing
+- `system-design.md` - App vision, user types, flows
 - `design-dna.md` - UI/UX principles (NEVER break these)
-- `firebase-plan.md` - Architecture and build phases
-- `code-conventions.md` - Code standards
-- `multi-environment.md` - Environment setup
+- `architecture.md` - Backend architecture rules
+- `file-organization.md` - File size and naming rules
+- `llm-workflow.md` - LLM development rules
+- `localization.md` - i18n support for Arabic/English
 
 ## Tech Stack
 
@@ -78,5 +77,5 @@ All project rules and documentation are in `.windsurf/rules/`:
 
 Each codebase is independent:
 - App changes: Work in `apps/superhome_main/`
-- Functions changes: Work in `firebase/`
+- Backend changes: Work in `backend/functions/`
 - Both share the same git repo but are deployed separately

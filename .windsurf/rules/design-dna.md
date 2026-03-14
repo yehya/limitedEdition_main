@@ -10,11 +10,11 @@ always_on: true
 ## Principles
 1. **One Thing Per Screen** - One input per screen. Never combine.
 2. **Zero Decision Fatigue** - AI decides, user confirms. Max 3 options.
-3. **Instant Gratification** - Every tap = progress. Animations 200-300ms. No blank screens.
+3. **Instant Gratification** - Every tap = progress. Fast animations. No blank screens.
 4. **Talk, Don't Type** - AI chat primary. Forms = one field at a time.
 5. **No Dead Ends** - Clear next action. Back works. Errors offer solutions.
-6. **Visual Hierarchy** - One primary action (big, bold). Min 48px touch targets.
-7. **Clean Typography** - Max 2 font weights. Large readable text.
+6. **Visual Hierarchy** - One primary action. Large touch targets.
+7. **Clean Typography** - Limited font weights. Large readable text.
 8. **3-Second Rule** - User understands any screen in 3 seconds. No tutorials.
 
 ## Forbidden

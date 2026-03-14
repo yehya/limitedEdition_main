@@ -1,6 +1,3 @@
-// CONTEXT: Database-agnostic pagination interface. Works with any database.
-// Cursor-based pagination is preferred over offset-based for performance.
-
 export interface PaginationOptions {
   limit?: number;
   cursor?: string;

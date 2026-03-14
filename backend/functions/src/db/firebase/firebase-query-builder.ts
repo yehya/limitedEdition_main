@@ -1,7 +1,3 @@
-// CONTEXT: Firestore-specific query builder implementation. Wraps Firestore
-// query API to match our database-agnostic IQueryBuilder interface.
-// When migrating to Supabase, create SupabaseQueryBuilder with same interface.
-
 import { firestore } from "firebase-admin";
 import { IQueryBuilder, QueryOperator, OrderDirection } from "../interfaces/query-builder.interface";
 
@@ -15,7 +11,6 @@ export class FirebaseQueryBuilder<T> implements IQueryBuilder<T> {
   }
 
   where(field: string, operator: QueryOperator, value: any): IQueryBuilder<T> {
-    // Map our generic operators to Firestore operators
     const firestoreOperator = operator as firestore.WhereFilterOp;
     this.query = this.query.where(field, firestoreOperator, value);
     return this;

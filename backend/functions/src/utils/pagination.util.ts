@@ -1,6 +1,3 @@
-// CONTEXT: Pagination utilities. Validates and limits page sizes.
-// Firebase charges per document read, so we enforce reasonable limits.
-
 export interface PaginationRequest {
   page?: number;
   limit?: number;

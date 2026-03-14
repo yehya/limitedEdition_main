@@ -1,5 +1,3 @@
-// CONTEXT: Customer model with address and A/B test group.
-
 import { BaseModel } from './base.model';
 
 export interface Address {

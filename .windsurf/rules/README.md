@@ -16,7 +16,7 @@
 
 ## Quick Start for LLMs
 1. Read **llm-workflow.md** first
-2. Every file needs `// CONTEXT:` comment
+2. Code must be self-documenting
 3. Max 200 lines per file
 4. NO barrel files except function exports
 5. Use @/ path aliases
