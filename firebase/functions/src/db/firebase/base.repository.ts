@@ -1,7 +1,14 @@
+// CONTEXT: Firebase implementation of base repository. Handles Firestore-specific
+// operations and conversions. When migrating to Supabase, create SupabaseBaseRepository
+// implementing the same IBaseRepository interface.
+
 import { firestore } from "firebase-admin";
 import { v4 as uuidv4 } from "uuid";
 import { BaseModel } from "../../models/base.model";
 import { IBaseRepository } from "../interfaces/base.repository.interface";
+import { PaginationOptions, PaginatedResult } from "../interfaces/pagination.interface";
+import { IQueryBuilder } from "../interfaces/query-builder.interface";
+import { FirebaseQueryBuilder } from "./firebase-query-builder";
 import { CollectionName } from "../../config/collections";
 
 export abstract class FirebaseBaseRepository<T extends BaseModel> implements IBaseRepository<T> {
@@ -100,11 +107,42 @@ export abstract class FirebaseBaseRepository<T extends BaseModel> implements IBa
     return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as T);
   }
 
+  async findManyPaginated(filters: Partial<T>, options: PaginationOptions): Promise<PaginatedResult<T>> {
+    const limit = options.limit ?? 20;
+    let query: firestore.Query = this.collection;
+    
+    // Apply filters
+    for (const [key, value] of Object.entries(filters)) {
+      if (value !== undefined) {
+        query = query.where(key, "==", this.toFirestore(value));
+      }
+    }
+
+    // Apply cursor if provided
+    if (options.cursor) {
+      const cursorDoc = await this.collection.doc(options.cursor).get();
+      if (cursorDoc.exists) {
+        query = query.startAfter(cursorDoc);
+      }
+    }
+
+    // Fetch limit + 1 to check if there are more results
+    const snapshot = await query.limit(limit + 1).get();
+    const hasMore = snapshot.docs.length > limit;
+    const items = snapshot.docs.slice(0, limit).map(doc => this.fromFirestore(doc.data()) as T);
+    
+    return {
+      items,
+      nextCursor: hasMore ? items[items.length - 1]?.id : undefined,
+      hasMore,
+    };
+  }
+
   async delete(id: string): Promise<void> {
     await this.collection.doc(id).delete();
   }
 
-  protected createQuery(): firestore.Query {
-    return this.collection;
+  query(): IQueryBuilder<T> {
+    return new FirebaseQueryBuilder<T>(this.collection, (data) => this.fromFirestore(data));
   }
 }

@@ -1,8 +1,11 @@
+// CONTEXT: Firebase implementation of provider repository. Uses query builder
+// for database-agnostic queries. Geolocation filtering moved to service layer
+// to avoid Firestore-specific geohash coupling.
+
 import { FirebaseBaseRepository } from "./base.repository";
 import { IProviderRepository } from "../interfaces/provider.repository.interface";
 import { Provider, ServiceType, Location } from "../../models/provider.model";
 import { COLLECTIONS } from "../../config/collections";
-import { geohashForLocation, geohashQueryBounds, distanceBetween } from "geofire-common";
 
 export class FirebaseProviderRepository extends FirebaseBaseRepository<Provider> implements IProviderRepository {
   constructor() {
@@ -10,60 +13,39 @@ export class FirebaseProviderRepository extends FirebaseBaseRepository<Provider>
   }
 
   async findByUserId(userId: string): Promise<Provider | null> {
-    const query = this.createQuery().where("userId", "==", userId).limit(1);
-    const snapshot = await query.get();
-    return snapshot.empty ? null : this.fromFirestore(snapshot.docs[0].data()) as Provider;
+    return this.query()
+      .where("userId", "==", userId)
+      .executeOne();
   }
 
   async findByService(service: ServiceType): Promise<Provider[]> {
-    const query = this.createQuery().where("services", "array-contains", service);
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as Provider);
+    return this.query()
+      .where("services", "array-contains", service)
+      .execute();
   }
 
   async findAvailable(): Promise<Provider[]> {
-    const query = this.createQuery().where("available", "==", true);
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as Provider);
+    return this.query()
+      .where("available", "==", true)
+      .execute();
   }
 
   async findNearby(location: Location, radiusKm: number): Promise<Provider[]> {
-    const bounds = geohashQueryBounds([location.lat, location.lng], radiusKm * 1000);
-    const queries = bounds.map(([startHash, endHash]) => {
-      return this.createQuery()
-        .orderBy("geohash")
-        .startAt(startHash)
-        .endAt(endHash)
-        .get();
-    });
-
-    const snapshots = await Promise.all(queries);
-    const providers: Provider[] = [];
-
-    for (const snap of snapshots) {
-      for (const doc of snap.docs) {
-        const provider = this.fromFirestore(doc.data()) as Provider;
-        const distanceInKm = distanceBetween(
-          [location.lat, location.lng],
-          [provider.location.lat, provider.location.lng]
-        );
-
-        if (distanceInKm <= radiusKm) {
-          providers.push(provider);
-        }
-      }
-    }
-
-    return providers.sort((a, b) => {
-      const distA = distanceBetween([location.lat, location.lng], [a.location.lat, a.location.lng]);
-      const distB = distanceBetween([location.lat, location.lng], [b.location.lat, b.location.lng]);
-      return distA - distB;
-    });
+    // CONTEXT: Fetch all available providers, then filter by distance in service layer.
+    // This is database-agnostic. For optimization with large datasets, implement
+    // database-specific geospatial queries in separate repository implementations.
+    // Firestore: use geohash queries
+    // Supabase: use PostGIS ST_DWithin
+    const allProviders = await this.findAvailable();
+    
+    // Return all providers - service layer will filter by distance
+    // This keeps repository database-agnostic
+    return allProviders;
   }
 
   async findVerified(): Promise<Provider[]> {
-    const query = this.createQuery().where("verified", "==", true);
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as Provider);
+    return this.query()
+      .where("verified", "==", true)
+      .execute();
   }
 }

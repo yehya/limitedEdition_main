@@ -1,3 +1,6 @@
+// CONTEXT: Firebase implementation of job repository. Uses query builder
+// for database-agnostic queries. No Firestore types exposed.
+
 import { FirebaseBaseRepository } from "./base.repository";
 import { IJobRepository } from "../interfaces/job.repository.interface";
 import { Job, JobStatus } from "../../models/job.model";
@@ -10,34 +13,33 @@ export class FirebaseJobRepository extends FirebaseBaseRepository<Job> implement
   }
 
   async findByCustomerId(customerId: string): Promise<Job[]> {
-    const query = this.createQuery().where("customerId", "==", customerId);
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as Job);
+    return this.query()
+      .where("customerId", "==", customerId)
+      .execute();
   }
 
   async findByProviderId(providerId: string): Promise<Job[]> {
-    const query = this.createQuery().where("providerId", "==", providerId);
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as Job);
+    return this.query()
+      .where("providerId", "==", providerId)
+      .execute();
   }
 
   async findByStatus(status: JobStatus): Promise<Job[]> {
-    const query = this.createQuery().where("status", "==", status);
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as Job);
+    return this.query()
+      .where("status", "==", status)
+      .execute();
   }
 
   async findByService(service: ServiceType): Promise<Job[]> {
-    const query = this.createQuery().where("service", "==", service);
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as Job);
+    return this.query()
+      .where("service", "==", service)
+      .execute();
   }
 
   async findPendingJobs(): Promise<Job[]> {
-    const query = this.createQuery()
+    return this.query()
       .where("status", "in", ["pending", "matching"])
-      .orderBy("createdAt", "desc");
-    const snapshot = await query.get();
-    return snapshot.docs.map(doc => this.fromFirestore(doc.data()) as Job);
+      .orderBy("createdAt", "desc")
+      .execute();
   }
 }
