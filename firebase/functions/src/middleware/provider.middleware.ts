@@ -1,3 +1,6 @@
+// CONTEXT: Provider middleware. Checks if user is authenticated AND is
+// a verified provider. Used by createProviderFunction creator.
+
 import { HttpsError, CallableRequest } from "firebase-functions/v2/https";
 import { checkUserIsAuthenticated } from "./auth.middleware";
 import { FirebaseProviderRepository } from "../db/firebase/provider.repository";

@@ -1,8 +1,16 @@
+// CONTEXT: Creates admin-only callable functions. Auto-checks that user
+// is authenticated AND has admin privileges. Supports CallableOptions for
+// secrets (e.g., { secrets: ["ADMIN_API_KEY"] }).
+
 import { onCall, CallableOptions } from "firebase-functions/v2/https";
 import { checkIsAdmin } from "../../middleware/admin.middleware";
 import { CallableFunction } from "./base.creator";
 import { logger } from "firebase-functions/v1";
 
+/**
+ * Create an admin-only callable function.
+ * Optionally pass onCall options (e.g., { secrets: ["GOOGLE_AI_API_KEY"] }).
+ */
 export const createAdminFunction = <T, R>(
   handler: CallableFunction<T, R>,
   options?: CallableOptions,

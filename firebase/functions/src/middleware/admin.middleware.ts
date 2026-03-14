@@ -1,3 +1,6 @@
+// CONTEXT: Admin middleware. Checks if user is authenticated AND has
+// admin privileges. Used by createAdminFunction creator.
+
 import { HttpsError, CallableRequest } from "firebase-functions/v2/https";
 import { checkUserIsAuthenticated } from "./auth.middleware";
 import { FirebaseUserRepository } from "../db/firebase/user.repository";
