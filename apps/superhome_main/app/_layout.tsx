@@ -6,7 +6,7 @@ export default function RootLayout() {
     <RTLProvider>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
-        <Stack.Screen name="home.screen" />
+        <Stack.Screen name="home" />
       </Stack>
     </RTLProvider>
   );

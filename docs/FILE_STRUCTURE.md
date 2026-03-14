@@ -100,11 +100,16 @@ export const homeStyles = StyleSheet.create({
 app/
 ├── _layout.tsx                    # App layout
 ├── index.tsx                      # Index redirect
-├── home.screen.tsx                # Home screen
-├── home.screen.styles.tsx         # Home screen styles
-├── profile.screen.tsx             # Profile screen
-├── profile.screen.styles.tsx      # Profile screen styles
-└── [other screens].screen.tsx
+├── home.tsx                       # Home route
+├── profile.tsx                    # Profile route
+├── [other routes].tsx             # Route files
+└── screens/                       # Screen components folder
+    ├── home.screen.tsx            # Home screen component
+    ├── home.screen.styles.tsx     # Home screen styles
+    ├── profile.screen.tsx         # Profile screen component
+    ├── profile.screen.styles.tsx  # Profile screen styles
+    └── [other screens].screen.tsx # Screen components
+```
 
 components/
 ├── index.ts                       # Component exports

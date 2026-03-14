@@ -127,12 +127,14 @@ export class UserService {
 ### File Naming Convention Rules
 
 ### Required File Structure
-✅ Screen files: `[name].screen.tsx` (e.g., `home.screen.tsx`)
-✅ Style files: `[name].screen.styles.tsx` (e.g., `home.screen.styles.tsx`)
+✅ Route files: `[name].tsx` in app/ (e.g., `home.tsx`)
+✅ Screen files: `screens/[name].screen.tsx` (e.g., `screens/home.screen.tsx`)
+✅ Style files: `screens/[name].screen.styles.tsx` (e.g., `screens/home.screen.styles.tsx`)
 ✅ Component files: `[Name].tsx` (e.g., `CustomButton.tsx`)
 ✅ Component styles: `[Name].styles.tsx` (e.g., `CustomButton.styles.tsx`)
 ✅ Separate styles from component logic
 ✅ Clear, descriptive file names
+✅ Screens organized in dedicated folder
 
 ### File Naming Anti-Patterns
 ❌ Inline styles in component files
