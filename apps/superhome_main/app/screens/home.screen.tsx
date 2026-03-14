@@ -1,115 +1,114 @@
-import { View, Pressable, StatusBar } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Pressable, StatusBar, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text } from '@/components/Text';
+import { BrandHeader } from '../components/home/BrandHeader';
+import { TrustBadge } from '../components/home/TrustBadge';
+import { Footer } from '../components/home/Footer';
 import { useRTL } from '@/contexts/RTLContext';
-import { useTranslation } from '@/locales/useTranslation';
 import { theme } from '@/theme/index';
 import { homeStyles } from './home.screen.styles';
 
-export default function Home() {
+export default function HomeScreen() {
   const router = useRouter();
-  const { language, isRTL, isLoading, setLanguage } = useRTL();
-  const { t } = useTranslation();
+  const { language, isLoading } = useRTL();
+  const [userInput, setUserInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
 
-  // Show loading state while language preference is being loaded
+  // Demo auto-typing effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      startAutoTyping();
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const startAutoTyping = () => {
+    setIsTyping(true);
+    const demoText = "My kitchen sink is leaking and I need it fixed today";
+    let currentIndex = 0;
+
+    const typeInterval = setInterval(() => {
+      if (currentIndex <= demoText.length) {
+        setUserInput(demoText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typeInterval);
+        setIsTyping(false);
+      }
+    }, 30);
+  };
+
+  const handleSubmit = () => {
+    if (userInput.trim()) {
+      router.push({
+        pathname: '/processing',
+        params: { request: userInput }
+      });
+    }
+  };
+
   if (isLoading) {
     return (
       <View style={homeStyles.container}>
         <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
-        <View style={homeStyles.content}>
-          <Text variant="body" language="en">Loading...</Text>
-        </View>
       </View>
     );
   }
 
   return (
-    <View style={homeStyles.container}>
+    <KeyboardAvoidingView 
+      style={homeStyles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
       
-      <View style={homeStyles.header}>
-        <View style={homeStyles.logoContainer}>
-          <View style={homeStyles.logo}>
-            <Text variant="title" style={homeStyles.logoText} language={language}>S</Text>
-          </View>
-          <Text variant="title" style={homeStyles.brandName} language={language}>SuperHome</Text>
-        </View>
-        
-        <Pressable 
-          style={homeStyles.languageButton}
-          onPress={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-        >
-          <Text variant="caption" weight="medium" style={homeStyles.languageText} language={language}>
-            {language === 'en' ? t('home.switchToArabic') : t('home.switchToEnglish')}
-          </Text>
-        </Pressable>
-      </View>
+      <ScrollView 
+        contentContainerStyle={homeStyles.scrollContent}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <BrandHeader />
 
-      <View style={homeStyles.content}>
-        <View style={homeStyles.heroSection}>
-          <Text variant="heading" style={homeStyles.heroTitle} language={language}>
-            {t('home.title')}
-          </Text>
-          <Text variant="heading" style={homeStyles.heroTitle} language={language}>
-            {t('home.subtitle')}
-          </Text>
-          <Text variant="subtitle" style={homeStyles.heroSubtitle} language={language}>
-            {t('home.tagline')}
-          </Text>
-        </View>
-
-        <View style={homeStyles.features}>
-          <View style={homeStyles.featureItem}>
-            <View style={[homeStyles.featureIcon, { backgroundColor: theme.colors.primary[500] }]}>
-              <Text style={homeStyles.featureIconText} language={language}>✨</Text>
-            </View>
-            <Text variant="body" weight="semibold" style={homeStyles.featureTitle} language={language}>
-              {t('home.aiPowered')}
-            </Text>
-            <Text variant="caption" style={homeStyles.featureDescription} language={language}>
-              {t('home.aiDescription')}
-            </Text>
+        <View style={homeStyles.content}>
+          <View style={homeStyles.inputContainer}>
+            <TextInput
+              style={homeStyles.textInput}
+              placeholder="Describe what needs fixing... (e.g., 'My kitchen sink is leaking')"
+              placeholderTextColor={theme.colors.text.tertiary}
+              value={userInput}
+              onChangeText={setUserInput}
+              multiline
+              numberOfLines={3}
+              textAlignVertical="top"
+              editable={!isTyping}
+            />
           </View>
 
-          <View style={homeStyles.featureItem}>
-            <View style={[homeStyles.featureIcon, { backgroundColor: theme.colors.secondary[500] }]}>
-              <Text style={homeStyles.featureIconText} language={language}>⚡</Text>
-            </View>
-            <Text variant="body" weight="semibold" style={homeStyles.featureTitle} language={language}>
-              {t('home.instantBooking')}
-            </Text>
-            <Text variant="caption" style={homeStyles.featureDescription} language={language}>
-              {t('home.instantDescription')}
-            </Text>
-          </View>
-
-          <View style={homeStyles.featureItem}>
-            <View style={[homeStyles.featureIcon, { backgroundColor: theme.colors.accent.amber }]}>
-              <Text style={homeStyles.featureIconText} language={language}>🛡️</Text>
-            </View>
-            <Text variant="body" weight="semibold" style={homeStyles.featureTitle} language={language}>
-              {t('home.trustedPros')}
-            </Text>
-            <Text variant="caption" style={homeStyles.featureDescription} language={language}>
-              {t('home.trustedDescription')}
-            </Text>
+          <View style={homeStyles.trustContainer}>
+            <TrustBadge icon="✓" text="Verified & Trained" />
+            <TrustBadge icon="⭐" text="Premium Service" />
           </View>
         </View>
 
-        <View style={homeStyles.ctaSection}>
+        <View style={homeStyles.bottomSection}>
           <Pressable 
-            style={homeStyles.demoButton}
-            onPress={() => router.push('/demo')}
+            style={[
+              homeStyles.submitButton,
+              (!userInput.trim() || isTyping) && homeStyles.submitButtonDisabled
+            ]}
+            onPress={handleSubmit}
+            disabled={!userInput.trim() || isTyping}
           >
-            <Text variant="body" weight="medium" style={homeStyles.demoButtonText} language={language}>
-              🚀 Try AI Demo
+            <Text variant="body" weight="medium" style={homeStyles.submitButtonText}>
+              Get Started
             </Text>
           </Pressable>
-          <Text variant="caption" style={homeStyles.ctaSubtitle} language={language}>
-            See how SuperHome AI handles your home service requests instantly
-          </Text>
+          
+          <Footer />
         </View>
-      </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

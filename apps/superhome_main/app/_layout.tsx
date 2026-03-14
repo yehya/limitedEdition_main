@@ -7,7 +7,11 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="home" />
-        <Stack.Screen name="demo" />
+        <Stack.Screen name="processing" />
+        <Stack.Screen name="identification" />
+        <Stack.Screen name="pricing" />
+        <Stack.Screen name="availability" />
+        <Stack.Screen name="confirmation" />
       </Stack>
     </RTLProvider>
   );

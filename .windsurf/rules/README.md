@@ -1,3 +1,6 @@
+---
+trigger: always_on
+---
 # Rules
 
 ## 🤖 LLM Development (START HERE)
