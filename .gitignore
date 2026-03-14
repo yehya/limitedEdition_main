@@ -15,6 +15,10 @@ build/
 .env.local
 .env.production
 
+# Firebase
+firebase/functions/lib/
+.firebase/
+
 # IDE
 .vscode/
 .idea/
