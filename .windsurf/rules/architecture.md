@@ -1,9 +1,21 @@
 ---
-description: SuperHome architecture patterns and principles
+description: SuperHome backend architecture and design patterns
 always_on: true
 ---
 
-# Architecture
+# Architecture Rules
+
+## CRITICAL: Framework-Only Approach
+**This codebase is a FRAMEWORK, not a complete application.**
+
+- ✅ Infrastructure setup (repositories, query builders, middleware, creators)
+- ✅ Interfaces and abstractions
+- ✅ Database-agnostic patterns
+- ❌ NO business logic until decided
+- ❌ NO premature service implementations
+- ❌ NO concrete function implementations with business rules
+
+**Build the foundation. Business logic comes later.**
 
 ## Golden Rules
 

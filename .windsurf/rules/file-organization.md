@@ -61,22 +61,45 @@ services/
 │   └── job-pricing.service.ts
 ```
 
-## Export Pattern
+## Export Patterns
 
-**Index files for clean imports:**
+### NO Barrel Files (index.ts)
+**RULE: No barrel files (index.ts) except for Firebase function exports.**
+
+Forbidden:
 ```typescript
-// services/index.ts
-export * from './user.service';
-export * from './job.service';
+// models/index.ts - DON'T CREATE THIS
+export * from './user.model';
+export * from './job.model';
 
-// Usage
-import { UserService, JobService } from '@/services';
+// services/index.ts - DON'T CREATE THIS
+export * from './user.service';
+```
+
+Allowed ONLY for Firebase functions:
+```typescript
+// functions/user/index.ts - OK for function exports
+export { getUser } from './getUser/getUser.function';
+export { updateUser } from './updateUser/updateUser.function';
+```
+
+**Why:** Explicit imports are clearer for LLMs. Always import directly:
+```typescript
+// GOOD
+import { User } from '../models/user.model';
+import { Job } from '../models/job.model';
+
+// BAD
+import { User, Job } from '../models';
 ```
 
 ## File Naming
 
 **Be specific:**
 ```
+utils.ts
+date-formatter.util.ts
+phone-validator.util.ts
 ❌ utils.ts
 ✅ date-formatter.util.ts
 ✅ phone-validator.util.ts

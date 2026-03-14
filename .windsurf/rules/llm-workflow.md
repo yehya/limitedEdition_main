@@ -86,14 +86,19 @@ import type { FunctionNameRequest, FunctionNameResponse } from "./functionName.d
 
 **Why:** LLM can understand API contract without reading implementation.
 
-### Barrel Exports
+### NO Barrel Files (Except Functions)
+**CRITICAL RULE: No barrel files (index.ts) except for Firebase function exports.**
+
 ```typescript
-// functions/user/index.ts
+// ✅ ALLOWED - functions/user/index.ts
 export { getUser } from "./getUser/getUser.function";
 export { updateUserProfile } from "./updateUserProfile/updateUserProfile.function";
+
+// ❌ FORBIDDEN - models/index.ts, services/index.ts, db/index.ts
+// Don't create these!
 ```
 
-**Why:** LLM can see all available functions at a glance.
+**Why:** Explicit imports are clearer. LLM knows exactly where code comes from.
 
 ### Path Aliases
 Always use `@/` imports:
