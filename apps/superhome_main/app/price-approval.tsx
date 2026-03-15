@@ -92,7 +92,7 @@ export default function PriceApprovalScreen() {
               ✔ Work will begin only after you approve this price
             </Text>
             <Text variant="caption" style={priceApprovalStyles.trustText}>
-              ✔ Platform guarantee on all work
+              ✔ Quality guarantee on all work
             </Text>
           </View>
 

@@ -138,7 +138,7 @@ export default function ConfirmationScreen() {
             <View style={confirmationStyles.trustHeader}>
               <Shield size={20} color={theme.colors.semantic.success} style={confirmationStyles.trustIcon} />
               <Text variant="caption" style={confirmationStyles.trustTitle}>
-                Platform guarantee on all work
+                Quality guarantee
               </Text>
             </View>
             <Text variant="caption" style={confirmationStyles.trustText}>
