@@ -62,6 +62,7 @@ export const retentionPromptStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: theme.spacing.xs,
+    paddingRight: theme.spacing['3xl'],
   },
   optionLabel: {
     color: theme.colors.text.primary,
@@ -90,7 +91,7 @@ export const retentionPromptStyles = StyleSheet.create({
   radioButton: {
     position: 'absolute',
     top: theme.spacing.lg,
-    right: theme.spacing.lg,
+    right: theme.spacing.md,
     width: 24,
     height: 24,
     borderRadius: 12,

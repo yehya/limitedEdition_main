@@ -15,9 +15,9 @@ export default function RetentionPromptScreen() {
   const serviceType = 'cleaning';
 
   const cleaningOptions = [
-    { id: 'weekly', label: 'Weekly', price: '220 EGP', subtitle: 'Every week' },
-    { id: 'biweekly', label: 'Bi-weekly', price: '240 EGP', subtitle: 'Every 2 weeks' },
-    { id: 'monthly', label: 'Monthly', price: '260 EGP', subtitle: 'Once a month' },
+    { id: 'weekly', label: 'Weekly', price: '200-350 EGP', subtitle: 'Every week' },
+    { id: 'biweekly', label: 'Bi-weekly', price: '220-370 EGP', subtitle: 'Every 2 weeks' },
+    { id: 'monthly', label: 'Monthly', price: '240-390 EGP', subtitle: 'Once a month' },
   ];
 
   const handleBookRegular = () => {

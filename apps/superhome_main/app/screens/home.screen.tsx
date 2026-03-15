@@ -15,10 +15,7 @@ export default function HomeScreen() {
   const { language, isLoading } = useRTL();
 
   const handleServiceSelect = (serviceType: string) => {
-    router.push({
-      pathname: '/service',
-      params: { type: serviceType }
-    });
+    router.push(`/service/${serviceType}`);
   };
 
   const services = [
@@ -26,7 +23,7 @@ export default function HomeScreen() {
       id: 'cleaning',
       title: 'Clean My Home',
       subtitle: 'Professional home cleaning',
-      priceRange: 'From 250 EGP',
+      priceRange: 'From 250-400 EGP',
       icon: Home,
       color: theme.colors.primary[500],
     },

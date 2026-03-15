@@ -11,15 +11,18 @@ import { ProgressBar } from './components/shared/ProgressBar';
 import { useRTL } from '@/contexts/RTLContext';
 import { theme } from '@/theme/index';
 import { addressStyles } from './screens/address.screen.styles';
-import { MapPin, Navigation, Home } from 'lucide-react-native';
+import { MapPin, Navigation, Home, Phone } from 'lucide-react-native';
 
 export default function AddressScreen() {
   const router = useRouter();
   const { language, isLoading } = useRTL();
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [address, setAddress] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [instructions, setInstructions] = useState('');
   const [isLoadingLocation, setIsLoadingLocation] = useState(false);
+  const [showAddressInput, setShowAddressInput] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState<'current' | 'map' | 'manual' | null>(null);
 
   useEffect(() => {
     requestLocationPermission();
@@ -42,6 +45,7 @@ export default function AddressScreen() {
 
   const getCurrentLocation = async () => {
     setIsLoadingLocation(true);
+    setSelectedMethod('current');
     try {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -68,8 +72,21 @@ export default function AddressScreen() {
     }
   };
 
+  const handleChooseMap = () => {
+    setSelectedMethod('map');
+    // For demo, simulate map selection
+    const mockAddress = "Selected location • Cairo, Egypt";
+    setAddress(mockAddress);
+    setLocation({ latitude: 30.0444, longitude: 31.2357 });
+  };
+
+  const handleEnterAddress = () => {
+    setSelectedMethod('manual');
+    setShowAddressInput(true);
+  };
+
   const handleContinue = () => {
-    if (location || address.trim()) {
+    if ((location || address.trim()) && phoneNumber.trim()) {
       router.push('/time');
     }
   };
@@ -95,13 +112,6 @@ export default function AddressScreen() {
           <ScreenHeader onBack={() => router.back()} />
         </View>
       
-      <View style={addressStyles.progressContainer}>
-        <ProgressBar current={2} total={6} />
-        <Text variant="caption" style={addressStyles.progressText}>
-          Step 2 of 6
-        </Text>
-      </View>
-      
       <ScreenContent>
 
         {/* Content */}
@@ -117,15 +127,21 @@ export default function AddressScreen() {
           {/* Location Options */}
           <View style={addressStyles.locationOptions}>
             <Pressable 
-              style={addressStyles.locationOption}
+              style={[
+                addressStyles.locationOption,
+                selectedMethod === 'current' && addressStyles.locationOptionSelected
+              ]} 
               onPress={getCurrentLocation}
               disabled={isLoadingLocation}
             >
               <View style={addressStyles.locationIcon}>
-                <Navigation size={24} color={theme.colors.primary[500]} />
+                <Navigation size={24} color={selectedMethod === 'current' ? theme.colors.primary[500] : theme.colors.primary[500]} />
               </View>
               <View style={addressStyles.locationContent}>
-                <Text variant="body" weight="medium" style={addressStyles.locationTitle}>
+                <Text variant="body" weight="medium" style={[
+                  addressStyles.locationTitle,
+                  selectedMethod === 'current' && addressStyles.locationTitleSelected
+                ]}>
                   Use Current Location
                 </Text>
                 <Text variant="caption" style={addressStyles.locationSubtitle}>
@@ -134,12 +150,21 @@ export default function AddressScreen() {
               </View>
             </Pressable>
 
-            <Pressable style={addressStyles.locationOption}>
+            <Pressable 
+              style={[
+                addressStyles.locationOption,
+                selectedMethod === 'map' && addressStyles.locationOptionSelected
+              ]} 
+              onPress={handleChooseMap}
+            >
               <View style={addressStyles.locationIcon}>
-                <MapPin size={24} color={theme.colors.primary[500]} />
+                <MapPin size={24} color={selectedMethod === 'map' ? theme.colors.primary[500] : theme.colors.primary[500]} />
               </View>
               <View style={addressStyles.locationContent}>
-                <Text variant="body" weight="medium" style={addressStyles.locationTitle}>
+                <Text variant="body" weight="medium" style={[
+                  addressStyles.locationTitle,
+                  selectedMethod === 'map' && addressStyles.locationTitleSelected
+                ]}>
                   Choose on Map
                 </Text>
                 <Text variant="caption" style={addressStyles.locationSubtitle}>
@@ -148,12 +173,21 @@ export default function AddressScreen() {
               </View>
             </Pressable>
 
-            <Pressable style={addressStyles.locationOption}>
+            <Pressable 
+              style={[
+                addressStyles.locationOption,
+                selectedMethod === 'manual' && addressStyles.locationOptionSelected
+              ]} 
+              onPress={handleEnterAddress}
+            >
               <View style={addressStyles.locationIcon}>
-                <Home size={24} color={theme.colors.primary[500]} />
+                <Home size={24} color={selectedMethod === 'manual' ? theme.colors.primary[500] : theme.colors.primary[500]} />
               </View>
               <View style={addressStyles.locationContent}>
-                <Text variant="body" weight="medium" style={addressStyles.locationTitle}>
+                <Text variant="body" weight="medium" style={[
+                  addressStyles.locationTitle,
+                  selectedMethod === 'manual' && addressStyles.locationTitleSelected
+                ]}>
                   Enter Address
                 </Text>
                 <Text variant="caption" style={addressStyles.locationSubtitle}>
@@ -175,15 +209,32 @@ export default function AddressScreen() {
             </View>
           )}
 
-          {/* Address Instructions */}
-          <View style={addressStyles.instructionsContainer}>
-            <Text variant="caption" style={addressStyles.instructionsTitle}>
-              Address Instructions (Optional)
-            </Text>
-            <View style={addressStyles.instructionsInput}>
-              <Text variant="caption" style={addressStyles.instructionsPlaceholder}>
-                Building name, floor, apartment number, or special instructions...
+          {/* Address Input - Show when manual entry selected */}
+          {showAddressInput && (
+            <View style={addressStyles.addressInputContainer}>
+              <Text variant="caption" style={addressStyles.inputTitle}>
+                Address
               </Text>
+              <View style={addressStyles.addressInput}>
+                <Text variant="caption" style={addressStyles.addressPlaceholder}>
+                  Enter your complete address (street, building, area, etc.)
+                </Text>
+              </View>
+            </View>
+          )}
+
+          {/* Phone Number */}
+          <View style={addressStyles.phoneContainer}>
+            <Text variant="caption" style={addressStyles.phoneTitle}>
+              Phone Number
+            </Text>
+            <View style={addressStyles.phoneInput}>
+              <View style={addressStyles.phoneInputContent}>
+                <Phone size={20} color={theme.colors.primary[500]} style={addressStyles.phoneIcon} />
+                <Text variant="caption" style={addressStyles.phonePlaceholder}>
+                  Enter your phone number for service updates
+                </Text>
+              </View>
             </View>
           </View>
         </View>
@@ -194,10 +245,10 @@ export default function AddressScreen() {
         <Pressable 
           style={[
             addressStyles.continueButton,
-            (!location && !address.trim()) && addressStyles.continueButtonDisabled
+            ((!location && !address.trim()) || !phoneNumber.trim()) && addressStyles.continueButtonDisabled
           ]}
           onPress={handleContinue}
-          disabled={!location && !address.trim()}
+          disabled={!location && !address.trim() || !phoneNumber.trim()}
         >
           <Text variant="body" weight="medium" style={addressStyles.continueButtonText}>
             Continue

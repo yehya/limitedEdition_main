@@ -56,11 +56,7 @@ export const confirmationStyles = StyleSheet.create({
     marginBottom: theme.spacing.md,
   },
   professionalCard: {
-    backgroundColor: theme.colors.neutral[50],
-    borderRadius: theme.borderRadius.lg,
     padding: theme.spacing.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.neutral[200],
   },
   professionalInfo: {
     gap: theme.spacing.sm,
@@ -70,20 +66,46 @@ export const confirmationStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  professionalNameContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  professionalIcon: {
+    marginRight: theme.spacing.sm,
+  },
   professionalName: {
     color: theme.colors.text.primary,
     fontSize: 18,
   },
+  verifiedContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.xs,
+  },
   verifiedBadge: {
-    color: theme.colors.primary[500],
+    color: theme.colors.semantic.success,
     fontSize: 12,
+  },
+  professionalStatsContainer: {
+    marginTop: theme.spacing.xs,
   },
   professionalStats: {
     color: theme.colors.text.secondary,
     fontSize: 14,
   },
   etaContainer: {
-    gap: theme.spacing.xs,
+    gap: theme.spacing.sm,
+  },
+  etaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  statusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
   },
   etaLabel: {
     color: theme.colors.primary[500],
@@ -96,29 +118,31 @@ export const confirmationStyles = StyleSheet.create({
   },
   detailsContainer: {
     width: '100%',
-    backgroundColor: theme.colors.neutral[50],
-    borderRadius: theme.borderRadius.lg,
     padding: theme.spacing.lg,
     marginBottom: theme.spacing.lg,
   },
   detailRow: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: theme.spacing.md,
+  },
+  detailIconContainer: {
+    marginRight: theme.spacing.sm,
   },
   detailLabel: {
     color: theme.colors.text.secondary,
     fontSize: 16,
+    flex: 1,
   },
   detailValue: {
     color: theme.colors.text.primary,
     fontSize: 16,
     fontWeight: '500',
+    textAlign: 'right',
   },
   calloutContainer: {
     width: '100%',
-    backgroundColor: theme.colors.primary[50],
-    borderRadius: theme.borderRadius.lg,
     padding: theme.spacing.md,
     borderLeftWidth: 4,
     borderLeftColor: theme.colors.primary[500],
@@ -128,10 +152,32 @@ export const confirmationStyles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
+  trustHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+    marginBottom: theme.spacing.sm,
+  },
+  trustIcon: {
+    marginRight: theme.spacing.sm,
+  },
+  trustTitle: {
+    color: theme.colors.semantic.success,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  supportContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: theme.spacing.sm,
+    marginTop: theme.spacing.lg,
+  },
+  supportIcon: {
+    marginRight: theme.spacing.sm,
+  },
   supportText: {
     color: theme.colors.text.tertiary,
-    textAlign: 'center',
-    marginTop: theme.spacing.lg,
     fontSize: 13,
   },
   subtitle: {

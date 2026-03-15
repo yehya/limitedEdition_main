@@ -56,11 +56,13 @@ export const addressStyles = StyleSheet.create({
   locationOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.neutral[50],
-    borderRadius: theme.borderRadius.xl,
     padding: theme.spacing.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.neutral[200],
+  },
+  locationOptionSelected: {
+    backgroundColor: theme.colors.primary[50],
+    borderRadius: theme.borderRadius.lg,
+    borderWidth: 2,
+    borderColor: theme.colors.primary[500],
   },
   locationIcon: {
     width: 48,
@@ -80,17 +82,16 @@ export const addressStyles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: theme.spacing.xs / 2,
   },
+  locationTitleSelected: {
+    color: theme.colors.primary[500],
+  },
   locationSubtitle: {
     color: theme.colors.text.secondary,
     fontSize: 14,
   },
   selectedLocationContainer: {
-    backgroundColor: theme.colors.primary[50],
-    borderRadius: theme.borderRadius.lg,
     padding: theme.spacing.lg,
     marginBottom: theme.spacing.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.primary[200],
   },
   selectedLabel: {
     color: theme.colors.primary[500],
@@ -109,20 +110,68 @@ export const addressStyles = StyleSheet.create({
   },
   instructionsTitle: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     marginBottom: theme.spacing.sm,
   },
   instructionsInput: {
     backgroundColor: theme.colors.neutral[50],
     borderRadius: theme.borderRadius.lg,
-    padding: theme.spacing.lg,
+    padding: theme.spacing.md,
     borderWidth: 1,
     borderColor: theme.colors.neutral[200],
-    minHeight: 80,
-    justifyContent: 'center',
   },
   instructionsPlaceholder: {
+    color: theme.colors.text.tertiary,
+  },
+  addressInputContainer: {
+    marginBottom: theme.spacing.xl,
+  },
+  inputTitle: {
+    color: theme.colors.text.primary,
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: theme.spacing.sm,
+  },
+  addressInput: {
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.md,
+    borderWidth: 2,
+    borderColor: theme.colors.primary[200],
+    borderStyle: 'dashed',
+  },
+  addressPlaceholder: {
+    color: theme.colors.text.tertiary,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  phoneContainer: {
+    marginBottom: theme.spacing.xl,
+  },
+  phoneTitle: {
+    color: theme.colors.text.primary,
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: theme.spacing.sm,
+  },
+  phoneInput: {
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.md,
+    borderWidth: 2,
+    borderColor: theme.colors.primary[200],
+    borderStyle: 'dashed',
+  },
+  phoneInputContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  phoneIcon: {
+    marginRight: theme.spacing.sm,
+  },
+  phonePlaceholder: {
     color: theme.colors.text.tertiary,
     fontSize: 14,
     lineHeight: 20,

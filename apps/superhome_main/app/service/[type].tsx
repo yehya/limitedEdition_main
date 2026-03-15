@@ -3,10 +3,10 @@ import { View, Pressable, StatusBar, ScrollView } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Text } from '@/components/Text';
 import { BackButton } from '../components/shared/BackButton';
-import { Clock } from 'lucide-react-native';
 import { useRTL } from '@/contexts/RTLContext';
 import { theme } from '@/theme/index';
 import { serviceStyles } from '../screens/service.screen.styles';
+import { Home, Wrench, Clock, CheckCircle } from 'lucide-react-native';
 
 export default function ServiceDetailScreen() {
   const router = useRouter();
@@ -18,10 +18,17 @@ export default function ServiceDetailScreen() {
       title: 'Home Cleaning',
       subtitle: 'Professional cleaning services',
       visitFee: null,
-      priceRange: '250 EGP',
+      priceRange: '250-400 EGP',
       arrivalTime: 'Within 2 hours',
       description: 'Apartments and homes cleaned by verified professionals.',
-      trustMessage: 'Fixed pricing for all apartment sizes.',
+      trustMessage: 'Pricing based on number of rooms and size.',
+      icon: Home,
+      features: [
+        'Deep cleaning of all rooms',
+        'Kitchen and bathroom sanitation',
+        'Floor cleaning and polishing',
+        'Window cleaning included'
+      ]
     },
     plumbing: {
       title: 'Plumbing',
@@ -31,6 +38,13 @@ export default function ServiceDetailScreen() {
       arrivalTime: 'Within 2 hours',
       description: 'Professional plumbers for leaks, clogs, and basic repairs.',
       trustMessage: 'Final price confirmed before work begins.',
+      icon: Wrench,
+      features: [
+        'Leak detection and repair',
+        'Drain unclogging services',
+        'Pipe installation and repair',
+        'Emergency plumbing available'
+      ]
     }
   };
 
@@ -61,53 +75,81 @@ export default function ServiceDetailScreen() {
           <BackButton onPress={() => router.back()} />
         </View>
 
+        {/* Service Header */}
+        <View style={serviceStyles.serviceHeader}>
+          <View style={serviceStyles.serviceIconContainer}>
+            <service.icon size={48} color={theme.colors.primary[500]} />
+          </View>
+          <View style={serviceStyles.serviceTitleContainer}>
+            <Text variant="heading" style={serviceStyles.serviceTitle}>
+              {service.title}
+            </Text>
+            <Text variant="body" style={serviceStyles.serviceSubtitle}>
+              {service.subtitle}
+            </Text>
+          </View>
+        </View>
+
         {/* Service Info */}
         <View style={serviceStyles.content}>
-          <Text variant="heading" style={serviceStyles.title}>
-            {service.title}
-          </Text>
-          
-          <View style={serviceStyles.priceContainer}>
+          {/* Pricing Card */}
+          <View style={serviceStyles.pricingCard}>
             {service.visitFee && (
               <View style={serviceStyles.visitFeeSection}>
-                <Text variant="caption" style={serviceStyles.visitFeeLabel}>
-                  Visit fee
-                </Text>
-                <Text variant="body" style={serviceStyles.visitFeeValue}>
-                  {service.visitFee}
-                </Text>
+                <View style={serviceStyles.visitFeeLeft}>
+                  <Text variant="caption" style={serviceStyles.visitFeeLabel}>
+                    Visit fee
+                  </Text>
+                  <Text variant="body" weight="medium" style={serviceStyles.visitFeeValue}>
+                    {service.visitFee}
+                  </Text>
+                </View>
+                <View style={serviceStyles.visitFeeIcon}>
+                  <Clock size={20} color={theme.colors.primary[500]} />
+                </View>
               </View>
             )}
             
             <View style={serviceStyles.priceRangeSection}>
-              <Text variant="caption" style={serviceStyles.priceLabel}>
-                {service.visitFee ? 'Most jobs cost' : 'Price'}
-              </Text>
-              <Text variant="body" style={serviceStyles.price}>
-                {service.priceRange}
-              </Text>
-            </View>
-            
-            <View style={serviceStyles.arrivalSection}>
-              <View style={serviceStyles.arrivalLeft}>
-                <Text variant="caption" style={serviceStyles.arrivalLabel}>
-                  Arrival
+              <View style={serviceStyles.priceLeft}>
+                <Text variant="caption" style={serviceStyles.priceLabel}>
+                  {service.visitFee ? 'Most jobs cost' : 'Price'}
                 </Text>
-                <Text variant="caption" style={serviceStyles.arrivalTime}>
-                  Within 2 hours
+                <Text variant="body" weight="bold" style={serviceStyles.price}>
+                  {service.priceRange}
                 </Text>
               </View>
-              <Clock size={20} color={theme.colors.primary[500]} />
+              <View style={serviceStyles.priceIcon}>
+                <CheckCircle size={24} color={theme.colors.primary[500]} />
+              </View>
             </View>
           </View>
 
+          {/* Description */}
           <Text variant="body" style={serviceStyles.description}>
             {service.description}
           </Text>
           
+          {/* Features */}
+          <View style={serviceStyles.featuresContainer}>
+            <Text variant="body" weight="medium" style={serviceStyles.featuresTitle}>
+              What's included:
+            </Text>
+            {service.features.map((feature, index) => (
+              <View key={index} style={serviceStyles.featureItem}>
+                <CheckCircle size={16} color={theme.colors.primary[500]} style={serviceStyles.featureIcon} />
+                <Text variant="caption" style={serviceStyles.featureText}>
+                  {feature}
+                </Text>
+              </View>
+            ))}
+          </View>
+          
+          {/* Trust Message */}
           <View style={serviceStyles.trustMessageContainer}>
+            <CheckCircle size={20} color={theme.colors.primary[500]} style={serviceStyles.trustIcon} />
             <Text variant="caption" style={serviceStyles.trustMessage}>
-              ✔ {service.trustMessage}
+              {service.trustMessage}
             </Text>
           </View>
         </View>

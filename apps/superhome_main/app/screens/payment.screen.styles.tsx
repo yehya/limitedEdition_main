@@ -41,8 +41,6 @@ export const paymentStyles = StyleSheet.create({
   paymentOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.neutral[50],
-    borderRadius: theme.borderRadius.xl,
     padding: theme.spacing.lg,
     borderWidth: 2,
     borderColor: theme.colors.neutral[200],
