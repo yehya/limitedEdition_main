@@ -31,14 +31,14 @@ export const retentionPromptStyles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text.primary,
-    fontSize: 28,
+    fontSize: theme.typography.fontSize['3xl'],
     fontWeight: '700',
     marginBottom: theme.spacing.sm,
     textAlign: 'center',
   },
   subtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     textAlign: 'center',
   },
   optionsContainer: {
@@ -66,7 +66,7 @@ export const retentionPromptStyles = StyleSheet.create({
   },
   optionLabel: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
   },
   optionLabelSelected: {
@@ -74,7 +74,7 @@ export const retentionPromptStyles = StyleSheet.create({
   },
   optionPrice: {
     color: theme.colors.text.primary,
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '700',
   },
   optionPriceSelected: {
@@ -82,7 +82,7 @@ export const retentionPromptStyles = StyleSheet.create({
   },
   optionSubtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     marginBottom: theme.spacing.md,
   },
   optionSubtitleSelected: {
@@ -110,7 +110,7 @@ export const retentionPromptStyles = StyleSheet.create({
   },
   benefitsTitle: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.md,
   },
@@ -119,7 +119,7 @@ export const retentionPromptStyles = StyleSheet.create({
   },
   benefitText: {
     color: theme.colors.text.primary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   bottomSection: {
     flexDirection: 'row',
@@ -132,19 +132,19 @@ export const retentionPromptStyles = StyleSheet.create({
   notNowButton: {
     flex: 1,
     backgroundColor: theme.colors.neutral[200],
-    paddingVertical: 20,
+    paddingVertical: theme.spacing.lg,
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
   },
   notNowButtonText: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
   },
   bookButton: {
     flex: 2,
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 20,
+    paddingVertical: theme.spacing.lg,
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
   },
@@ -153,7 +153,7 @@ export const retentionPromptStyles = StyleSheet.create({
   },
   bookButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
   },
 });

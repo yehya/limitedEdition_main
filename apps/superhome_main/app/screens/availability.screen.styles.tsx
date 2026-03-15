@@ -7,7 +7,7 @@ export const availabilityStyles = StyleSheet.create({
     backgroundColor: theme.colors.surface.background,
   },
   header: {
-    paddingTop: 20,
+    paddingTop: theme.spacing.lg,
     paddingBottom: theme.spacing.lg,
     paddingHorizontal: theme.spacing.xl,
     paddingStart: theme.spacing.xl,
@@ -15,7 +15,7 @@ export const availabilityStyles = StyleSheet.create({
   },
   backButton: {
     color: theme.colors.primary[500],
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
   },
   content: {
     flex: 1,
@@ -28,14 +28,14 @@ export const availabilityStyles = StyleSheet.create({
     color: theme.colors.text.secondary,
     textAlign: 'center',
     marginBottom: theme.spacing.lg,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '500',
   },
   heading: {
     color: theme.colors.text.primary,
     textAlign: 'center',
     marginBottom: theme.spacing['2xl'],
-    fontSize: 36,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '700',
     letterSpacing: -0.5,
   },
@@ -43,7 +43,7 @@ export const availabilityStyles = StyleSheet.create({
     color: theme.colors.text.primary,
     textAlign: 'center',
     marginBottom: theme.spacing.sm,
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
   },
   subtitle: {
     color: theme.colors.text.secondary,
@@ -76,7 +76,7 @@ export const availabilityStyles = StyleSheet.create({
   },
   timeSlotText: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     textAlign: 'center',
     fontWeight: '500',
   },
@@ -89,7 +89,7 @@ export const availabilityStyles = StyleSheet.create({
   },
   unavailableText: {
     color: theme.colors.text.tertiary,
-    fontSize: 10,
+    fontSize: theme.typography.fontSize.xs,
     marginTop: 2,
   },
   trustText: {
@@ -106,12 +106,12 @@ export const availabilityStyles = StyleSheet.create({
     color: theme.colors.text.primary,
     textAlign: 'center',
     marginBottom: theme.spacing.lg,
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
     fontWeight: 'bold',
   },
   reserveButton: {
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 20,
+    paddingVertical: theme.spacing.lg,
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
     shadowColor: theme.colors.primary[500],
@@ -127,7 +127,7 @@ export const availabilityStyles = StyleSheet.create({
   },
   reserveButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '700',
     letterSpacing: 0.5,
   },

@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.xs / 2,
   },
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '400',
   },
   subtitleSelected: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   estimate: {
     color: theme.colors.primary[500],
-    fontSize: 12,
+    fontSize: theme.typography.fontSize.xs,
     fontWeight: '600',
     marginBottom: theme.spacing.xs / 2,
   },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   date: {
     color: theme.colors.text.tertiary,
-    fontSize: 11,
+    fontSize: theme.typography.fontSize.xs,
     fontWeight: '500',
     textTransform: 'uppercase',
     letterSpacing: 0.5,

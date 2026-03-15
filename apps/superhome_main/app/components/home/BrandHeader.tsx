@@ -20,7 +20,7 @@ export const BrandHeader = () => {
 const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
-    paddingTop: 80,
+    paddingTop: theme.spacing['4xl'],
     paddingBottom: theme.spacing.xl,
   },
   brandContainer: {
@@ -30,18 +30,18 @@ const styles = StyleSheet.create({
   },
   brandNameBold: {
     color: theme.colors.primary[500],
-    fontSize: 48,
+    fontSize: theme.typography.fontSize['5xl'],
     fontWeight: 'bold',
   },
   brandNameThin: {
     color: theme.colors.text.primary,
-    fontSize: 48,
+    fontSize: theme.typography.fontSize['5xl'],
     fontWeight: '300',
   },
   tagline: {
     color: theme.colors.text.secondary,
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   taglineBold: {
     color: theme.colors.text.primary,

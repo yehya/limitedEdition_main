@@ -22,14 +22,14 @@ export const jobTrackingStyles = StyleSheet.create({
   },
   statusTitle: {
     color: theme.colors.text.primary,
-    fontSize: 28,
+    fontSize: theme.typography.fontSize['3xl'],
     fontWeight: '700',
     marginBottom: theme.spacing.sm,
     textAlign: 'center',
   },
   etaText: {
     color: theme.colors.primary[500],
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '600',
   },
   mapContainer: {
@@ -46,7 +46,7 @@ export const jobTrackingStyles = StyleSheet.create({
   mapText: {
     color: theme.colors.text.secondary,
     marginTop: theme.spacing.md,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   professionalCard: {
     backgroundColor: theme.colors.neutral[50],
@@ -64,17 +64,17 @@ export const jobTrackingStyles = StyleSheet.create({
   },
   professionalName: {
     color: theme.colors.text.primary,
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '600',
   },
   verifiedBadge: {
     color: theme.colors.primary[500],
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '600',
   },
   professionalStats: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   actionButtons: {
     flexDirection: 'row',
@@ -92,7 +92,7 @@ export const jobTrackingStyles = StyleSheet.create({
   },
   actionButtonText: {
     color: theme.colors.primary[500],
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '600',
   },
   statusTracker: {
@@ -103,7 +103,7 @@ export const jobTrackingStyles = StyleSheet.create({
   },
   trackerTitle: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.lg,
   },
@@ -131,7 +131,7 @@ export const jobTrackingStyles = StyleSheet.create({
   },
   statusLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
   },
   statusLabelCompleted: {
     color: theme.colors.text.primary,
@@ -144,6 +144,6 @@ export const jobTrackingStyles = StyleSheet.create({
   supportText: {
     color: theme.colors.text.tertiary,
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: theme.typography.fontSize.xs,
   },
 });

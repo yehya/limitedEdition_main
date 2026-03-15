@@ -25,14 +25,14 @@ export const paymentStyles = StyleSheet.create({
   title: {
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.sm,
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '700',
     letterSpacing: -0.5,
   },
   subtitle: {
     color: theme.colors.text.secondary,
     marginBottom: theme.spacing.xl,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     lineHeight: 28,
   },
   paymentOptionsContainer: {
@@ -54,7 +54,7 @@ export const paymentStyles = StyleSheet.create({
   },
   paymentOptionLabel: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.xs / 2,
   },
@@ -63,7 +63,7 @@ export const paymentStyles = StyleSheet.create({
   },
   paymentOptionSubtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   paymentOptionSubtitleSelected: {
     color: theme.colors.primary[500],
@@ -85,7 +85,7 @@ export const paymentStyles = StyleSheet.create({
   },
   trustText: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   bottomSection: {
     paddingHorizontal: theme.spacing.xl,
@@ -95,8 +95,8 @@ export const paymentStyles = StyleSheet.create({
   },
   confirmButton: {
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 24,
-    paddingHorizontal: 32,
+    paddingVertical: theme.spacing.xl,
+    paddingHorizontal: theme.spacing['2xl'],
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
     shadowColor: theme.colors.primary[500],
@@ -113,7 +113,7 @@ export const paymentStyles = StyleSheet.create({
   },
   confirmButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '600',
     letterSpacing: 0.5,
   },

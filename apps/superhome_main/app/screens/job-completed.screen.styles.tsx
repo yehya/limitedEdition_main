@@ -31,14 +31,14 @@ export const jobCompletedStyles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text.primary,
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '700',
     marginBottom: theme.spacing.sm,
     textAlign: 'center',
   },
   subtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     textAlign: 'center',
   },
   summaryCard: {
@@ -49,7 +49,7 @@ export const jobCompletedStyles = StyleSheet.create({
   },
   summaryTitle: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.md,
   },
@@ -62,11 +62,11 @@ export const jobCompletedStyles = StyleSheet.create({
   },
   summaryLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
   },
   summaryValue: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
   },
   paymentCard: {
@@ -79,7 +79,7 @@ export const jobCompletedStyles = StyleSheet.create({
   },
   paymentTitle: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.md,
   },
@@ -91,12 +91,12 @@ export const jobCompletedStyles = StyleSheet.create({
   },
   paymentLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     marginBottom: theme.spacing.xs,
   },
   paymentAmount: {
     color: theme.colors.primary[500],
-    fontSize: 36,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '700',
   },
   paymentMethod: {
@@ -105,12 +105,12 @@ export const jobCompletedStyles = StyleSheet.create({
   },
   paymentMethodLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 12,
+    fontSize: theme.typography.fontSize.xs,
     marginBottom: theme.spacing.xs / 2,
   },
   paymentMethodValue: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
   },
   trustContainer: {
@@ -122,13 +122,13 @@ export const jobCompletedStyles = StyleSheet.create({
   },
   trustText: {
     color: theme.colors.semantic.success,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '600',
   },
   supportText: {
     color: theme.colors.text.tertiary,
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: theme.typography.fontSize.xs,
   },
   bottomSection: {
     paddingHorizontal: theme.spacing.xl,
@@ -138,13 +138,13 @@ export const jobCompletedStyles = StyleSheet.create({
   },
   reviewButton: {
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 24,
+    paddingVertical: theme.spacing.xl,
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
   },
   reviewButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '600',
   },
 });

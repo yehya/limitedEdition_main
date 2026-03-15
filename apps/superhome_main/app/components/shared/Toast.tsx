@@ -73,7 +73,7 @@ export const Toast = ({ type, message, duration = 3000, onHide }: ToastProps) =>
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 60,
+    top: theme.spacing['3xl'],
     left: theme.spacing.xl,
     right: theme.spacing.xl,
     zIndex: 1000,

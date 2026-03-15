@@ -7,7 +7,7 @@ export const whySuperHomeStyles = StyleSheet.create({
     backgroundColor: theme.colors.surface.background,
   },
   header: {
-    paddingTop: 20,
+    paddingTop: theme.spacing.lg,
     paddingBottom: theme.spacing.lg,
     paddingHorizontal: theme.spacing.xl,
     paddingStart: theme.spacing.xl,
@@ -32,24 +32,24 @@ export const whySuperHomeStyles = StyleSheet.create({
     color: theme.colors.text.primary,
     textAlign: 'center',
     marginBottom: theme.spacing.md,
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '700',
     letterSpacing: -0.5,
   },
   brandBold: {
     color: theme.colors.primary[500],
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: 'bold',
   },
   brandThin: {
     color: theme.colors.text.primary,
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '300',
   },
   subtitle: {
     color: theme.colors.text.secondary,
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     lineHeight: 24,
   },
   statsSection: {
@@ -71,13 +71,13 @@ export const whySuperHomeStyles = StyleSheet.create({
     marginBottom: theme.spacing.lg,
   },
   statNumber: {
-    fontSize: 28,
+    fontSize: theme.typography.fontSize['3xl'],
     fontWeight: '800',
     color: theme.colors.primary[500],
     marginBottom: theme.spacing.xs,
   },
   statLabel: {
-    fontSize: 13,
+    fontSize: theme.typography.fontSize.xs,
     color: theme.colors.text.secondary,
     textAlign: 'center',
     fontWeight: '500',
@@ -88,7 +88,7 @@ export const whySuperHomeStyles = StyleSheet.create({
   sectionTitle: {
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.lg,
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
     fontWeight: '700',
   },
   featureCard: {
@@ -118,7 +118,7 @@ export const whySuperHomeStyles = StyleSheet.create({
   featureTitle: {
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.xs,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
   },
   featureDescription: {
@@ -127,7 +127,7 @@ export const whySuperHomeStyles = StyleSheet.create({
   },
   featureDescriptionExpanded: {
     lineHeight: 24,
-    fontSize: 15,
+    fontSize: theme.typography.fontSize.sm,
   },
   contactSection: {
     marginBottom: theme.spacing['2xl'],
@@ -158,18 +158,18 @@ export const whySuperHomeStyles = StyleSheet.create({
   },
   contactTitle: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
     marginBottom: theme.spacing.xs / 2,
   },
   contactSubtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 13,
+    fontSize: theme.typography.fontSize.xs,
     marginBottom: theme.spacing.xs,
   },
   contactNumber: {
     color: theme.colors.primary[500],
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '700',
   },
   ctaSection: {
@@ -187,7 +187,7 @@ export const whySuperHomeStyles = StyleSheet.create({
     color: theme.colors.text.primary,
     textAlign: 'center',
     marginBottom: theme.spacing.md,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
   },
   ctaBrandContainer: {
@@ -197,18 +197,18 @@ export const whySuperHomeStyles = StyleSheet.create({
   },
   ctaBrandBold: {
     color: theme.colors.primary[500],
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
     fontWeight: 'bold',
   },
   ctaBrandThin: {
     color: theme.colors.text.primary,
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
     fontWeight: '300',
   },
   ctaButton: {
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingVertical: theme.spacing.md,
+    paddingHorizontal: theme.spacing['2xl'],
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
     shadowColor: theme.colors.primary[500],
@@ -219,7 +219,7 @@ export const whySuperHomeStyles = StyleSheet.create({
   },
   ctaButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '700',
     letterSpacing: 0.5,
   },

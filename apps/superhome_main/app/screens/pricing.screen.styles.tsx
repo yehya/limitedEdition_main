@@ -7,7 +7,7 @@ export const pricingStyles = StyleSheet.create({
     backgroundColor: theme.colors.surface.background,
   },
   header: {
-    paddingTop: 60,
+    paddingTop: theme.spacing['3xl'],
     paddingBottom: theme.spacing.lg,
     paddingHorizontal: theme.spacing.xl,
     paddingStart: theme.spacing.xl,
@@ -15,7 +15,7 @@ export const pricingStyles = StyleSheet.create({
   },
   backButton: {
     color: theme.colors.primary[500],
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
   },
   content: {
     flex: 1,
@@ -28,7 +28,7 @@ export const pricingStyles = StyleSheet.create({
     color: theme.colors.text.primary,
     textAlign: 'center',
     marginBottom: theme.spacing.sm,
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
   },
   subtitle: {
     color: theme.colors.text.secondary,
@@ -58,12 +58,12 @@ export const pricingStyles = StyleSheet.create({
     right: 20,
     backgroundColor: theme.colors.primary[500],
     paddingHorizontal: theme.spacing.sm,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingVertical: theme.spacing.xs,
+    borderRadius: theme.borderRadius.md,
   },
   popularBadgeText: {
     color: theme.colors.text.inverse,
-    fontSize: 10,
+    fontSize: theme.typography.fontSize.xs,
     fontWeight: 'bold',
   },
   planName: {
@@ -72,7 +72,7 @@ export const pricingStyles = StyleSheet.create({
   },
   price: {
     color: theme.colors.primary[500],
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
     marginBottom: theme.spacing.xs,
   },
   priceLabel: {
@@ -107,6 +107,6 @@ export const pricingStyles = StyleSheet.create({
   },
   continueButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
   },
 });

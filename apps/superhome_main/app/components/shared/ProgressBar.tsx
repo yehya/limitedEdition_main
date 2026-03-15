@@ -21,12 +21,12 @@ export const ProgressBar = ({ current, total, height = 4 }: ProgressBarProps) =>
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.colors.neutral[200],
-    borderRadius: 2,
+    borderRadius: theme.borderRadius.xs,
     overflow: 'hidden',
   },
   progress: {
     backgroundColor: theme.colors.primary[500],
     height: '100%',
-    borderRadius: 2,
+    borderRadius: theme.borderRadius.xs,
   },
 });

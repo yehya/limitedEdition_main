@@ -22,7 +22,7 @@ export const priceApprovalStyles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text.primary,
-    fontSize: 28,
+    fontSize: theme.typography.fontSize['3xl'],
     fontWeight: '700',
     marginTop: theme.spacing.md,
     marginBottom: theme.spacing.sm,
@@ -30,7 +30,7 @@ export const priceApprovalStyles = StyleSheet.create({
   },
   subtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     textAlign: 'center',
   },
   priceCard: {
@@ -44,12 +44,12 @@ export const priceApprovalStyles = StyleSheet.create({
   },
   priceLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     marginBottom: theme.spacing.sm,
   },
   priceValue: {
     color: theme.colors.primary[500],
-    fontSize: 40,
+    fontSize: theme.typography.fontSize['5xl'],
     fontWeight: '700',
   },
   tasksContainer: {
@@ -60,7 +60,7 @@ export const priceApprovalStyles = StyleSheet.create({
   },
   tasksTitle: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.md,
   },
@@ -73,11 +73,11 @@ export const priceApprovalStyles = StyleSheet.create({
   },
   taskName: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
   },
   taskPrice: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
   },
   trustContainer: {
@@ -89,13 +89,13 @@ export const priceApprovalStyles = StyleSheet.create({
   },
   trustText: {
     color: theme.colors.primary[500],
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '600',
   },
   supportText: {
     color: theme.colors.text.tertiary,
     textAlign: 'center',
-    fontSize: 13,
+    fontSize: theme.typography.fontSize.xs,
   },
   bottomSection: {
     flexDirection: 'row',
@@ -108,25 +108,25 @@ export const priceApprovalStyles = StyleSheet.create({
   cancelButton: {
     flex: 1,
     backgroundColor: theme.colors.neutral[200],
-    paddingVertical: 20,
+    paddingVertical: theme.spacing.lg,
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
   },
   cancelButtonText: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
   },
   approveButton: {
     flex: 2,
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 20,
+    paddingVertical: theme.spacing.lg,
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
   },
   approveButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
   },
 });

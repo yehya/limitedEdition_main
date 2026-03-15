@@ -7,7 +7,7 @@ export const processingStyles = StyleSheet.create({
     backgroundColor: theme.colors.surface.background,
   },
   header: {
-    paddingTop: 20,
+    paddingTop: theme.spacing.lg,
     paddingBottom: theme.spacing.lg,
     paddingHorizontal: theme.spacing.xl,
     paddingStart: theme.spacing.xl,
@@ -15,7 +15,7 @@ export const processingStyles = StyleSheet.create({
   },
   backButton: {
     color: theme.colors.primary[500],
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
   },
   content: {
     flex: 1,
@@ -38,7 +38,7 @@ export const processingStyles = StyleSheet.create({
   processingText: {
     color: theme.colors.text.primary,
     textAlign: 'center',
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
     fontWeight: '500',
     marginTop: theme.spacing.xl,
   },

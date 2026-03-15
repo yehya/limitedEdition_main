@@ -22,14 +22,14 @@ export const reviewStyles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text.primary,
-    fontSize: 28,
+    fontSize: theme.typography.fontSize['3xl'],
     fontWeight: '700',
     marginBottom: theme.spacing.sm,
     textAlign: 'center',
   },
   subtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     textAlign: 'center',
   },
   ratingContainer: {
@@ -37,7 +37,7 @@ export const reviewStyles = StyleSheet.create({
   },
   question: {
     color: theme.colors.text.primary,
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '600',
     marginBottom: theme.spacing.lg,
     textAlign: 'center',
@@ -66,7 +66,7 @@ export const reviewStyles = StyleSheet.create({
   },
   ratingButtonText: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
   },
   ratingButtonTextActive: {
@@ -77,7 +77,7 @@ export const reviewStyles = StyleSheet.create({
   },
   commentLabel: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
     marginBottom: theme.spacing.md,
   },
@@ -85,7 +85,7 @@ export const reviewStyles = StyleSheet.create({
     backgroundColor: theme.colors.neutral[50],
     borderRadius: theme.borderRadius.lg,
     padding: theme.spacing.lg,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     borderWidth: 1,
     borderColor: theme.colors.neutral[200],
     color: theme.colors.text.primary,
@@ -99,7 +99,7 @@ export const reviewStyles = StyleSheet.create({
   },
   trustText: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     textAlign: 'center',
   },
   bottomSection: {
@@ -113,19 +113,19 @@ export const reviewStyles = StyleSheet.create({
   skipButton: {
     flex: 1,
     backgroundColor: theme.colors.neutral[200],
-    paddingVertical: 20,
+    paddingVertical: theme.spacing.lg,
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
   },
   skipButtonText: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
   },
   submitButton: {
     flex: 2,
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 20,
+    paddingVertical: theme.spacing.lg,
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
   },
@@ -134,7 +134,7 @@ export const reviewStyles = StyleSheet.create({
   },
   submitButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
   },
 });

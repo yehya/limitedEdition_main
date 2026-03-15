@@ -27,13 +27,13 @@ export const confirmationStyles = StyleSheet.create({
   },
   successIconText: {
     color: theme.colors.text.inverse,
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
   },
   title: {
     color: theme.colors.text.primary,
     textAlign: 'center',
     marginBottom: theme.spacing.md,
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '700',
     letterSpacing: -0.5,
   },
@@ -41,7 +41,7 @@ export const confirmationStyles = StyleSheet.create({
     color: theme.colors.text.secondary,
     textAlign: 'center',
     marginBottom: theme.spacing['2xl'],
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontFamily: 'monospace',
     fontWeight: '500',
   },
@@ -51,7 +51,7 @@ export const confirmationStyles = StyleSheet.create({
   },
   sectionTitle: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.md,
   },
@@ -76,7 +76,7 @@ export const confirmationStyles = StyleSheet.create({
   },
   professionalName: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
   },
   verifiedContainer: {
     flexDirection: 'row',
@@ -85,14 +85,14 @@ export const confirmationStyles = StyleSheet.create({
   },
   verifiedBadge: {
     color: theme.colors.semantic.success,
-    fontSize: 12,
+    fontSize: theme.typography.fontSize.xs,
   },
   professionalStatsContainer: {
     marginTop: theme.spacing.xs,
   },
   professionalStats: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   etaContainer: {
     gap: theme.spacing.sm,
@@ -109,12 +109,12 @@ export const confirmationStyles = StyleSheet.create({
   },
   etaLabel: {
     color: theme.colors.primary[500],
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '600',
   },
   statusText: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   detailsContainer: {
     width: '100%',
@@ -132,12 +132,12 @@ export const confirmationStyles = StyleSheet.create({
   },
   detailLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     flex: 1,
   },
   detailValue: {
     color: theme.colors.text.primary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '500',
     textAlign: 'right',
   },
@@ -149,7 +149,7 @@ export const confirmationStyles = StyleSheet.create({
   },
   calloutText: {
     color: theme.colors.text.primary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     textAlign: 'center',
   },
   trustHeader: {
@@ -163,7 +163,7 @@ export const confirmationStyles = StyleSheet.create({
   },
   trustTitle: {
     color: theme.colors.semantic.success,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '600',
   },
   supportContainer: {
@@ -178,13 +178,13 @@ export const confirmationStyles = StyleSheet.create({
   },
   supportText: {
     color: theme.colors.text.tertiary,
-    fontSize: 13,
+    fontSize: theme.typography.fontSize.xs,
   },
   subtitle: {
     color: theme.colors.text.secondary,
     textAlign: 'center',
     marginBottom: theme.spacing.xl,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
   },
   detailsCard: {
     backgroundColor: theme.colors.neutral[50],
@@ -212,7 +212,7 @@ export const confirmationStyles = StyleSheet.create({
   },
   trustText: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
   },
   bottomSection: {
     paddingHorizontal: theme.spacing.xl,
@@ -233,7 +233,7 @@ export const confirmationStyles = StyleSheet.create({
   },
   doneButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '600',
   },
 });

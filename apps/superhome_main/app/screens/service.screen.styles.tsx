@@ -42,27 +42,27 @@ export const serviceStyles = StyleSheet.create({
   },
   serviceTitle: {
     color: theme.colors.text.primary,
-    fontSize: 28,
+    fontSize: theme.typography.fontSize['3xl'],
     fontWeight: '700',
     letterSpacing: -0.5,
     marginBottom: theme.spacing.xs,
   },
   serviceSubtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     lineHeight: 24,
   },
   title: {
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.sm,
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '700',
     letterSpacing: -0.5,
   },
   subtitle: {
     color: theme.colors.text.secondary,
     marginBottom: theme.spacing.lg,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     lineHeight: 28,
   },
   pricingCard: {
@@ -86,12 +86,12 @@ export const serviceStyles = StyleSheet.create({
   },
   visitFeeLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '500',
   },
   visitFeeValue: {
     color: theme.colors.primary[500],
-    fontSize: 24,
+    fontSize: theme.typography.fontSize['2xl'],
     fontWeight: '700',
   },
   visitFeeIcon: {
@@ -108,12 +108,12 @@ export const serviceStyles = StyleSheet.create({
   },
   priceLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '500',
   },
   price: {
     color: theme.colors.primary[500],
-    fontSize: 36,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '800',
   },
   priceIcon: {
@@ -124,7 +124,7 @@ export const serviceStyles = StyleSheet.create({
   },
   featuresTitle: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.md,
   },
@@ -138,7 +138,7 @@ export const serviceStyles = StyleSheet.create({
   },
   featureText: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     lineHeight: 20,
     flex: 1,
   },
@@ -155,18 +155,18 @@ export const serviceStyles = StyleSheet.create({
   },
   arrivalLabel: {
     color: theme.colors.text.secondary,
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '500',
   },
   arrivalTime: {
     color: theme.colors.text.primary,
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     fontWeight: '700',
   },
   description: {
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.xl,
-    fontSize: 20,
+    fontSize: theme.typography.fontSize.xl,
     lineHeight: 30,
     textAlign: 'center',
     fontWeight: '500',
@@ -187,7 +187,7 @@ export const serviceStyles = StyleSheet.create({
   },
   trustMessage: {
     color: theme.colors.primary[500],
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.base,
     fontWeight: '600',
     flex: 1,
   },
@@ -199,8 +199,8 @@ export const serviceStyles = StyleSheet.create({
   },
   continueButton: {
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 28,
-    paddingHorizontal: 40,
+    paddingVertical: theme.spacing.xl,
+    paddingHorizontal: theme.spacing['2xl'],
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
     shadowColor: theme.colors.primary[500],
@@ -211,7 +211,7 @@ export const serviceStyles = StyleSheet.create({
   },
   continueButtonText: {
     color: theme.colors.text.inverse,
-    fontSize: 22,
+    fontSize: theme.typography.fontSize['2xl'],
     fontWeight: '700',
     letterSpacing: 0.5,
   },

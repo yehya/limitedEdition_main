@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: theme.colors.text.primary,
-    fontSize: 32,
+    fontSize: theme.typography.fontSize['4xl'],
     fontWeight: '700',
     letterSpacing: -0.5,
     marginBottom: theme.spacing.sm,
   },
   subtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     lineHeight: 28,
   },
 });
