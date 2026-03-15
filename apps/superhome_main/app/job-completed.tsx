@@ -115,10 +115,10 @@ export default function JobCompletedScreen() {
           {/* Trust Message */}
           <View style={jobCompletedStyles.trustContainer}>
             <Text variant="caption" style={jobCompletedStyles.trustText}>
-              ✔ Receipt sent to your email
+              ✔ Receipt details saved to your phone
             </Text>
             <Text variant="caption" style={jobCompletedStyles.trustText}>
-              ✔ Platform guarantee active for 7 days
+              ✔ Quality guarantee on all completed work
             </Text>
           </View>
 
