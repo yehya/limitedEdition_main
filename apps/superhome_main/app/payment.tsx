@@ -87,7 +87,6 @@ export default function PaymentScreen() {
               ✔ Secure payment processing
             </Text>
           </View>
-        </View>
       </ScreenContent>
 
       <BottomButton 

@@ -152,7 +152,6 @@ export default function ConfirmationScreen() {
               Need help? Call us at 19123
             </Text>
           </View>
-        </View>
       </ScreenContent>
 
       <BottomButton 
