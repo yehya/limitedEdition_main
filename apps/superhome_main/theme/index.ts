@@ -21,15 +21,15 @@ export const theme = {
     '2xl': 1536,
   },
   
-  // Border radius
+  // Border radius (reduced for more compact look)
   borderRadius: {
     none: 0,
-    sm: 4,
-    md: 8,
-    lg: 12,
-    xl: 16,
-    '2xl': 20,
-    '3xl': 24,
+    sm: 3,
+    md: 6,
+    lg: 9,
+    xl: 12,
+    '2xl': 16,
+    '3xl': 20,
     full: 9999,
   },
   

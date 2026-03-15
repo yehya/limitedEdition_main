@@ -11,18 +11,18 @@ export const typography = {
     mono: 'Monaco, Consolas, monospace',
   },
   
-  // Font sizes
+  // Font sizes (reduced by ~15% for mobile)
   fontSize: {
-    xs: 12,
-    sm: 14,
-    base: 16,
-    lg: 18,
-    xl: 20,
-    '2xl': 24,
-    '3xl': 30,
-    '4xl': 36,
-    '5xl': 48,
-    '6xl': 60,
+    xs: 10,
+    sm: 12,
+    base: 14,
+    lg: 16,
+    xl: 18,
+    '2xl': 20,
+    '3xl': 26,
+    '4xl': 30,
+    '5xl': 40,
+    '6xl': 50,
   },
   
   // Font weights
@@ -57,34 +57,34 @@ export const typography = {
   // Text variants (pre-computed combinations)
   variants: {
     heading: {
-      fontSize: 36,
+      fontSize: 30,
       fontWeight: 'bold' as const,
-      lineHeight: 44,
+      lineHeight: 36,
     },
     title: {
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: 'bold' as const,
-      lineHeight: 32,
+      lineHeight: 28,
     },
     subtitle: {
-      fontSize: 18,
+      fontSize: 16,
       fontWeight: '600' as const,
-      lineHeight: 26,
+      lineHeight: 22,
     },
     body: {
-      fontSize: 16,
-      fontWeight: 'normal' as const,
-      lineHeight: 24,
-    },
-    caption: {
       fontSize: 14,
       fontWeight: 'normal' as const,
       lineHeight: 20,
     },
-    small: {
+    caption: {
       fontSize: 12,
       fontWeight: 'normal' as const,
       lineHeight: 16,
+    },
+    small: {
+      fontSize: 10,
+      fontWeight: 'normal' as const,
+      lineHeight: 14,
     },
   },
 } as const;

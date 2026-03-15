@@ -168,6 +168,12 @@ export const addressStyles = StyleSheet.create({
     alignItems: 'center',
     gap: theme.spacing.sm,
   },
+  phoneTextInput: {
+    flex: 1,
+    fontSize: 16,
+    color: theme.colors.text.primary,
+    padding: 0,
+  },
   phoneIcon: {
     marginRight: theme.spacing.sm,
   },

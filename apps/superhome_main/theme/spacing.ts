@@ -27,15 +27,15 @@ export const spacing = {
   56: 224, // 224px
   64: 256, // 256px
   
-  // Common spacing shortcuts
-  xs: 4,   // 4px
-  sm: 8,   // 8px
-  md: 16,  // 16px
-  lg: 24,  // 24px
-  xl: 32,  // 32px
-  '2xl': 48, // 48px
-  '3xl': 64, // 64px
-  '4xl': 80, // 80px
+  // Common spacing shortcuts (reduced by ~20% for mobile)
+  xs: 3,   // 3px
+  sm: 6,   // 6px
+  md: 12,  // 12px
+  lg: 18,  // 18px
+  xl: 24,  // 24px
+  '2xl': 36, // 36px
+  '3xl': 48, // 48px
+  '4xl': 60, // 60px
   
   // Component-specific spacing
   component: {

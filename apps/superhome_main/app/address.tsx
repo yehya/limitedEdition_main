@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable, StatusBar, ScrollView, Alert } from 'react-native';
+import { View, Pressable, StatusBar, ScrollView, Alert, TextInput } from 'react-native';
 import { useRouter } from 'expo-router';
+import * as Location from 'expo-location';
 import { Text } from '@/components/Text';
 import { ScreenLayout } from './components/shared/ScreenLayout';
 import { ScreenHeader } from './components/shared/ScreenHeader';
@@ -203,11 +204,15 @@ export default function AddressScreen() {
               <Text variant="caption" style={addressStyles.inputTitle}>
                 Address
               </Text>
-              <View style={addressStyles.addressInput}>
-                <Text variant="caption" style={addressStyles.addressPlaceholder}>
-                  Enter your complete address (street, building, area, etc.)
-                </Text>
-              </View>
+              <TextInput
+                style={addressStyles.addressInput}
+                placeholder="Enter your complete address (street, building, area, etc.)"
+                placeholderTextColor={theme.colors.text.tertiary}
+                value={address}
+                onChangeText={setAddress}
+                multiline
+                numberOfLines={3}
+              />
             </View>
           )}
 
@@ -219,9 +224,14 @@ export default function AddressScreen() {
             <View style={addressStyles.phoneInput}>
               <View style={addressStyles.phoneInputContent}>
                 <Phone size={20} color={theme.colors.primary[500]} style={addressStyles.phoneIcon} />
-                <Text variant="caption" style={addressStyles.phonePlaceholder}>
-                  Enter your phone number for service updates
-                </Text>
+                <TextInput
+                  style={addressStyles.phoneTextInput}
+                  placeholder="Enter your phone number for service updates"
+                  placeholderTextColor={theme.colors.text.tertiary}
+                  value={phoneNumber}
+                  onChangeText={setPhoneNumber}
+                  keyboardType="phone-pad"
+                />
               </View>
             </View>
           </View>
