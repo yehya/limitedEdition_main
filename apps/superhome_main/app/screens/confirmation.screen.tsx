@@ -25,8 +25,8 @@ export default function ConfirmationScreen() {
     price: '150-300 EGP'
   };
 
-  const handleDone = () => {
-    router.replace('/home');
+  const handleTrackJob = () => {
+    router.push('/job-tracking');
   };
 
   if (isLoading) {
@@ -130,7 +130,7 @@ export default function ConfirmationScreen() {
       <View style={confirmationStyles.bottomSection}>
         <Pressable 
           style={confirmationStyles.doneButton}
-          onPress={handleDone}
+          onPress={handleTrackJob}
         >
           <Text variant="body" weight="medium" style={confirmationStyles.doneButtonText}>
             Track Job

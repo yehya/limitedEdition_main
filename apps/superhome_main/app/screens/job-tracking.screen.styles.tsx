@@ -1,0 +1,149 @@
+import { StyleSheet } from 'react-native';
+import { theme } from '@/theme/index';
+
+export const jobTrackingStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.surface.background,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  content: {
+    paddingHorizontal: theme.spacing.xl,
+    paddingStart: theme.spacing.xl,
+    paddingEnd: theme.spacing.xl,
+    paddingTop: theme.spacing['2xl'],
+    paddingBottom: theme.spacing['2xl'],
+  },
+  statusHeader: {
+    marginBottom: theme.spacing.xl,
+    alignItems: 'center',
+  },
+  statusTitle: {
+    color: theme.colors.text.primary,
+    fontSize: 28,
+    fontWeight: '700',
+    marginBottom: theme.spacing.sm,
+    textAlign: 'center',
+  },
+  etaText: {
+    color: theme.colors.primary[500],
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  mapContainer: {
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing['3xl'],
+    marginBottom: theme.spacing.xl,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 200,
+    borderWidth: 1,
+    borderColor: theme.colors.neutral[200],
+  },
+  mapText: {
+    color: theme.colors.text.secondary,
+    marginTop: theme.spacing.md,
+    fontSize: 14,
+  },
+  professionalCard: {
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing.lg,
+    marginBottom: theme.spacing.xl,
+    borderWidth: 1,
+    borderColor: theme.colors.neutral[200],
+  },
+  professionalHeader: {
+    marginBottom: theme.spacing.md,
+  },
+  professionalInfo: {
+    gap: theme.spacing.xs,
+  },
+  professionalName: {
+    color: theme.colors.text.primary,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  verifiedBadge: {
+    color: theme.colors.primary[500],
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  professionalStats: {
+    color: theme.colors.text.secondary,
+    fontSize: 14,
+  },
+  actionButtons: {
+    flexDirection: 'row',
+    gap: theme.spacing.md,
+  },
+  actionButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.primary[50],
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.md,
+    gap: theme.spacing.sm,
+  },
+  actionButtonText: {
+    color: theme.colors.primary[500],
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  statusTracker: {
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing.lg,
+    marginBottom: theme.spacing.xl,
+  },
+  trackerTitle: {
+    color: theme.colors.text.primary,
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: theme.spacing.lg,
+  },
+  statusItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: theme.spacing.md,
+    gap: theme.spacing.md,
+  },
+  statusDot: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: theme.colors.neutral[200],
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  statusDotCompleted: {
+    backgroundColor: theme.colors.primary[500],
+  },
+  statusDotActive: {
+    backgroundColor: theme.colors.primary[500],
+    borderWidth: 3,
+    borderColor: theme.colors.primary[200],
+  },
+  statusLabel: {
+    color: theme.colors.text.secondary,
+    fontSize: 16,
+  },
+  statusLabelCompleted: {
+    color: theme.colors.text.primary,
+    fontWeight: '600',
+  },
+  statusLabelActive: {
+    color: theme.colors.primary[500],
+    fontWeight: '700',
+  },
+  supportText: {
+    color: theme.colors.text.tertiary,
+    textAlign: 'center',
+    fontSize: 13,
+  },
+});

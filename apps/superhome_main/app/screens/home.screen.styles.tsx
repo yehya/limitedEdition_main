@@ -174,6 +174,29 @@ export const homeStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  emergencyButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.md,
+    marginTop: theme.spacing.md,
+    borderWidth: 1,
+    borderColor: theme.colors.semantic.error,
+  },
+  emergencyContent: {
+    flex: 1,
+  },
+  emergencyTitle: {
+    color: theme.colors.semantic.error,
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: theme.spacing.xs / 2,
+  },
+  emergencySubtitle: {
+    color: theme.colors.text.secondary,
+    fontSize: 12,
+  },
   trustContainer: {
     flexDirection: 'row',
     justifyContent: 'center',

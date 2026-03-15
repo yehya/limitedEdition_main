@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Pressable, StatusBar, ScrollView, Alert } from 'react-native';
-import * as Location from 'expo-location';
 import { useRouter } from 'expo-router';
 import { Text } from '@/components/Text';
-import { BackButton } from './components/shared/BackButton';
+import { ScreenLayout } from './components/shared/ScreenLayout';
+import { ScreenHeader } from './components/shared/ScreenHeader';
+import { ScreenContent } from './components/shared/ScreenContent';
+import { ScreenTitle } from './components/shared/ScreenTitle';
+import { BottomButton } from './components/shared/BottomButton';
+import { ProgressBar } from './components/shared/ProgressBar';
 import { useRTL } from '@/contexts/RTLContext';
 import { theme } from '@/theme/index';
 import { addressStyles } from './screens/address.screen.styles';
@@ -88,8 +92,17 @@ export default function AddressScreen() {
       >
         {/* Header */}
         <View style={addressStyles.header}>
-          <BackButton onPress={() => router.back()} />
+          <ScreenHeader onBack={() => router.back()} />
         </View>
+      
+      <View style={addressStyles.progressContainer}>
+        <ProgressBar current={2} total={6} />
+        <Text variant="caption" style={addressStyles.progressText}>
+          Step 2 of 6
+        </Text>
+      </View>
+      
+      <ScreenContent>
 
         {/* Content */}
         <View style={addressStyles.content}>
@@ -174,23 +187,24 @@ export default function AddressScreen() {
             </View>
           </View>
         </View>
+      </ScreenContent>
 
-        {/* Bottom CTA */}
-        <View style={addressStyles.bottomSection}>
-          <Pressable 
-            style={[
-              addressStyles.continueButton,
-              (!location && !address.trim()) && addressStyles.continueButtonDisabled
-            ]}
-            onPress={handleContinue}
-            disabled={!location && !address.trim()}
-          >
-            <Text variant="body" weight="medium" style={addressStyles.continueButtonText}>
-              Continue
-            </Text>
-          </Pressable>
-        </View>
-      </ScrollView>
+      {/* Bottom CTA */}
+      <View style={addressStyles.bottomSection}>
+        <Pressable 
+          style={[
+            addressStyles.continueButton,
+            (!location && !address.trim()) && addressStyles.continueButtonDisabled
+          ]}
+          onPress={handleContinue}
+          disabled={!location && !address.trim()}
+        >
+          <Text variant="body" weight="medium" style={addressStyles.continueButtonText}>
+            Continue
+          </Text>
+        </Pressable>
+      </View>
+    </ScrollView>
     </View>
   );
 }

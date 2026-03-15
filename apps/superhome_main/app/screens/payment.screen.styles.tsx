@@ -10,8 +10,11 @@ export const paymentStyles = StyleSheet.create({
     flexGrow: 1,
   },
   header: {
-    paddingTop: 60,
-    paddingBottom: theme.spacing.lg,
+    paddingTop: theme.spacing.md,
+    paddingBottom: theme.spacing.md,
+    paddingHorizontal: theme.spacing.xl,
+    paddingStart: theme.spacing.xl,
+    paddingEnd: theme.spacing.xl,
   },
   content: {
     flex: 1,

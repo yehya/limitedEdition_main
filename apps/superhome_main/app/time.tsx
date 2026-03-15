@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
-import { View, Pressable, StatusBar, ScrollView } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text } from '@/components/Text';
-import { BackButton } from './components/shared/BackButton';
+import { ScreenLayout } from './components/shared/ScreenLayout';
+import { ScreenHeader } from './components/shared/ScreenHeader';
+import { ScreenContent } from './components/shared/ScreenContent';
+import { ScreenTitle } from './components/shared/ScreenTitle';
+import { BottomButton } from './components/shared/BottomButton';
 import { useRTL } from '@/contexts/RTLContext';
-import { theme } from '@/theme/index';
 import { timeStyles } from './screens/time.screen.styles';
 
 export default function TimeScreen() {
   const router = useRouter();
-  const { language, isLoading } = useRTL();
+  const { isLoading } = useRTL();
   const [selectedTime, setSelectedTime] = useState('');
 
   const timeOptions = [
     { id: 'asap', label: 'ASAP', subtitle: 'First available professional' },
-    { id: 'today', label: 'Today Evening', subtitle: '6:00 PM - 10:00 PM' },
-    { id: 'tomorrow', label: 'Tomorrow', subtitle: 'Choose time slot' },
+    { id: 'tomorrow_afternoon', label: 'Tomorrow Afternoon', subtitle: '12:00 PM - 4:00 PM' },
+    { id: 'tomorrow_evening', label: 'Tomorrow Evening', subtitle: '6:00 PM - 10:00 PM' },
+    { id: 'emergency', label: 'Emergency', subtitle: 'Arrival within 60 minutes', emergencyFee: '+1000 EGP' },
   ];
 
   const handleTimeSelect = (timeId: string) => {
@@ -29,86 +33,67 @@ export default function TimeScreen() {
   };
 
   if (isLoading) {
-    return (
-      <View style={timeStyles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
-      </View>
-    );
+    return <ScreenLayout showScrollView={false} />;
   }
 
   return (
-    <View style={timeStyles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
+    <ScreenLayout>
+      <ScreenHeader onBack={() => router.back()} />
       
-      <ScrollView 
-        contentContainerStyle={timeStyles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header */}
-        <View style={timeStyles.header}>
-          <BackButton onPress={() => router.back()} />
-        </View>
+      <ScreenContent>
+        <ScreenTitle 
+          title="When do you need it?"
+          subtitle="Choose your preferred time"
+        />
 
-        {/* Content */}
-        <View style={timeStyles.content}>
-          <Text variant="heading" style={timeStyles.title}>
-            When do you need it?
-          </Text>
-          
-          <Text variant="body" style={timeStyles.subtitle}>
-            Choose your preferred time
-          </Text>
-
-          {/* Time Options */}
-          <View style={timeStyles.timeOptionsContainer}>
-            {timeOptions.map((option) => (
-              <Pressable
-                key={option.id}
-                style={[
-                  timeStyles.timeOption,
-                  selectedTime === option.id && timeStyles.timeOptionSelected
-                ]}
-                onPress={() => handleTimeSelect(option.id)}
-              >
-                <View style={timeStyles.timeOptionContent}>
+        <View style={timeStyles.timeOptionsContainer}>
+          {timeOptions.map((option) => (
+            <Pressable
+              key={option.id}
+              style={[
+                timeStyles.timeOption,
+                option.id === 'emergency' && timeStyles.emergencyOption,
+                selectedTime === option.id && timeStyles.timeOptionSelected
+              ]}
+              onPress={() => handleTimeSelect(option.id)}
+            >
+              <View style={timeStyles.timeOptionContent}>
+                <View style={timeStyles.timeOptionText}>
                   <Text variant="body" weight="medium" style={[
                     timeStyles.timeOptionLabel,
+                    option.id === 'emergency' && timeStyles.emergencyLabel,
                     selectedTime === option.id && timeStyles.timeOptionLabelSelected
                   ]}>
                     {option.label}
                   </Text>
                   <Text variant="caption" style={[
                     timeStyles.timeOptionSubtitle,
+                    option.id === 'emergency' && timeStyles.emergencySubtitle,
                     selectedTime === option.id && timeStyles.timeOptionSubtitleSelected
                   ]}>
                     {option.subtitle}
                   </Text>
                 </View>
-                <View style={[
-                  timeStyles.radioButton,
-                  selectedTime === option.id && timeStyles.radioButtonSelected
-                ]} />
-              </Pressable>
-            ))}
-          </View>
+                {option.emergencyFee && (
+                  <Text variant="caption" style={timeStyles.emergencyFee}>
+                    {option.emergencyFee}
+                  </Text>
+                )}
+              </View>
+              <View style={[
+                timeStyles.radioButton,
+                selectedTime === option.id && timeStyles.radioButtonSelected
+              ]} />
+            </Pressable>
+          ))}
         </View>
+      </ScreenContent>
 
-        {/* Bottom CTA */}
-        <View style={timeStyles.bottomSection}>
-          <Pressable 
-            style={[
-              timeStyles.continueButton,
-              !selectedTime && timeStyles.continueButtonDisabled
-            ]}
-            onPress={handleContinue}
-            disabled={!selectedTime}
-          >
-            <Text variant="body" weight="medium" style={timeStyles.continueButtonText}>
-              Continue
-            </Text>
-          </Pressable>
-        </View>
-      </ScrollView>
-    </View>
+      <BottomButton 
+        text="Continue"
+        onPress={handleContinue}
+        disabled={!selectedTime}
+      />
+    </ScreenLayout>
   );
 }

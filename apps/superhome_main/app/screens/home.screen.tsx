@@ -25,16 +25,16 @@ export default function HomeScreen() {
     {
       id: 'cleaning',
       title: 'Clean My Home',
-      subtitle: 'Professional cleaning services',
-      priceRange: '250 EGP',
+      subtitle: 'Professional home cleaning',
+      priceRange: 'From 250 EGP',
       icon: Home,
       color: theme.colors.primary[500],
     },
     {
       id: 'plumbing',
-      title: 'Fix My Plumbing',
-      subtitle: 'Expert plumbing repairs',
-      priceRange: '300 EGP',
+      title: 'Fix Plumbing',
+      subtitle: 'Leaks, clogs, repairs',
+      priceRange: 'Visit fee 200 EGP',
       icon: Wrench,
       color: theme.colors.secondary[500],
     },
@@ -70,7 +70,7 @@ export default function HomeScreen() {
             </Pressable>
           </View>
 
-          {/* Service Buttons */}
+          {/* Services */}
           <View style={homeStyles.servicesContainer}>
             {services.map((service) => (
               <Pressable
@@ -95,6 +95,22 @@ export default function HomeScreen() {
                 <ChevronRight size={20} color={theme.colors.text.tertiary} />
               </Pressable>
             ))}
+            
+            {/* Emergency Plumbing */}
+            <Pressable 
+              style={homeStyles.emergencyButton}
+              onPress={() => handleServiceSelect('plumbing')}
+            >
+              <View style={homeStyles.emergencyContent}>
+                <Text variant="body" weight="medium" style={homeStyles.emergencyTitle}>
+                  Emergency Plumbing
+                </Text>
+                <Text variant="caption" style={homeStyles.emergencySubtitle}>
+                  Arrival within 60 minutes
+                </Text>
+              </View>
+              <ChevronRight size={20} color={theme.colors.text.inverse} />
+            </Pressable>
           </View>
 
           <View style={homeStyles.trustContainer}>

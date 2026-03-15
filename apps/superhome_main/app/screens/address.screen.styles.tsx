@@ -10,8 +10,25 @@ export const addressStyles = StyleSheet.create({
     flexGrow: 1,
   },
   header: {
-    paddingTop: 60,
+    paddingTop: theme.spacing.md,
+    paddingBottom: theme.spacing.md,
+    paddingHorizontal: theme.spacing.xl,
+    paddingStart: theme.spacing.xl,
+    paddingEnd: theme.spacing.xl,
+  },
+  progressContainer: {
+    paddingHorizontal: theme.spacing.xl,
+    paddingStart: theme.spacing.xl,
+    paddingEnd: theme.spacing.xl,
+    paddingTop: theme.spacing.md,
     paddingBottom: theme.spacing.lg,
+    alignItems: 'center',
+    gap: theme.spacing.sm,
+  },
+  progressText: {
+    color: theme.colors.text.tertiary,
+    fontSize: 12,
+    fontWeight: '500',
   },
   content: {
     flex: 1,

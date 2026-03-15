@@ -3,6 +3,7 @@ import { View, Pressable, StatusBar, ScrollView } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Text } from '@/components/Text';
 import { BackButton } from '../components/shared/BackButton';
+import { Clock } from 'lucide-react-native';
 import { useRTL } from '@/contexts/RTLContext';
 import { theme } from '@/theme/index';
 import { serviceStyles } from '../screens/service.screen.styles';
@@ -16,16 +17,20 @@ export default function ServiceDetailScreen() {
     cleaning: {
       title: 'Home Cleaning',
       subtitle: 'Professional cleaning services',
-      priceRange: '150-300 EGP',
+      visitFee: null,
+      priceRange: '250 EGP',
       arrivalTime: 'Within 2 hours',
       description: 'Apartments and homes cleaned by verified professionals.',
+      trustMessage: 'Fixed pricing for all apartment sizes.',
     },
     plumbing: {
       title: 'Plumbing',
       subtitle: 'Expert plumbing repairs',
-      priceRange: '200-400 EGP',
+      visitFee: '200 EGP',
+      priceRange: '200–450 EGP',
       arrivalTime: 'Within 2 hours',
-      description: 'Professional plumbers available for leaks, clogs, and basic repairs.',
+      description: 'Professional plumbers for leaks, clogs, and basic repairs.',
+      trustMessage: 'Final price confirmed before work begins.',
     }
   };
 
@@ -63,17 +68,48 @@ export default function ServiceDetailScreen() {
           </Text>
           
           <View style={serviceStyles.priceContainer}>
-            <Text variant="body" style={serviceStyles.price}>
-              {service.priceRange}
-            </Text>
-            <Text variant="caption" style={serviceStyles.arrivalTime}>
-              Arrival within 2 hours
-            </Text>
+            {service.visitFee && (
+              <View style={serviceStyles.visitFeeSection}>
+                <Text variant="caption" style={serviceStyles.visitFeeLabel}>
+                  Visit fee
+                </Text>
+                <Text variant="body" style={serviceStyles.visitFeeValue}>
+                  {service.visitFee}
+                </Text>
+              </View>
+            )}
+            
+            <View style={serviceStyles.priceRangeSection}>
+              <Text variant="caption" style={serviceStyles.priceLabel}>
+                {service.visitFee ? 'Most jobs cost' : 'Price'}
+              </Text>
+              <Text variant="body" style={serviceStyles.price}>
+                {service.priceRange}
+              </Text>
+            </View>
+            
+            <View style={serviceStyles.arrivalSection}>
+              <View style={serviceStyles.arrivalLeft}>
+                <Text variant="caption" style={serviceStyles.arrivalLabel}>
+                  Arrival
+                </Text>
+                <Text variant="caption" style={serviceStyles.arrivalTime}>
+                  Within 2 hours
+                </Text>
+              </View>
+              <Clock size={20} color={theme.colors.primary[500]} />
+            </View>
           </View>
 
           <Text variant="body" style={serviceStyles.description}>
             {service.description}
           </Text>
+          
+          <View style={serviceStyles.trustMessageContainer}>
+            <Text variant="caption" style={serviceStyles.trustMessage}>
+              ✔ {service.trustMessage}
+            </Text>
+          </View>
         </View>
 
         {/* Bottom CTA */}

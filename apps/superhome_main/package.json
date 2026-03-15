@@ -21,12 +21,12 @@
     "release:ios": "eas build --profile production --platform ios --auto-submit"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^3.0.1",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "expo": "~51.0.28",
-    "expo-localization": "^55.0.8",
+    "expo-localization": "15.0.3",
     "expo-location": "~17.0.1",
     "expo-router": "~3.5.23",
-    "expo-updates": "^55.0.13",
+    "expo-updates": "0.25.28",
     "lucide-react-native": "^0.577.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
