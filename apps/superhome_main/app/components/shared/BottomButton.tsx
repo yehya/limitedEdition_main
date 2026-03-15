@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 24,
-    paddingHorizontal: 32,
+    paddingVertical: theme.spacing.xl,
+    paddingHorizontal: theme.spacing['2xl'],
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
     shadowColor: theme.colors.primary[500],

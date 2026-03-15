@@ -11,7 +11,7 @@ export const homeStyles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    paddingTop: 60,
+    paddingTop: theme.spacing['3xl'],
     paddingBottom: theme.spacing['2xl'],
   },
   brandContainer: {
@@ -224,8 +224,8 @@ export const homeStyles = StyleSheet.create({
   },
   submitButton: {
     backgroundColor: theme.colors.primary[500],
-    paddingVertical: 22,
-    paddingHorizontal: 32,
+    paddingVertical: theme.spacing.xl,
+    paddingHorizontal: theme.spacing['2xl'],
     borderRadius: theme.borderRadius.xl,
     alignItems: 'center',
     shadowColor: theme.colors.primary[600],
