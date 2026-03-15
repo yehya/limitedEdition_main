@@ -93,25 +93,12 @@ export default function AddressScreen() {
   };
 
   if (isLoading) {
-    return (
-      <View style={addressStyles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
-      </View>
-    );
+    return <ScreenLayout showScrollView={false} />;
   }
 
   return (
-    <View style={addressStyles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
-      
-      <ScrollView 
-        contentContainerStyle={addressStyles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header */}
-        <View style={addressStyles.header}>
-          <ScreenHeader onBack={() => router.back()} />
-        </View>
+    <ScreenLayout>
+      <ScreenHeader onBack={() => router.back()} />
       
       <ScreenContent>
 
@@ -241,22 +228,11 @@ export default function AddressScreen() {
         </View>
       </ScreenContent>
 
-      {/* Bottom CTA */}
-      <View style={addressStyles.bottomSection}>
-        <Pressable 
-          style={[
-            addressStyles.continueButton,
-            (!location && !address.trim() && !selectedMethod) && addressStyles.continueButtonDisabled
-          ]}
-          onPress={handleContinue}
-          disabled={!location && !address.trim() && !selectedMethod}
-        >
-          <Text variant="body" weight="medium" style={addressStyles.continueButtonText}>
-            Continue
-          </Text>
-        </Pressable>
-      </View>
-    </ScrollView>
-    </View>
+      <BottomButton 
+        text="Continue"
+        onPress={handleContinue}
+        disabled={!location && !address.trim() && !selectedMethod}
+      />
+    </ScreenLayout>
   );
 }

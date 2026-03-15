@@ -92,22 +92,6 @@ export default function HomeScreen() {
                 <ChevronRight size={20} color={theme.colors.text.tertiary} />
               </Pressable>
             ))}
-            
-            {/* Emergency Plumbing */}
-            <Pressable 
-              style={homeStyles.emergencyButton}
-              onPress={() => handleServiceSelect('plumbing')}
-            >
-              <View style={homeStyles.emergencyContent}>
-                <Text variant="body" weight="medium" style={homeStyles.emergencyTitle}>
-                  Emergency Plumbing
-                </Text>
-                <Text variant="caption" style={homeStyles.emergencySubtitle}>
-                  Arrival within 60 minutes
-                </Text>
-              </View>
-              <ChevronRight size={20} color={theme.colors.text.inverse} />
-            </Pressable>
           </View>
 
           <View style={homeStyles.trustContainer}>
