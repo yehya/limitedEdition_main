@@ -1,0 +1,111 @@
+import { StyleSheet } from 'react-native';
+import { theme } from '@/theme/index';
+
+export const timeStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.surface.background,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  header: {
+    paddingTop: 60,
+    paddingBottom: theme.spacing.lg,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: theme.spacing.xl,
+    paddingStart: theme.spacing.xl,
+    paddingEnd: theme.spacing.xl,
+  },
+  title: {
+    color: theme.colors.text.primary,
+    marginBottom: theme.spacing.sm,
+    fontSize: 32,
+    fontWeight: '700',
+    letterSpacing: -0.5,
+  },
+  subtitle: {
+    color: theme.colors.text.secondary,
+    marginBottom: theme.spacing.xl,
+    fontSize: 18,
+    lineHeight: 28,
+  },
+  timeOptionsContainer: {
+    gap: theme.spacing.md,
+  },
+  timeOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing.lg,
+    borderWidth: 2,
+    borderColor: theme.colors.neutral[200],
+  },
+  timeOptionSelected: {
+    backgroundColor: theme.colors.primary[50],
+    borderColor: theme.colors.primary[500],
+  },
+  timeOptionContent: {
+    flex: 1,
+  },
+  timeOptionLabel: {
+    color: theme.colors.text.primary,
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: theme.spacing.xs / 2,
+  },
+  timeOptionLabelSelected: {
+    color: theme.colors.primary[500],
+  },
+  timeOptionSubtitle: {
+    color: theme.colors.text.secondary,
+    fontSize: 14,
+  },
+  timeOptionSubtitleSelected: {
+    color: theme.colors.primary[500],
+  },
+  radioButton: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: theme.colors.neutral[300],
+  },
+  radioButtonSelected: {
+    backgroundColor: theme.colors.primary[500],
+    borderColor: theme.colors.primary[500],
+  },
+  bottomSection: {
+    paddingHorizontal: theme.spacing.xl,
+    paddingStart: theme.spacing.xl,
+    paddingEnd: theme.spacing.xl,
+    paddingBottom: theme.spacing['2xl'],
+  },
+  continueButton: {
+    backgroundColor: theme.colors.primary[500],
+    paddingVertical: 24,
+    paddingHorizontal: 32,
+    borderRadius: theme.borderRadius.xl,
+    alignItems: 'center',
+    shadowColor: theme.colors.primary[500],
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    elevation: 12,
+  },
+  continueButtonDisabled: {
+    backgroundColor: theme.colors.neutral[300],
+    shadowColor: 'transparent',
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+  continueButtonText: {
+    color: theme.colors.text.inverse,
+    fontSize: 20,
+    fontWeight: '600',
+    letterSpacing: 0.5,
+  },
+});

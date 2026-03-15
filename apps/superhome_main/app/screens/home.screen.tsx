@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Pressable, StatusBar, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Pressable, StatusBar, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text } from '@/components/Text';
 import { BrandHeader } from '../components/home/BrandHeader';
@@ -8,47 +8,37 @@ import { Footer } from '../components/home/Footer';
 import { useRTL } from '@/contexts/RTLContext';
 import { theme } from '@/theme/index';
 import { homeStyles } from './home.screen.styles';
-import { Info, ChevronRight } from 'lucide-react-native';
+import { Info, ChevronRight, Home, Wrench } from 'lucide-react-native';
 
 export default function HomeScreen() {
   const router = useRouter();
   const { language, isLoading } = useRTL();
-  const [userInput, setUserInput] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
 
-  // Demo auto-typing effect
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      startAutoTyping();
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const startAutoTyping = () => {
-    setIsTyping(true);
-    const demoText = "My kitchen sink is leaking and I need it fixed today";
-    let currentIndex = 0;
-
-    const typeInterval = setInterval(() => {
-      if (currentIndex <= demoText.length) {
-        setUserInput(demoText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typeInterval);
-        setIsTyping(false);
-      }
-    }, 30);
+  const handleServiceSelect = (serviceType: string) => {
+    router.push({
+      pathname: '/service',
+      params: { type: serviceType }
+    });
   };
 
-  const handleSubmit = () => {
-    if (userInput.trim()) {
-      router.push({
-        pathname: '/processing',
-        params: { request: userInput }
-      });
-    }
-  };
+  const services = [
+    {
+      id: 'cleaning',
+      title: 'Clean My Home',
+      subtitle: 'Professional cleaning services',
+      priceRange: '250 EGP',
+      icon: Home,
+      color: theme.colors.primary[500],
+    },
+    {
+      id: 'plumbing',
+      title: 'Fix My Plumbing',
+      subtitle: 'Expert plumbing repairs',
+      priceRange: '300 EGP',
+      icon: Wrench,
+      color: theme.colors.secondary[500],
+    },
+  ];
 
   if (isLoading) {
     return (
@@ -59,15 +49,11 @@ export default function HomeScreen() {
   }
 
   return (
-    <KeyboardAvoidingView 
-      style={homeStyles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    <View style={homeStyles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
       
       <ScrollView 
         contentContainerStyle={homeStyles.scrollContent}
-        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
         <BrandHeader />
@@ -84,18 +70,31 @@ export default function HomeScreen() {
             </Pressable>
           </View>
 
-          <View style={homeStyles.inputContainer}>
-            <TextInput
-              style={homeStyles.textInput}
-              placeholder="Describe what needs fixing... (e.g., 'My kitchen sink is leaking')"
-              placeholderTextColor={theme.colors.text.tertiary}
-              value={userInput}
-              onChangeText={setUserInput}
-              multiline
-              numberOfLines={3}
-              textAlignVertical="top"
-              editable={!isTyping}
-            />
+          {/* Service Buttons */}
+          <View style={homeStyles.servicesContainer}>
+            {services.map((service) => (
+              <Pressable
+                key={service.id}
+                style={homeStyles.serviceButton}
+                onPress={() => handleServiceSelect(service.id)}
+              >
+                <View style={[homeStyles.serviceIcon, { backgroundColor: service.color }]}>
+                  <service.icon size={32} color={theme.colors.text.inverse} />
+                </View>
+                <View style={homeStyles.serviceContent}>
+                  <Text variant="body" weight="medium" style={homeStyles.serviceTitle}>
+                    {service.title}
+                  </Text>
+                  <Text variant="caption" style={homeStyles.serviceSubtitle}>
+                    {service.subtitle}
+                  </Text>
+                  <Text variant="caption" style={homeStyles.servicePrice}>
+                    {service.priceRange}
+                  </Text>
+                </View>
+                <ChevronRight size={20} color={theme.colors.text.tertiary} />
+              </Pressable>
+            ))}
           </View>
 
           <View style={homeStyles.trustContainer}>
@@ -103,24 +102,9 @@ export default function HomeScreen() {
             <TrustBadge icon="award" text="Premium Service" />
           </View>
         </View>
-
-        <View style={homeStyles.bottomSection}>
-          <Pressable 
-            style={[
-              homeStyles.submitButton,
-              (!userInput.trim() || isTyping) && homeStyles.submitButtonDisabled
-            ]}
-            onPress={handleSubmit}
-            disabled={!userInput.trim() || isTyping}
-          >
-            <Text variant="body" weight="medium" style={homeStyles.submitButtonText}>
-              Get Started
-            </Text>
-          </Pressable>
-          
-          <Footer />
-        </View>
+        
+        <Footer />
       </ScrollView>
-    </KeyboardAvoidingView>
+    </View>
   );
 }

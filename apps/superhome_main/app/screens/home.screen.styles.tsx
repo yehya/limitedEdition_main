@@ -134,11 +134,51 @@ export const homeStyles = StyleSheet.create({
     minHeight: 120,
     textAlignVertical: 'top',
   },
+  servicesContainer: {
+    gap: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
+  },
+  serviceButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.xl,
+    padding: theme.spacing.lg,
+    borderWidth: 1,
+    borderColor: theme.colors.neutral[200],
+  },
+  serviceIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: theme.spacing.md,
+  },
+  serviceContent: {
+    flex: 1,
+  },
+  serviceTitle: {
+    color: theme.colors.text.primary,
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: theme.spacing.xs / 2,
+  },
+  serviceSubtitle: {
+    color: theme.colors.text.secondary,
+    fontSize: 14,
+    marginBottom: theme.spacing.xs / 2,
+  },
+  servicePrice: {
+    color: theme.colors.primary[500],
+    fontSize: 16,
+    fontWeight: '600',
+  },
   trustContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+    gap: theme.spacing.md,
     marginTop: theme.spacing.lg,
-    gap: theme.spacing.lg,
   },
   trustBadge: {
     flexDirection: 'row',

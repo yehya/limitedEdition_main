@@ -6,13 +6,15 @@ export const confirmationStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.surface.background,
   },
+  scrollContent: {
+    flexGrow: 1,
+  },
   content: {
-    flex: 1,
     paddingHorizontal: theme.spacing.xl,
     paddingStart: theme.spacing.xl,
     paddingEnd: theme.spacing.xl,
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: theme.spacing['2xl'],
+    paddingBottom: theme.spacing['2xl'],
   },
   successIcon: {
     width: 80,
@@ -42,6 +44,55 @@ export const confirmationStyles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'monospace',
     fontWeight: '500',
+  },
+  professionalContainer: {
+    width: '100%',
+    marginBottom: theme.spacing.lg,
+  },
+  sectionTitle: {
+    color: theme.colors.text.primary,
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: theme.spacing.md,
+  },
+  professionalCard: {
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.lg,
+    borderWidth: 1,
+    borderColor: theme.colors.neutral[200],
+  },
+  professionalInfo: {
+    gap: theme.spacing.sm,
+  },
+  professionalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  professionalName: {
+    color: theme.colors.text.primary,
+    fontSize: 18,
+  },
+  verifiedBadge: {
+    color: theme.colors.primary[500],
+    fontSize: 12,
+  },
+  professionalStats: {
+    color: theme.colors.text.secondary,
+    fontSize: 14,
+  },
+  etaContainer: {
+    gap: theme.spacing.xs,
+  },
+  etaLabel: {
+    color: theme.colors.primary[500],
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  statusText: {
+    color: theme.colors.text.secondary,
+    fontSize: 14,
   },
   detailsContainer: {
     width: '100%',
@@ -105,9 +156,17 @@ export const confirmationStyles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: theme.spacing.lg,
   },
+  trustContainer: {
+    width: '100%',
+    backgroundColor: theme.colors.neutral[50],
+    borderRadius: theme.borderRadius.lg,
+    padding: theme.spacing.lg,
+    marginBottom: theme.spacing.lg,
+    gap: theme.spacing.sm,
+  },
   trustText: {
     color: theme.colors.text.secondary,
-    textAlign: 'center',
+    fontSize: 14,
   },
   bottomSection: {
     paddingHorizontal: theme.spacing.xl,
