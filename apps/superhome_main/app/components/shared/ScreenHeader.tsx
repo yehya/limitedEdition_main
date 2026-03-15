@@ -18,7 +18,7 @@ export const ScreenHeader = ({ onBack }: ScreenHeaderProps) => {
 const styles = StyleSheet.create({
   header: {
     paddingTop: theme.spacing.md,
-    paddingBottom: theme.spacing.md,
+    paddingBottom: theme.spacing.xl,
     paddingHorizontal: theme.spacing.xl,
     paddingStart: theme.spacing.xl,
     paddingEnd: theme.spacing.xl,

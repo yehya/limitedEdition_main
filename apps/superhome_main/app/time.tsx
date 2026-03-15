@@ -8,7 +8,9 @@ import { ScreenContent } from './components/shared/ScreenContent';
 import { ScreenTitle } from './components/shared/ScreenTitle';
 import { BottomButton } from './components/shared/BottomButton';
 import { useRTL } from '@/contexts/RTLContext';
+import { theme } from '@/theme/index';
 import { timeStyles } from './screens/time.screen.styles';
+import { CheckCircle } from 'lucide-react-native';
 
 export default function TimeScreen() {
   const router = useRouter();
@@ -19,7 +21,7 @@ export default function TimeScreen() {
     { id: 'asap', label: 'ASAP', subtitle: 'First available professional' },
     { id: 'tomorrow_afternoon', label: 'Tomorrow Afternoon', subtitle: '12:00 PM - 4:00 PM' },
     { id: 'tomorrow_evening', label: 'Tomorrow Evening', subtitle: '6:00 PM - 10:00 PM' },
-    { id: 'emergency', label: 'Emergency', subtitle: 'Arrival within 60 minutes', emergencyFee: '+1000 EGP' },
+    { id: 'emergency', label: 'Emergency', subtitle: 'Arrival within 60 minutes' },
   ];
 
   const handleTimeSelect = (timeId: string) => {
@@ -53,7 +55,7 @@ export default function TimeScreen() {
               style={[
                 timeStyles.timeOption,
                 option.id === 'emergency' && timeStyles.emergencyOption,
-                selectedTime === option.id && timeStyles.timeOptionSelected
+                selectedTime === option.id && (option.id === 'emergency' ? timeStyles.emergencyOptionSelected : timeStyles.timeOptionSelected)
               ]}
               onPress={() => handleTimeSelect(option.id)}
             >
@@ -62,28 +64,30 @@ export default function TimeScreen() {
                   <Text variant="body" weight="medium" style={[
                     timeStyles.timeOptionLabel,
                     option.id === 'emergency' && timeStyles.emergencyLabel,
-                    selectedTime === option.id && timeStyles.timeOptionLabelSelected
+                    selectedTime === option.id && option.id === 'emergency' && timeStyles.emergencyLabelSelected,
+                    selectedTime === option.id && option.id !== 'emergency' && timeStyles.timeOptionLabelSelected
                   ]}>
                     {option.label}
                   </Text>
                   <Text variant="caption" style={[
                     timeStyles.timeOptionSubtitle,
                     option.id === 'emergency' && timeStyles.emergencySubtitle,
-                    selectedTime === option.id && timeStyles.timeOptionSubtitleSelected
+                    selectedTime === option.id && option.id === 'emergency' && timeStyles.emergencySubtitleSelected,
+                    selectedTime === option.id && option.id !== 'emergency' && timeStyles.timeOptionSubtitleSelected
                   ]}>
                     {option.subtitle}
                   </Text>
                 </View>
-                {option.emergencyFee && (
-                  <Text variant="caption" style={timeStyles.emergencyFee}>
-                    {option.emergencyFee}
-                  </Text>
-                )}
               </View>
-              <View style={[
-                timeStyles.radioButton,
-                selectedTime === option.id && timeStyles.radioButtonSelected
-              ]} />
+              {option.id === 'emergency' && selectedTime === option.id ? (
+                <View style={timeStyles.emergencyCheckmark}>
+                  <CheckCircle size={20} color={theme.colors.semantic.error} fill={theme.colors.text.inverse} strokeWidth={3} />
+                </View>
+              ) : option.id !== 'emergency' && selectedTime === option.id ? (
+                <View style={timeStyles.regularCheckmark}>
+                  <CheckCircle size={20} color={theme.colors.primary[500]} fill={theme.colors.text.inverse} strokeWidth={3} />
+                </View>
+              ) : null}
             </Pressable>
           ))}
         </View>
