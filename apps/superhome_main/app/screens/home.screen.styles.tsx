@@ -115,7 +115,7 @@ export const homeStyles = StyleSheet.create({
     gap: theme.spacing.sm,
   },
   whyButtonText: {
-    fontSize: 15,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '500',
     color: theme.colors.primary[500],
   },
@@ -128,7 +128,7 @@ export const homeStyles = StyleSheet.create({
     borderColor: theme.colors.neutral[200],
   },
   textInput: {
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     lineHeight: 26,
     color: theme.colors.text.primary,
     minHeight: 120,
@@ -160,18 +160,18 @@ export const homeStyles = StyleSheet.create({
   },
   serviceTitle: {
     color: theme.colors.text.primary,
-    fontSize: 18,
+    fontSize: theme.typography.fontSize.lg,
     fontWeight: '600',
     marginBottom: theme.spacing.xs / 2,
   },
   serviceSubtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     marginBottom: theme.spacing.xs / 2,
   },
   servicePrice: {
     color: theme.colors.primary[500],
-    fontSize: 16,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '600',
   },
   emergencyButton: {
@@ -189,13 +189,13 @@ export const homeStyles = StyleSheet.create({
   },
   emergencyTitle: {
     color: theme.colors.semantic.error,
-    fontSize: 14,
+    fontSize: theme.typography.fontSize.sm,
     fontWeight: '600',
     marginBottom: theme.spacing.xs / 2,
   },
   emergencySubtitle: {
     color: theme.colors.text.secondary,
-    fontSize: 12,
+    fontSize: theme.typography.fontSize.xs,
   },
   trustContainer: {
     flexDirection: 'row',
