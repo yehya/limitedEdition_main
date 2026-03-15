@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { View, Pressable, StatusBar, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Text } from '@/components/Text';
-import { BackButton } from './components/shared/BackButton';
+import { ScreenLayout } from './components/shared/ScreenLayout';
+import { ScreenHeader } from './components/shared/ScreenHeader';
+import { ScreenContent } from './components/shared/ScreenContent';
+import { ScreenTitle } from './components/shared/ScreenTitle';
+import { BottomButton } from './components/shared/BottomButton';
 import { useRTL } from '@/contexts/RTLContext';
 import { theme } from '@/theme/index';
 import { paymentStyles } from './screens/payment.screen.styles';
@@ -28,35 +32,18 @@ export default function PaymentScreen() {
   };
 
   if (isLoading) {
-    return (
-      <View style={paymentStyles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
-      </View>
-    );
+    return <ScreenLayout showScrollView={false} />;
   }
 
   return (
-    <View style={paymentStyles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
+    <ScreenLayout>
+      <ScreenHeader onBack={() => router.back()} />
       
-      <ScrollView 
-        contentContainerStyle={paymentStyles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header */}
-        <View style={paymentStyles.header}>
-          <BackButton onPress={() => router.back()} />
-        </View>
-
-        {/* Content */}
-        <View style={paymentStyles.content}>
-          <Text variant="heading" style={paymentStyles.title}>
-            Payment method
-          </Text>
-          
-          <Text variant="body" style={paymentStyles.subtitle}>
-            Choose how you'd like to pay
-          </Text>
+      <ScreenContent>
+        <ScreenTitle 
+          title="Payment method"
+          subtitle="Choose how you'd like to pay"
+        />
 
           {/* Payment Options */}
           <View style={paymentStyles.paymentOptionsContainer}>
@@ -101,23 +88,13 @@ export default function PaymentScreen() {
             </Text>
           </View>
         </View>
+      </ScreenContent>
 
-        {/* Bottom CTA */}
-        <View style={paymentStyles.bottomSection}>
-          <Pressable 
-            style={[
-              paymentStyles.confirmButton,
-              !selectedPayment && paymentStyles.confirmButtonDisabled
-            ]}
-            onPress={handleConfirm}
-            disabled={!selectedPayment}
-          >
-            <Text variant="body" weight="medium" style={paymentStyles.confirmButtonText}>
-              Confirm Booking
-            </Text>
-          </Pressable>
-        </View>
-      </ScrollView>
-    </View>
+      <BottomButton 
+        text="Confirm Booking"
+        onPress={handleConfirm}
+        disabled={!selectedPayment}
+      />
+    </ScreenLayout>
   );
 }

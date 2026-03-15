@@ -1,7 +1,12 @@
-import React from 'react';
-import { View, Pressable, StatusBar, ScrollView } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { Text } from '@/components/Text';
+import { ScreenLayout } from '../components/shared/ScreenLayout';
+import { ScreenHeader } from '../components/shared/ScreenHeader';
+import { ScreenContent } from '../components/shared/ScreenContent';
+import { ScreenTitle } from '../components/shared/ScreenTitle';
+import { BottomButton } from '../components/shared/BottomButton';
 import { SuccessIcon } from '../components/shared/SuccessIcon';
 import { User, Clock, Phone, Shield, CheckCircle, MapPin } from 'lucide-react-native';
 import { useRTL } from '@/contexts/RTLContext';
@@ -31,32 +36,18 @@ export default function ConfirmationScreen() {
   };
 
   if (isLoading) {
-    return (
-      <View style={confirmationStyles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
-      </View>
-    );
+    return <ScreenLayout showScrollView={false} />;
   }
 
   return (
-    <View style={confirmationStyles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
-      
-      <ScrollView 
-        contentContainerStyle={confirmationStyles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Main Content */}
-        <View style={confirmationStyles.content}>
-          <SuccessIcon />
-          
-          <Text variant="heading" style={confirmationStyles.title}>
-            Booking Confirmed
-          </Text>
-          
-          <Text variant="caption" style={confirmationStyles.bookingRef}>
-            Booking #{bookingDetails.id}
-          </Text>
+    <ScreenLayout>
+      <ScreenContent>
+        <SuccessIcon />
+        
+        <ScreenTitle 
+          title="Booking Confirmed"
+          subtitle={`Booking #${bookingDetails.id}`}
+        />
           
           {/* Assigned Professional */}
           <View style={confirmationStyles.professionalContainer}>
@@ -162,19 +153,12 @@ export default function ConfirmationScreen() {
             </Text>
           </View>
         </View>
-      </ScrollView>
+      </ScreenContent>
 
-      {/* Bottom CTA */}
-      <View style={confirmationStyles.bottomSection}>
-        <Pressable 
-          style={confirmationStyles.doneButton}
-          onPress={handleTrackJob}
-        >
-          <Text variant="body" weight="medium" style={confirmationStyles.doneButtonText}>
-            Track Job
-          </Text>
-        </Pressable>
-      </View>
-    </View>
+      <BottomButton 
+        text="Track Job"
+        onPress={handleTrackJob}
+      />
+    </ScreenLayout>
   );
 }

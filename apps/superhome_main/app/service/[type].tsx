@@ -1,8 +1,12 @@
 import React from 'react';
-import { View, Pressable, StatusBar, ScrollView } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Text } from '@/components/Text';
-import { BackButton } from '../components/shared/BackButton';
+import { ScreenLayout } from '../components/shared/ScreenLayout';
+import { ScreenHeader } from '../components/shared/ScreenHeader';
+import { ScreenContent } from '../components/shared/ScreenContent';
+import { ScreenTitle } from '../components/shared/ScreenTitle';
+import { BottomButton } from '../components/shared/BottomButton';
 import { useRTL } from '@/contexts/RTLContext';
 import { theme } from '@/theme/index';
 import { serviceStyles } from '../screens/service.screen.styles';
@@ -55,26 +59,14 @@ export default function ServiceDetailScreen() {
   };
 
   if (isLoading) {
-    return (
-      <View style={serviceStyles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
-      </View>
-    );
+    return <ScreenLayout showScrollView={false} />;
   }
 
   return (
-    <View style={serviceStyles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.surface.background} />
+    <ScreenLayout>
+      <ScreenHeader onBack={() => router.back()} />
       
-      <ScrollView 
-        contentContainerStyle={serviceStyles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Header */}
-        <View style={serviceStyles.header}>
-          <BackButton onPress={() => router.back()} />
-        </View>
-
+      <ScreenContent>
         {/* Service Header */}
         <View style={serviceStyles.serviceHeader}>
           <View style={serviceStyles.serviceIconContainer}>
@@ -153,19 +145,12 @@ export default function ServiceDetailScreen() {
             </Text>
           </View>
         </View>
+      </ScreenContent>
 
-        {/* Bottom CTA */}
-        <View style={serviceStyles.bottomSection}>
-          <Pressable 
-            style={serviceStyles.continueButton}
-            onPress={handleContinue}
-          >
-            <Text variant="body" weight="medium" style={serviceStyles.continueButtonText}>
-              Continue
-            </Text>
-          </Pressable>
-        </View>
-      </ScrollView>
-    </View>
+      <BottomButton 
+        text="Continue"
+        onPress={handleContinue}
+      />
+    </ScreenLayout>
   );
 }

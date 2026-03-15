@@ -86,7 +86,8 @@ export default function AddressScreen() {
   };
 
   const handleContinue = () => {
-    if ((location || address.trim()) && phoneNumber.trim()) {
+    // For demo, allow proceeding with just location selection
+    if (location || address.trim() || selectedMethod) {
       router.push('/time');
     }
   };
@@ -245,10 +246,10 @@ export default function AddressScreen() {
         <Pressable 
           style={[
             addressStyles.continueButton,
-            ((!location && !address.trim()) || !phoneNumber.trim()) && addressStyles.continueButtonDisabled
+            (!location && !address.trim() && !selectedMethod) && addressStyles.continueButtonDisabled
           ]}
           onPress={handleContinue}
-          disabled={!location && !address.trim() || !phoneNumber.trim()}
+          disabled={!location && !address.trim() && !selectedMethod}
         >
           <Text variant="body" weight="medium" style={addressStyles.continueButtonText}>
             Continue
