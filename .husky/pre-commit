@@ -1,0 +1,17 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Check if there are changes in apps/superhome_main
+if git diff --cached --name-only | grep -q "^apps/superhome_main/"; then
+  echo "Changes detected in apps/superhome_main, running build check..."
+  cd apps/superhome_main
+  npm run build
+  if [ $? -ne 0 ]; then
+    echo "Build failed! Please fix the build errors before committing."
+    exit 1
+  fi
+  echo "Build successful!"
+  cd ../..
+else
+  echo "No changes in apps/superhome_main, skipping build check."
+fi
