@@ -1,11 +1,29 @@
 import * as functions from 'firebase-functions';
 import { Container } from '../di/Container';
+import { isAdmin } from '../config/admin';
 
 export const updateProduct = async (
   data: any,
   context: functions.https.CallableContext
 ) => {
   try {
+    // Verify user is authenticated
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        'unauthenticated',
+        'User must be authenticated'
+      );
+    }
+
+    // Verify user is an admin
+    const email = context.auth.token.email;
+    if (!email || !isAdmin(email)) {
+      throw new functions.https.HttpsError(
+        'permission-denied',
+        'User is not authorized as an admin'
+      );
+    }
+
     const { productId, productData } = data;
 
     if (!productId || !productData) {

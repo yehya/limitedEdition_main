@@ -1,15 +1,38 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 
-const firebaseConfig = {
-  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
+const firebaseConfigs = {
+  production: {
+    apiKey: "AIzaSyC_U5QPw9QLFfbJFfdMmMtGJ_AbvoX13tQ",
+    authDomain: "limited-edition-prod.firebaseapp.com",
+    projectId: "limited-edition-prod",
+    storageBucket: "limited-edition-prod.firebasestorage.app",
+    messagingSenderId: "313942451307",
+    appId: "1:313942451307:web:3860bc4ac990d3d8e97d2e",
+    measurementId: "G-KTMWL710KX",
+  },
+  development: {
+    apiKey: "AIzaSyC_U5QPw9QLFfbJFfdMmMtGJ_AbvoX13tQ",
+    authDomain: "limited-edition-prod.firebaseapp.com",
+    projectId: "limited-edition-prod",
+    storageBucket: "limited-edition-prod.firebasestorage.app",
+    messagingSenderId: "313942451307",
+    appId: "1:313942451307:web:3860bc4ac990d3d8e97d2e",
+    measurementId: "G-KTMWL710KX",
+  },
+  testing: {
+    apiKey: "AIzaSyC_U5QPw9QLFfbJFfdMmMtGJ_AbvoX13tQ",
+    authDomain: "limited-edition-prod.firebaseapp.com",
+    projectId: "limited-edition-prod",
+    storageBucket: "limited-edition-prod.firebasestorage.app",
+    messagingSenderId: "313942451307",
+    appId: "1:313942451307:web:3860bc4ac990d3d8e97d2e",
+    measurementId: "G-KTMWL710KX",
+  },
 };
+
+const env = process.env.EXPO_PUBLIC_FIREBASE_ENV || 'development';
+const firebaseConfig = firebaseConfigs[env as keyof typeof firebaseConfigs] || firebaseConfigs.development;
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;

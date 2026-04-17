@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import theme from '../theme';
 import { Typography } from '../components/Typography';
@@ -16,6 +17,51 @@ export default function CheckoutScreen() {
   const [governorate, setGovernorate] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const { clearCart, getCartTotal, cart } = useCart();
+
+  // Load form data from AsyncStorage on mount
+  useEffect(() => {
+    loadFormData();
+  }, []);
+
+  const loadFormData = async () => {
+    try {
+      const savedName = await AsyncStorage.getItem('checkout_name');
+      const savedPhone = await AsyncStorage.getItem('checkout_phone');
+      const savedAddress = await AsyncStorage.getItem('checkout_address');
+      const savedCity = await AsyncStorage.getItem('checkout_city');
+      const savedGovernorate = await AsyncStorage.getItem('checkout_governorate');
+
+      if (savedName) setName(savedName);
+      if (savedPhone) setPhone(savedPhone);
+      if (savedAddress) setAddress(savedAddress);
+      if (savedCity) setCity(savedCity);
+      if (savedGovernorate) setGovernorate(savedGovernorate);
+    } catch (error) {
+      console.error('Error loading form data:', error);
+    }
+  };
+
+  // Save form data to AsyncStorage asynchronously (non-blocking)
+  const saveFormData = async () => {
+    try {
+      await AsyncStorage.setItem('checkout_name', name);
+      await AsyncStorage.setItem('checkout_phone', phone);
+      await AsyncStorage.setItem('checkout_address', address);
+      await AsyncStorage.setItem('checkout_city', city);
+      await AsyncStorage.setItem('checkout_governorate', governorate);
+    } catch (error) {
+      console.error('Error saving form data:', error);
+    }
+  };
+
+  // Debounce save function to avoid saving on every keystroke
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      saveFormData();
+    }, 500); // Save after 500ms of inactivity
+
+    return () => clearTimeout(timeoutId);
+  }, [name, phone, address, city, governorate]);
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -46,9 +92,22 @@ export default function CheckoutScreen() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     if (!validateForm()) {
       return;
+    }
+
+    // Clear saved form data after successful order
+    try {
+      await AsyncStorage.multiRemove([
+        'checkout_name',
+        'checkout_phone',
+        'checkout_address',
+        'checkout_city',
+        'checkout_governorate',
+      ]);
+    } catch (error) {
+      console.error('Error clearing form data:', error);
     }
 
     clearCart();
