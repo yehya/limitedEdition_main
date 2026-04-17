@@ -137,17 +137,20 @@ export default function AdminOrders() {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Pressable onPress={() => router.back()} style={styles.backButton}>
-          <Typography variant="body">← Back</Typography>
+          <Typography variant="caption" color="secondary">← BACK</Typography>
         </Pressable>
 
         <Typography variant="h2" style={styles.title}>ORDERS</Typography>
 
         {loading ? (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator color={theme.colors.accent} />
+            <ActivityIndicator size="large" color={theme.colors.accent} />
           </View>
         ) : orders.length === 0 ? (
-          <Typography variant="body" color="secondary">No orders</Typography>
+          <View style={styles.emptyContainer}>
+            <Typography variant="h3" style={styles.emptyTitle}>NO ORDERS</Typography>
+            <Typography variant="caption" color="secondary">Orders will appear here</Typography>
+          </View>
         ) : (
           orders.map((order) => (
             <View key={order.id} style={styles.card}>
@@ -272,6 +275,16 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     alignItems: 'center',
-    paddingVertical: theme.spacing.xl,
+    justifyContent: 'center',
+    paddingVertical: theme.spacing.xxxl,
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: theme.spacing.xxxl,
+  },
+  emptyTitle: {
+    marginBottom: theme.spacing.sm,
+    letterSpacing: 2,
   },
 });

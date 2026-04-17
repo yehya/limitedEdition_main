@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     alignItems: 'center',
-    paddingVertical: theme.spacing.xl,
+    justifyContent: 'center',
+    paddingVertical: theme.spacing.xxxl,
   },
 });

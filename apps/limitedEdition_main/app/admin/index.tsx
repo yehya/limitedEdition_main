@@ -40,7 +40,7 @@ export default function AdminDashboard() {
     return (
       <View style={styles.container}>
         <View style={styles.center}>
-          <ActivityIndicator color={theme.colors.accent} />
+          <ActivityIndicator size="large" color={theme.colors.accent} />
         </View>
       </View>
     );
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <Pressable onPress={() => router.back()} style={styles.backButton}>
-            <Typography variant="body">← Back</Typography>
+            <Typography variant="caption" color="secondary">← BACK</Typography>
           </Pressable>
 
           <Typography variant="h2" style={styles.title}>ADMIN</Typography>
@@ -61,7 +61,7 @@ export default function AdminDashboard() {
           </Typography>
 
           <Pressable style={styles.primaryButton} onPress={signInWithGoogle}>
-            <Typography variant="body" style={styles.primaryButtonText}>Sign In</Typography>
+            <Typography variant="body" style={styles.primaryButtonText}>SIGN IN</Typography>
           </Pressable>
         </ScrollView>
       </View>
@@ -73,7 +73,7 @@ export default function AdminDashboard() {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <Pressable onPress={() => router.back()} style={styles.backButton}>
-            <Typography variant="body">← Back</Typography>
+            <Typography variant="caption" color="secondary">← BACK</Typography>
           </Pressable>
 
           <Typography variant="h2" style={styles.title}>ACCESS DENIED</Typography>
@@ -83,7 +83,7 @@ export default function AdminDashboard() {
           </Typography>
 
           <Pressable style={styles.secondaryButton} onPress={signOut}>
-            <Typography variant="body" style={styles.secondaryButtonText}>Sign Out</Typography>
+            <Typography variant="body" style={styles.secondaryButtonText}>SIGN OUT</Typography>
           </Pressable>
         </ScrollView>
       </View>
@@ -95,10 +95,10 @@ export default function AdminDashboard() {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
           <Pressable onPress={() => router.back()} style={styles.backButton}>
-            <Typography variant="body">← Back</Typography>
+            <Typography variant="caption" color="secondary">← BACK</Typography>
           </Pressable>
           <Pressable style={styles.signOutButton} onPress={signOut}>
-            <Typography variant="caption">Sign Out</Typography>
+            <Typography variant="caption" color="secondary">SIGN OUT</Typography>
           </Pressable>
         </View>
 

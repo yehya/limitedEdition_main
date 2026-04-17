@@ -50,11 +50,12 @@ export default function Index() {
     >
       {loading ? (
         <View style={styles.center}>
-          <ActivityIndicator color={theme.colors.accent} />
+          <ActivityIndicator size="large" color={theme.colors.accent} />
         </View>
       ) : products.length === 0 ? (
         <View style={styles.center}>
-          <Typography variant="body" color="secondary">No products found</Typography>
+          <Typography variant="h3" style={styles.emptyTitle}>NO PRODUCTS</Typography>
+          <Typography variant="caption" color="secondary">Check back soon</Typography>
         </View>
       ) : (
         <FlatList
@@ -104,8 +105,14 @@ const styles = StyleSheet.create({
     height: 80,
   },
   center: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: theme.spacing.xl,
+  },
+  emptyTitle: {
+    marginBottom: theme.spacing.sm,
+    letterSpacing: 2,
   },
   row: {
     justifyContent: 'space-between',

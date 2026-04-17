@@ -27,7 +27,7 @@ export default function ConfirmationScreen() {
 
         {/* Thank You Message */}
         <Typography variant="body" color="secondary" style={styles.message}>
-          Thank you for your purchase. You will receive a confirmation message shortly.
+          Thank you for your purchase. You will receive a confirmation call within 1-3 days.
         </Typography>
 
         {/* Details */}
