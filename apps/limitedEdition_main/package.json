@@ -7,7 +7,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build": "expo export -p web",
+    "build": "expo export -p web && cp superstatic.json dist/superstatic.json",
     "dev": "expo start",
     "dev:testing": "cp .env.testing .env.local && expo start",
     "dev:production": "cp .env.production .env.local && expo start",
