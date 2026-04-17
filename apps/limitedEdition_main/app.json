@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Limited Edition",
+    "slug": "limited-edition",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-localization"
+    ],
+    "extra": {
+      "supportsRTL": true
+    },
+    "scheme": "limited-edition"
+  }
+}

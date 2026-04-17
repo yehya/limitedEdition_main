@@ -1,0 +1,207 @@
+# AI Context - Blank Project Setup
+
+## Project Origin
+- **Date:** April 17, 2026
+- **Purpose:** Clean slate with preserved architecture and .windsurf rules
+
+## Architecture Summary
+
+### Tech Stack
+- **Expo React Native** - Cross-platform mobile (iOS, Android, Web)
+- **Expo Router** - File-based routing system (app/ directory)
+- **TypeScript** - Type safety with path aliases (@/*)
+- **Bun** - Package manager (local development)
+- **React Native Web** - Web support
+
+### Project Structure
+```
+limitedEdition/
+├── apps/superhome_main/    # Expo app
+│   ├── app/               # Expo Router routes
+│   │   ├── _layout.tsx    # Root layout with Stack navigator
+│   │   └── index.tsx      # Blank home page
+│   ├── package.json       # Dependencies & scripts
+│   ├── app.json           # Expo configuration
+│   ├── tsconfig.json      # TypeScript config with path aliases
+│   ├── babel.config.js    # Babel configuration
+│   ├── eas.json           # EAS Build configuration
+│   ├── .env.*             # Environment files (testing, production)
+│   └── apphosting.*.yaml  # Firebase App Hosting configs
+├── .windsurf/rules/       # Development rules (13 files)
+├── package.json           # Root dependencies
+├── THEME_RULE.md          # Theme system rules
+└── README.md              # Project documentation
+```
+
+### TypeScript Path Aliases (tsconfig.json)
+```json
+{
+  "@/*": ["./"],
+  "@/components/*": ["./components/*"],
+  "@/hooks/*": ["./hooks/*"],
+  "@/contexts/*": ["./contexts/*"],
+  "@/utils/*": ["./utils/*"],
+  "@/theme/*": ["./theme/*"],
+  "@/locales/*": ["./locales/*"]
+}
+```
+
+## .windsurf Rules Preserved
+
+All rule files are preserved in `.windsurf/rules/`:
+
+### Core Architecture
+1. **architecture.md** - Framework-only approach, 3-layer architecture, database-agnostic
+2. **file-organization.md** - File size limits (200 lines max), NO barrel files rule
+3. **llm-workflow.md** - LLM development workflow, context management, common mistakes
+
+### Product & Design
+4. **design-dna.md** - UI/UX principles (NEVER break)
+5. **localization.md** - i18n support for Arabic/English, extensible design
+
+### Implementation Guides
+6. **componentization.md** - Reusable components pattern
+7. **package-management.md** - Bun package management rules
+
+### Meta
+8. **THEME_RULE.md** - Theme system rules (NEVER use hardcoded colors)
+9. **README.md** - Rules overview
+
+## Key Development Rules
+
+### Theme System (CRITICAL)
+- **NEVER use hardcoded colors** - ALWAYS use theme system
+- Examples:
+  - ❌ `backgroundColor: '#0A0A0A'`
+  - ✅ `backgroundColor: theme.colors.neutral[950]`
+- Available: `theme.colors.primary[50-950]`, `theme.colors.text.*`, `theme.spacing.*`, etc.
+
+### File Organization
+- Max 200 lines per file
+- NO barrel files except function exports
+- Use @/ path aliases
+
+### Package Management
+- **ALWAYS USE BUN** for local package management
+- NEVER use npm, yarn, or pnpm locally
+- Use `bunx expo install` for Expo-compatible packages
+
+## What Was Cleaned
+
+### Removed:
+- ❌ backend/ directory (Firebase Cloud Functions)
+- ❌ node_modules/ directories
+- ❌ .expo/ directories
+- ❌ dist/ directories
+- ❌ bun.lock files
+- ❌ package-lock.json files
+- ❌ app/ content (screens, components, contexts, hooks, locales, scripts, theme, utils)
+- ❌ STYLING_CHECKLIST.md
+- ❌ THEME_AUDIT.md
+
+### Preserved:
+- ✅ .windsurf/rules/ (all 13 files)
+- ✅ apps/superhome_main/ setup files
+- ✅ package.json (root and app)
+- ✅ app.json (Expo config)
+- ✅ tsconfig.json (TypeScript config)
+- ✅ babel.config.js
+- ✅ eas.json
+- ✅ .env.* files
+- ✅ apphosting.*.yaml files
+- ✅ THEME_RULE.md
+- ✅ .gitignore
+
+## Current State
+
+### Blank Page Setup
+- **app/_layout.tsx** - Root layout with Expo Router Stack
+- **app/index.tsx** - Simple blank page with "Blank Project" text
+
+### Dependencies (package.json)
+```json
+{
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "1.23.1",
+    "expo": "~51.0.28",
+    "expo-localization": "15.0.3",
+    "expo-location": "~17.0.1",
+    "expo-router": "~3.5.23",
+    "expo-updates": "0.25.28",
+    "lucide-react-native": "^0.577.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-native": "0.74.5",
+    "react-native-web": "~0.19.10",
+    "superstatic": "^9.2.0"
+  }
+}
+```
+
+### Scripts
+- `bun run dev:testing` - Development with testing environment
+- `bun run dev:production` - Development with production environment
+- `bun run build` - Export for web
+- `bun run web` - Start web development server
+- `bun run android` - Start Android development
+- `bun run ios` - Start iOS development
+
+## Next Steps for Development
+
+1. **Install dependencies:**
+   ```bash
+   cd apps/limitedEdition_main
+   bun install
+   ```
+
+2. **Start development:**
+   ```bash
+   bun run dev:testing
+   ```
+
+3. **Build structure following .windsurf rules:**
+   - Create theme/ directory with theme system
+   - Create components/ for reusable components
+   - Create contexts/ for state management
+   - Create hooks/ for custom hooks
+   - Create utils/ for utilities
+   - Create locales/ for i18n
+   - Add screens in app/ directory
+
+4. **Always follow:**
+   - Theme system (THEME_RULE.md)
+   - File organization rules (file-organization.md)
+   - Design DNA principles (design-dna.md)
+   - Architecture guidelines (architecture.md)
+
+## Environment Files
+
+- `.env.local` - Local development (copied from .env.testing or .env.production)
+- `.env.testing` - Testing environment config
+- `.env.production` - Production environment config
+- `.env.production.example` - Template for production env
+
+## Expo Configuration (app.json)
+
+- **Name:** Limited Edition
+- **Slug:** limited-edition
+- **Orientation:** Portrait
+- **Plugins:** expo-router, expo-localization
+- **Scheme:** limited-edition
+- **RTL Support:** Enabled
+
+## Deployment
+
+The project is configured for Firebase App Hosting with:
+- apphosting.yaml - Base configuration
+- apphosting.development.yaml - Development environment
+- apphosting.production.yaml - Production environment
+
+## Important Notes
+
+- This is a **monorepo structure** with apps/ directory
+- The project is set up for **multi-platform** (iOS, Android, Web)
+- **Expo Router** uses file-based routing in the app/ directory
+- **TypeScript** is configured with strict mode and path aliases
+- **Bun** is the required package manager for local development
+- All development must follow the .windsurf rules
