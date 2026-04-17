@@ -28,23 +28,9 @@ export default function ProductCard({ product, onEdit, onDelete, isDeleting = fa
         <Image source={{ uri: product.image }} style={styles.image} />
       </View>
       <View style={styles.cardContent}>
-        <View style={styles.nameRow}>
-          <Typography variant="body" style={styles.productName}>
-            {product.name}
-          </Typography>
-          <View style={styles.statusBadges}>
-            {product.soldOut && (
-              <View style={styles.statusBadge}>
-                <Typography variant="small" style={styles.statusBadgeText}>SOLD OUT</Typography>
-              </View>
-            )}
-            {product.hidden && (
-              <View style={[styles.statusBadge, styles.hiddenBadge]}>
-                <Typography variant="small" style={styles.statusBadgeText}>HIDDEN</Typography>
-              </View>
-            )}
-          </View>
-        </View>
+        <Typography variant="body" style={styles.productName}>
+          {product.name}
+        </Typography>
         <Typography variant="caption" color="secondary" style={styles.productDescription}>
           {product.description}
         </Typography>
@@ -54,6 +40,18 @@ export default function ProductCard({ product, onEdit, onDelete, isDeleting = fa
         <Typography variant="caption" color="secondary">
           {Array.isArray(product.sizes) ? product.sizes.join(', ') : product.sizes}
         </Typography>
+        <View style={styles.statusBadges}>
+          {product.soldOut && (
+            <View style={styles.statusBadge}>
+              <Typography variant="small" style={styles.statusBadgeText}>SOLD OUT</Typography>
+            </View>
+          )}
+          {product.hidden && (
+            <View style={[styles.statusBadge, styles.hiddenBadge]}>
+              <Typography variant="small" style={styles.statusBadgeText}>HIDDEN</Typography>
+            </View>
+          )}
+        </View>
       </View>
       <View style={styles.cardActions}>
         <Pressable
@@ -97,24 +95,18 @@ const styles = StyleSheet.create({
   cardContent: {
     marginBottom: theme.spacing.md,
   },
-  nameRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: theme.spacing.xs,
-  },
   productName: {
-    flex: 1,
-    marginRight: theme.spacing.sm,
+    marginBottom: theme.spacing.xs,
   },
   statusBadges: {
     flexDirection: 'row',
     gap: theme.spacing.xs,
+    marginTop: theme.spacing.sm,
   },
   statusBadge: {
     backgroundColor: theme.colors.accent,
-    paddingHorizontal: theme.spacing.xs,
-    paddingVertical: 2,
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: 4,
     borderRadius: theme.borderRadius.sm,
   },
   hiddenBadge: {
