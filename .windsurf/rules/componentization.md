@@ -3,7 +3,7 @@ trigger: always_on
 ---
 
 # COMPONENTIZATION GUIDELINES
-SuperHome - Reusable Components Pattern
+Reusable Components Pattern
 
 ## OBJECTIVE
 
