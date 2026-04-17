@@ -86,12 +86,12 @@ export default function AdminOrders() {
           <Typography variant="body">← Back</Typography>
         </Pressable>
 
-        <Typography variant="h2" style={styles.title}>Orders</Typography>
+        <Typography variant="h2" style={styles.title}>ORDERS</Typography>
 
         {loading ? (
-          <Typography variant="body">Loading orders...</Typography>
+          <Typography variant="body">Loading...</Typography>
         ) : orders.length === 0 ? (
-          <Typography variant="body" color="secondary">No orders found</Typography>
+          <Typography variant="body" color="secondary">No orders</Typography>
         ) : (
           orders.map((order) => (
             <View key={order.id} style={styles.card}>
@@ -112,23 +112,23 @@ export default function AdminOrders() {
               </View>
 
               <View style={styles.section}>
-                <Typography variant="caption" color="secondary">Customer Info:</Typography>
+                <Typography variant="caption" color="secondary">CUSTOMER</Typography>
                 <Typography variant="body">{order.customerInfo.phone}</Typography>
                 <Typography variant="body">{order.customerInfo.address}</Typography>
                 <Typography variant="body">{order.customerInfo.city}, {order.customerInfo.governorate}</Typography>
               </View>
 
               <View style={styles.section}>
-                <Typography variant="caption" color="secondary">Items:</Typography>
+                <Typography variant="caption" color="secondary">ITEMS</Typography>
                 {order.items.map((item, index) => (
                   <Typography key={index} variant="body">
-                    {item.name} (Size: {item.selectedSize}) x {item.quantity} - EGP {item.price * item.quantity}
+                    {item.name} ({item.selectedSize}) x {item.quantity} - EGP {item.price * item.quantity}
                   </Typography>
                 ))}
               </View>
 
               <View style={styles.statusSection}>
-                <Typography variant="caption" color="secondary">Status:</Typography>
+                <Typography variant="caption" color="secondary">STATUS</Typography>
                 <View style={styles.statusButtons}>
                   {['pending', 'processing', 'shipped', 'delivered', 'cancelled'].map((status) => (
                     <Pressable
@@ -143,7 +143,7 @@ export default function AdminOrders() {
                         variant="caption"
                         color={order.status === status ? 'primary' : 'secondary'}
                       >
-                        {status.charAt(0).toUpperCase() + status.slice(1)}
+                        {status.toUpperCase()}
                       </Typography>
                     </Pressable>
                   ))}
@@ -166,23 +166,21 @@ const styles = StyleSheet.create({
     padding: theme.spacing.lg,
   },
   backButton: {
-    marginBottom: theme.spacing.lg,
+    marginBottom: theme.spacing.xl,
   },
   title: {
-    marginBottom: theme.spacing.xl,
+    marginBottom: theme.spacing.xxxl,
   },
   card: {
     backgroundColor: theme.colors.surface.card,
-    borderWidth: 1,
-    borderColor: theme.colors.surface.border,
-    padding: theme.spacing.md,
+    padding: theme.spacing.lg,
     marginBottom: theme.spacing.md,
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
   },
   cardHeaderRight: {
     alignItems: 'flex-end',
@@ -191,11 +189,11 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.xs,
   },
   section: {
-    marginBottom: theme.spacing.md,
+    marginBottom: theme.spacing.lg,
   },
   statusSection: {
-    marginTop: theme.spacing.md,
-    paddingTop: theme.spacing.md,
+    marginTop: theme.spacing.lg,
+    paddingTop: theme.spacing.lg,
     borderTopWidth: 1,
     borderTopColor: theme.colors.surface.border,
   },
@@ -203,15 +201,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: theme.spacing.xs,
-    marginTop: theme.spacing.sm,
+    marginTop: theme.spacing.md,
   },
   statusButton: {
     backgroundColor: theme.colors.background.secondary,
     borderWidth: 1,
     borderColor: theme.colors.surface.border,
-    paddingVertical: theme.spacing.xs,
-    paddingHorizontal: theme.spacing.sm,
-    borderRadius: theme.borderRadius.sm,
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
   },
   statusButtonActive: {
     backgroundColor: theme.colors.accent,

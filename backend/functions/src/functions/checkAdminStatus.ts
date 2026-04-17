@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 import { isAdmin } from '../config/admin';
 
 export const checkAdminStatus = async (

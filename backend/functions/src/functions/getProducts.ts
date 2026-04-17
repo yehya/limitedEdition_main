@@ -1,15 +1,26 @@
 import * as functions from 'firebase-functions';
-import { Container } from '../di/Container';
+import * as admin from 'firebase-admin';
 
 export const getProducts = async (
   data: any,
   context: functions.https.CallableContext
 ) => {
-  try {
-    const container = Container.getInstance();
-    const productService = container.getProductService();
+  const db = admin.firestore();
 
-    const products = await productService.getAllProducts();
+  try {
+    const { limit = 50, offset = 0 } = data;
+
+    const productsRef = db.collection('products');
+    const snapshot = await productsRef
+      .orderBy('name')
+      .limit(limit)
+      .offset(offset)
+      .get();
+
+    const products = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
 
     return {
       success: true,

@@ -54,14 +54,14 @@ export default function AdminDashboard() {
             <Typography variant="body">← Back</Typography>
           </Pressable>
 
-          <Typography variant="h2" style={styles.title}>Admin Access</Typography>
+          <Typography variant="h2" style={styles.title}>ADMIN</Typography>
 
           <Typography variant="body" color="secondary" style={styles.description}>
-            Sign in with Google to access the admin dashboard
+            Sign in to access
           </Typography>
 
-          <Pressable style={styles.signInButton} onPress={signInWithGoogle}>
-            <Typography variant="body" style={styles.signInButtonText}>Sign in with Google</Typography>
+          <Pressable style={styles.primaryButton} onPress={signInWithGoogle}>
+            <Typography variant="body" style={styles.primaryButtonText}>Sign In</Typography>
           </Pressable>
         </ScrollView>
       </View>
@@ -76,14 +76,14 @@ export default function AdminDashboard() {
             <Typography variant="body">← Back</Typography>
           </Pressable>
 
-          <Typography variant="h2" style={styles.title}>Access Denied</Typography>
+          <Typography variant="h2" style={styles.title}>ACCESS DENIED</Typography>
 
           <Typography variant="body" color="secondary" style={styles.description}>
-            You do not have permission to access the admin dashboard
+            Not authorized
           </Typography>
 
-          <Pressable style={styles.signOutButton} onPress={signOut}>
-            <Typography variant="body" style={styles.signOutButtonText}>Sign Out</Typography>
+          <Pressable style={styles.secondaryButton} onPress={signOut}>
+            <Typography variant="body" style={styles.secondaryButtonText}>Sign Out</Typography>
           </Pressable>
         </ScrollView>
       </View>
@@ -102,27 +102,27 @@ export default function AdminDashboard() {
           </Pressable>
         </View>
 
-        <Typography variant="h2" style={styles.title}>Admin Dashboard</Typography>
+        <Typography variant="h2" style={styles.title}>ADMIN</Typography>
 
-        <Typography variant="body" color="secondary" style={styles.userInfo}>
-          Signed in as {user.email}
-        </Typography>
+        <View style={styles.menuItem}>
+          <Pressable 
+            style={styles.menuItemContent}
+            onPress={() => router.push('/admin/orders')}
+          >
+            <Typography variant="h3">ORDERS</Typography>
+            <Typography variant="caption" color="secondary">Manage orders</Typography>
+          </Pressable>
+        </View>
 
-        <Pressable
-          style={styles.card}
-          onPress={() => router.push('/admin/orders')}
-        >
-          <Typography variant="h3" style={styles.cardTitle}>Orders</Typography>
-          <Typography variant="body" color="secondary">Manage customer orders</Typography>
-        </Pressable>
-
-        <Pressable
-          style={styles.card}
-          onPress={() => router.push('/admin/products')}
-        >
-          <Typography variant="h3" style={styles.cardTitle}>Products</Typography>
-          <Typography variant="body" color="secondary">Manage product inventory</Typography>
-        </Pressable>
+        <View style={styles.menuItem}>
+          <Pressable 
+            style={styles.menuItemContent}
+            onPress={() => router.push('/admin/products')}
+          >
+            <Typography variant="h3">PRODUCTS</Typography>
+            <Typography variant="caption" color="secondary">Manage products</Typography>
+          </Pressable>
+        </View>
       </ScrollView>
     </View>
   );
@@ -142,7 +142,39 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backButton: {
-    marginBottom: theme.spacing.lg,
+    marginBottom: theme.spacing.xl,
+  },
+  title: {
+    marginBottom: theme.spacing.xxxl,
+  },
+  description: {
+    marginBottom: theme.spacing.xl,
+  },
+  primaryButton: {
+    backgroundColor: theme.colors.accent,
+    paddingVertical: theme.spacing.md,
+    paddingHorizontal: theme.spacing.xl,
+    alignItems: 'center',
+  },
+  primaryButtonText: {
+    color: theme.colors.background.primary,
+    fontWeight: '600',
+  },
+  secondaryButton: {
+    backgroundColor: theme.colors.background.secondary,
+    borderWidth: 1,
+    borderColor: theme.colors.surface.border,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.md,
+    alignItems: 'center',
+  },
+  secondaryButtonText: {
+    color: theme.colors.text.primary,
+  },
+  signOutButton: {
+    backgroundColor: theme.colors.background.secondary,
+    paddingHorizontal: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
   },
   header: {
     flexDirection: 'row',
@@ -150,53 +182,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: theme.spacing.lg,
   },
-  signOutButton: {
-    backgroundColor: theme.colors.background.secondary,
-    borderWidth: 1,
-    borderColor: theme.colors.surface.border,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.sm,
-  },
-  title: {
-    marginBottom: theme.spacing.lg,
-  },
-  description: {
-    marginBottom: theme.spacing.xxl,
-    textAlign: 'center',
-  },
-  userInfo: {
-    marginBottom: theme.spacing.xl,
-  },
-  signInButton: {
-    backgroundColor: '#4285F4',
-    paddingVertical: theme.spacing.md,
-    paddingHorizontal: theme.spacing.xl,
-    alignItems: 'center',
-    borderRadius: theme.borderRadius.sm,
-  },
-  signInButtonText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
-  },
-  signOutButton: {
-    backgroundColor: theme.colors.background.secondary,
-    borderWidth: 1,
-    borderColor: theme.colors.surface.border,
-    paddingHorizontal: theme.spacing.md,
-    paddingVertical: theme.spacing.md,
-    alignItems: 'center',
-  },
-  signOutButtonText: {
-    color: theme.colors.text.primary,
-  },
-  card: {
+  menuItem: {
     backgroundColor: theme.colors.surface.card,
-    padding: theme.spacing.xl,
     marginBottom: theme.spacing.md,
-    borderWidth: 1,
-    borderColor: theme.colors.surface.border,
   },
-  cardTitle: {
-    marginBottom: theme.spacing.xs,
+  menuItemContent: {
+    paddingVertical: theme.spacing.xl,
+    paddingHorizontal: theme.spacing.lg,
   },
 });

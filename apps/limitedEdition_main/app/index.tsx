@@ -1,13 +1,48 @@
-import React from 'react';
-import { View, StyleSheet, ScrollView, Image, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, ScrollView, Image, FlatList, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
+import { httpsCallable } from 'firebase/functions';
+import { getFunctions } from 'firebase/functions';
 import theme from '../theme';
 import { Typography } from '../components/Typography';
 import { ProductCard } from '../components/ProductCard';
-import { mockProducts } from '../mockData';
+import { app } from '../config/firebase';
+
+const functions = getFunctions(app, 'us-central1');
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  sizes: string[];
+}
 
 export default function Index() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const getProductsFn = httpsCallable(functions, 'getProductsFn');
+      const result = await getProductsFn({ limit: 50, offset: 0 });
+      const data = result.data as { success: boolean; data: Product[] };
+      if (data.success) {
+        setProducts(data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <LinearGradient
       colors={[theme.colors.background.secondary, theme.colors.background.primary]}
@@ -24,21 +59,29 @@ export default function Index() {
         </View>
 
         {/* Products Grid */}
-        <FlatList
-          data={mockProducts}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          renderItem={({ item }) => (
-            <View style={styles.gridItem}>
-              <ProductCard
-                product={item}
-                onPress={() => router.push(`/product/${item.id}`)}
-              />
-            </View>
-          )}
-          scrollEnabled={false}
-          columnWrapperStyle={styles.row}
-        />
+        {loading ? (
+          <View style={styles.center}>
+            <ActivityIndicator color={theme.colors.accent} />
+          </View>
+        ) : products.length === 0 ? (
+          <Typography variant="body" color="secondary">No products found</Typography>
+        ) : (
+          <FlatList
+            data={products}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            renderItem={({ item }) => (
+              <View style={styles.gridItem}>
+                <ProductCard
+                  product={item}
+                  onPress={() => router.push(`/product/${item.id}`)}
+                />
+              </View>
+            )}
+            scrollEnabled={false}
+            columnWrapperStyle={styles.row}
+          />
+        )}
       </ScrollView>
     </LinearGradient>
   );
@@ -60,6 +103,10 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 80,
+  },
+  center: {
+    alignItems: 'center',
+    paddingVertical: theme.spacing.xl,
   },
   row: {
     justifyContent: 'space-between',
