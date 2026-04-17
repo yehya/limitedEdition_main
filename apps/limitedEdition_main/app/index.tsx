@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Image, FlatList } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import theme from '../theme';
 import { Typography } from '../components/Typography';
@@ -8,7 +9,10 @@ import { mockProducts } from '../mockData';
 
 export default function Index() {
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={[theme.colors.background.secondary, theme.colors.background.primary]}
+      style={styles.container}
+    >
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Logo */}
         <View style={styles.logoContainer}>
@@ -36,7 +40,7 @@ export default function Index() {
           columnWrapperStyle={styles.row}
         />
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 }
 
