@@ -25,7 +25,7 @@ export default function ProductCard({ product, onEdit, onDelete, isDeleting = fa
   return (
     <View style={styles.card}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: product.image }} style={styles.image} />
+        <Image source={{ uri: product.image }} style={styles.image} cache="force-cache" />
       </View>
       <View style={styles.cardContent}>
         <Typography variant="body" style={styles.productName}>

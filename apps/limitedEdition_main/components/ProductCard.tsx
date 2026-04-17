@@ -16,6 +16,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onPress }) =>
           source={product.image}
           style={[styles.image, product.soldOut && styles.imageSoldOut]}
           resizeMode="contain"
+          cache="force-cache"
         />
         {product.soldOut && (
           <View style={styles.soldOutOverlay}>

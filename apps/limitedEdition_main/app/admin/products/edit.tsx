@@ -80,7 +80,10 @@ export default function EditProduct() {
       if (fileToUpload) {
         const filename = `products/${Date.now()}.${fileToUpload.name.split('.').pop()}`;
         const storageRef = ref(storage, filename);
-        await uploadBytes(storageRef, fileToUpload);
+        const metadata = {
+          cacheControl: 'public, max-age=31536000', // Cache for 1 year
+        };
+        await uploadBytes(storageRef, fileToUpload, metadata);
         imageUrl = await getDownloadURL(storageRef);
       }
 

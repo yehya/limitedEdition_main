@@ -83,7 +83,7 @@ export default function ProductDetailScreen() {
 
           <View style={[styles.layout, isDesktop && styles.layoutDesktop]}>
             <View style={[styles.imageContainer, isDesktop && styles.imageContainerDesktop]}>
-              <Image source={product.image} style={styles.image} resizeMode="contain" />
+              <Image source={product.image} style={styles.image} resizeMode="contain" cache="force-cache" />
             </View>
 
             <View style={[styles.infoContainer, isDesktop && styles.infoContainerDesktop]}>
