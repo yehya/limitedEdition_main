@@ -44,16 +44,17 @@ export default function ProductDetailScreen() {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Typography variant="body">Loading...</Typography>
+      <View style={[styles.container, styles.centered]}>
+        <ActivityIndicator size="large" color={theme.colors.accent} />
       </View>
     );
   }
 
   if (!product) {
     return (
-      <View style={styles.container}>
-        <Typography variant="body">Product not found</Typography>
+      <View style={[styles.container, styles.centered]}>
+        <Typography variant="h3" style={styles.notFoundTitle}>NOT FOUND</Typography>
+        <Typography variant="caption" color="secondary">This product does not exist</Typography>
       </View>
     );
   }
@@ -129,6 +130,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.background.primary,
+  },
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFoundTitle: {
+    marginBottom: theme.spacing.sm,
+    letterSpacing: 2,
   },
   scrollContent: {
     padding: theme.spacing.lg,
