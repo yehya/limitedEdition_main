@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background.secondary,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing.lg,
   },
   image: {
     width: '100%',
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     padding: theme.spacing.md,
   },
   name: {
-    fontSize: theme.typography.fontSize.body,
+    fontSize: theme.typography.fontSize.caption,
     fontWeight: '600',
     color: theme.colors.text.primary,
     marginBottom: theme.spacing.xs,
