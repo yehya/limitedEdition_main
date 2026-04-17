@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background.secondary,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: theme.spacing.xs,
   },
   image: {
     width: '100%',
