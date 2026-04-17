@@ -83,7 +83,17 @@ export default function ProductDetailScreen() {
 
           <View style={[styles.layout, isDesktop && styles.layoutDesktop]}>
             <View style={[styles.imageContainer, isDesktop && styles.imageContainerDesktop]}>
-              <Image source={product.image} style={styles.image} resizeMode="contain" cache="force-cache" />
+              <Image
+                source={product.image}
+                style={[styles.image, product.soldOut && styles.imageSoldOut]}
+                resizeMode="contain"
+                cache="force-cache"
+              />
+              {product.soldOut && (
+                <View style={styles.soldOutOverlay}>
+                  <Typography variant="h3" style={styles.soldOutText}>SOLD OUT</Typography>
+                </View>
+              )}
             </View>
 
             <View style={[styles.infoContainer, isDesktop && styles.infoContainerDesktop]}>
@@ -116,7 +126,7 @@ export default function ProductDetailScreen() {
             <Button
               title="ADD TO CART"
               onPress={handleAddToCart}
-              disabled={!selectedSize || addingToCart}
+              disabled={!selectedSize || addingToCart || product.soldOut}
             />
             {addingToCart && (
               <View style={styles.loadingOverlay}>
@@ -183,6 +193,26 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
+  },
+  imageSoldOut: {
+    opacity: 0.6,
+  },
+  soldOutOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  soldOutText: {
+    color: theme.colors.accent,
+    fontSize: theme.typography.fontSize.h2,
+    fontWeight: '700',
+    letterSpacing: 4,
+    transform: [{ rotate: '-15deg' }],
   },
   infoContainer: {
     paddingBottom: theme.spacing.xxl,
