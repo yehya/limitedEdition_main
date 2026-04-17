@@ -75,14 +75,15 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   soldOutText: {
-    color: theme.colors.accent,
+    color: '#FFE066',
     fontSize: theme.typography.fontSize.h3,
     fontWeight: '700',
     letterSpacing: 4,
     transform: [{ rotate: '-15deg' }],
     textAlign: 'center',
+    opacity: 0.8,
   },
 });

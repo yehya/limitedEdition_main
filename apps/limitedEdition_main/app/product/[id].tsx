@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   soldOutText: {
     color: theme.colors.accent,
@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 4,
     transform: [{ rotate: '-15deg' }],
+    opacity: 0.8,
   },
   infoContainer: {
     paddingBottom: theme.spacing.xxl,
