@@ -11,6 +11,8 @@ import { getOrders } from './functions/getOrders';
 import { getProductsAdmin } from './functions/getProductsAdmin';
 import { createProduct } from './functions/createProduct';
 import { checkAdminStatus } from './functions/checkAdminStatus';
+import { getPaymentSettings } from './functions/getPaymentSettings';
+import { updatePaymentSettings } from './functions/updatePaymentSettings';
 
 admin.initializeApp();
 
@@ -25,3 +27,5 @@ export const getOrdersFnV2 = onCall(getOrders);
 export const getProductsAdminFnV2 = onCall(getProductsAdmin);
 export const createProductFnV2 = onCall(createProduct);
 export const checkAdminStatusFnV2 = onCall(checkAdminStatus);
+export const getPaymentSettingsFnV2 = onCall(getPaymentSettings);
+export const updatePaymentSettingsFnV2 = onCall(updatePaymentSettings);

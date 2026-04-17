@@ -22,10 +22,18 @@ export const getOrders = async (request: any) => {
       );
     }
 
-    const { limit = 50, offset = 0 } = request.data;
+    const { limit = 20, offset = 0, status } = request.data;
 
-    const ordersRef = db.collection('orders');
-    const snapshot = await ordersRef
+    let query: FirebaseFirestore.Query = db.collection('orders');
+    if (status && status !== 'all') {
+      query = query.where('status', '==', status);
+    }
+
+    // Count total matching orders (for pagination UI)
+    const countSnapshot = await query.count().get();
+    const total = countSnapshot.data().count;
+
+    const snapshot = await query
       .orderBy('createdAt', 'desc')
       .limit(limit)
       .offset(offset)
@@ -39,6 +47,7 @@ export const getOrders = async (request: any) => {
     return {
       success: true,
       data: orders,
+      total,
     };
   } catch (error: any) {
     console.error('Error getting orders:', error);

@@ -19,6 +19,8 @@ interface Product {
   price: number;
   image: string;
   sizes: string[];
+  soldOut?: boolean;
+  hidden?: boolean;
 }
 
 export default function AdminProducts() {

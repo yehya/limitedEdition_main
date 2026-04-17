@@ -49,21 +49,20 @@ export default function AdminDashboard() {
   if (!user) {
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <Pressable onPress={() => router.back()} style={styles.backButton}>
-            <Typography variant="caption" color="secondary">← BACK</Typography>
-          </Pressable>
-
-          <Typography variant="h2" style={styles.title}>ADMIN</Typography>
-
-          <Typography variant="body" color="secondary" style={styles.description}>
-            Sign in to access
+        <View style={styles.authCenter}>
+          <Typography variant="caption" color="secondary" style={styles.eyebrow}>
+            RESTRICTED ACCESS
+          </Typography>
+          <Typography variant="h1" style={styles.authTitle}>ADMIN</Typography>
+          <View style={styles.accentRule} />
+          <Typography variant="body" color="secondary" style={styles.authDescription}>
+            Authorized personnel only. Sign in with your Google account to continue.
           </Typography>
 
           <Pressable style={styles.primaryButton} onPress={signInWithGoogle}>
-            <Typography variant="body" style={styles.primaryButtonText}>SIGN IN</Typography>
+            <Typography variant="body" style={styles.primaryButtonText}>SIGN IN WITH GOOGLE</Typography>
           </Pressable>
-        </ScrollView>
+        </View>
       </View>
     );
   }
@@ -71,21 +70,29 @@ export default function AdminDashboard() {
   if (isAdminUser === false) {
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <Pressable onPress={() => router.back()} style={styles.backButton}>
-            <Typography variant="caption" color="secondary">← BACK</Typography>
-          </Pressable>
+        <Pressable onPress={() => router.back()} style={styles.topBack}>
+          <Typography variant="caption" color="secondary">← BACK</Typography>
+        </Pressable>
 
-          <Typography variant="h2" style={styles.title}>ACCESS DENIED</Typography>
-
-          <Typography variant="body" color="secondary" style={styles.description}>
-            Not authorized
+        <View style={styles.authCenter}>
+          <Typography variant="caption" style={{ ...styles.eyebrow, color: theme.colors.error }}>
+            403 · FORBIDDEN
           </Typography>
+          <Typography variant="h1" style={styles.authTitle}>ACCESS{'\n'}DENIED</Typography>
+          <View style={[styles.accentRule, { backgroundColor: theme.colors.error }]} />
+          <Typography variant="body" color="secondary" style={styles.authDescription}>
+            This account is not authorized to access the admin panel.
+          </Typography>
+          {user.email && (
+            <Typography variant="caption" color="tertiary" style={styles.emailLabel}>
+              Signed in as {user.email}
+            </Typography>
+          )}
 
           <Pressable style={styles.secondaryButton} onPress={signOut}>
             <Typography variant="body" style={styles.secondaryButtonText}>SIGN OUT</Typography>
           </Pressable>
-        </ScrollView>
+        </View>
       </View>
     );
   }
@@ -94,15 +101,11 @@ export default function AdminDashboard() {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.header}>
-          <Pressable onPress={() => router.back()} style={styles.backButton}>
-            <Typography variant="caption" color="secondary">← BACK</Typography>
-          </Pressable>
+          <Typography variant="h2">ADMIN</Typography>
           <Pressable style={styles.signOutButton} onPress={signOut}>
             <Typography variant="caption" color="secondary">SIGN OUT</Typography>
           </Pressable>
         </View>
-
-        <Typography variant="h2" style={styles.title}>ADMIN</Typography>
 
         <View style={styles.menuItem}>
           <Pressable 
@@ -123,6 +126,16 @@ export default function AdminDashboard() {
             <Typography variant="caption" color="secondary">Manage products</Typography>
           </Pressable>
         </View>
+
+        <View style={styles.menuItem}>
+          <Pressable 
+            style={styles.menuItemContent}
+            onPress={() => router.push('/admin/settings')}
+          >
+            <Typography variant="h3">SETTINGS</Typography>
+            <Typography variant="caption" color="secondary">Payment settings</Typography>
+          </Pressable>
+        </View>
       </ScrollView>
     </View>
   );
@@ -140,6 +153,41 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  topBack: {
+    padding: theme.spacing.lg,
+  },
+  authCenter: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: theme.spacing.lg,
+    paddingBottom: theme.spacing.xxxl,
+    maxWidth: 480,
+    width: '100%',
+    alignSelf: 'center',
+  },
+  eyebrow: {
+    letterSpacing: 3,
+    marginBottom: theme.spacing.lg,
+  },
+  authTitle: {
+    letterSpacing: 2,
+    marginBottom: theme.spacing.lg,
+  },
+  accentRule: {
+    width: 40,
+    height: 2,
+    backgroundColor: theme.colors.accent,
+    marginBottom: theme.spacing.xl,
+  },
+  authDescription: {
+    marginBottom: theme.spacing.xxl,
+    lineHeight: 24,
+  },
+  emailLabel: {
+    marginTop: -theme.spacing.md,
+    marginBottom: theme.spacing.xxl,
+    letterSpacing: 1,
   },
   backButton: {
     marginBottom: theme.spacing.xl,
@@ -180,7 +228,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: theme.spacing.lg,
+    marginBottom: theme.spacing.xxxl,
   },
   menuItem: {
     backgroundColor: theme.colors.surface.card,

@@ -5,12 +5,16 @@ export const createOrder = async (request: any) => {
   const db = admin.firestore();
 
   try {
-    const { items, customerInfo, total } = request.data;
+    const { items, customerInfo, total, paymentMethod } = request.data;
+
+    const validPaymentMethods = ['cod', 'instapay'];
+    const method = validPaymentMethods.includes(paymentMethod) ? paymentMethod : 'cod';
 
     const order = {
       items,
       customerInfo,
       total,
+      paymentMethod: method,
       status: 'pending',
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     };

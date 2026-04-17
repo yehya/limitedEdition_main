@@ -33,6 +33,11 @@ export default function ProductDetailScreen() {
       const result = await getProductFn({ productId: id });
       const data = result.data as { success: boolean; data: any };
       if (data.success) {
+        // Redirect if product is hidden
+        if (data.data.hidden) {
+          router.replace('/');
+          return;
+        }
         setProduct(data.data);
       }
     } catch (error) {

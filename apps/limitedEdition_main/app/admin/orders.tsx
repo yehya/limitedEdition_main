@@ -28,14 +28,30 @@ interface Order {
   }>;
   total: number;
   status: string;
+  paymentMethod?: 'cod' | 'instapay';
   createdAt: any;
 }
 
 export default function AdminOrders() {
   const { user } = useAuth();
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [allOrders, setAllOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(20);
+  const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
+  const STATUSES = ['all', 'pending', 'processing', 'shipped', 'delivered', 'cancelled'];
+
+  // Derived: filtered and paginated orders
+  const filteredOrders =
+    statusFilter === 'all'
+      ? allOrders
+      : allOrders.filter((o) => o.status === statusFilter);
+  const total = filteredOrders.length;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const orders = filteredOrders.slice(page * pageSize, (page + 1) * pageSize);
 
   useEffect(() => {
     setMounted(true);
@@ -55,23 +71,29 @@ export default function AdminOrders() {
   }, [user, mounted]);
 
   const fetchOrders = async () => {
+    setLoading(true);
     try {
       const getOrdersFn = httpsCallable(functions, 'getOrdersFnV2');
-      const result = await getOrdersFn({ limit: 50, offset: 0 });
-      console.log('Raw result:', result);
+      const result = await getOrdersFn({ limit: 500, offset: 0 });
       const data = result.data as { success: boolean; data: Order[] };
-      console.log('Parsed data:', data);
       if (data.success) {
-        console.log('Orders data received:', JSON.stringify(data.data, null, 2));
-        console.log('First order createdAt:', data.data[0]?.createdAt, 'Type:', typeof data.data[0]?.createdAt);
-        console.log('First order keys:', data.data[0] ? Object.keys(data.data[0]) : 'No orders');
-        setOrders(data.data);
+        setAllOrders(data.data);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleFilterChange = (status: string) => {
+    setStatusFilter(status);
+    setPage(0);
+  };
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize);
+    setPage(0);
   };
 
   const formatDate = (timestamp: any) => {
@@ -124,12 +146,21 @@ export default function AdminOrders() {
   };
 
   const updateStatus = async (orderId: string, newStatus: string) => {
+    const previousOrders = allOrders;
+    // Optimistic update
+    setAllOrders((prev) =>
+      prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
+    );
+    setUpdatingOrderId(orderId);
     try {
       const updateOrderStatusFn = httpsCallable(functions, 'updateOrderStatusFnV2');
       await updateOrderStatusFn({ orderId, status: newStatus });
-      fetchOrders();
     } catch (error) {
       console.error('Error updating order status:', error);
+      // Revert on failure
+      setAllOrders(previousOrders);
+    } finally {
+      setUpdatingOrderId(null);
     }
   };
 
@@ -141,6 +172,31 @@ export default function AdminOrders() {
         </Pressable>
 
         <Typography variant="h2" style={styles.title}>ORDERS</Typography>
+
+        {/* Status Filter */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterRow}
+        >
+          {STATUSES.map((status) => (
+            <Pressable
+              key={status}
+              style={[
+                styles.filterChip,
+                statusFilter === status && styles.filterChipActive,
+              ]}
+              onPress={() => handleFilterChange(status)}
+            >
+              <Typography
+                variant="caption"
+                style={{ color: statusFilter === status ? '#000000' : theme.colors.text.secondary }}
+              >
+                {status.toUpperCase()}
+              </Typography>
+            </Pressable>
+          ))}
+        </ScrollView>
 
         {loading ? (
           <View style={styles.loadingContainer}>
@@ -167,6 +223,11 @@ export default function AdminOrders() {
                   <Typography variant="h3" color="accent">
                     EGP {order.total}
                   </Typography>
+                  <View style={styles.paymentBadge}>
+                    <Typography variant="small" style={styles.paymentBadgeText}>
+                      {order.paymentMethod === 'instapay' ? 'INSTAPAY' : 'COD'}
+                    </Typography>
+                  </View>
                 </View>
               </View>
 
@@ -187,8 +248,13 @@ export default function AdminOrders() {
               </View>
 
               <View style={styles.statusSection}>
-                <Typography variant="caption" color="secondary">STATUS</Typography>
-                <View style={styles.statusButtons}>
+                <View style={styles.statusHeader}>
+                  <Typography variant="caption" color="secondary">STATUS</Typography>
+                  {updatingOrderId === order.id && (
+                    <ActivityIndicator size="small" color={theme.colors.accent} />
+                  )}
+                </View>
+                <View style={[styles.statusButtons, updatingOrderId === order.id && styles.statusButtonsUpdating]}>
                   {['pending', 'processing', 'shipped', 'delivered', 'cancelled'].map((status) => (
                     <Pressable
                       key={status}
@@ -197,6 +263,7 @@ export default function AdminOrders() {
                         order.status === status && styles.statusButtonActive,
                       ]}
                       onPress={() => updateStatus(order.id, status)}
+                      disabled={updatingOrderId === order.id}
                     >
                       <Typography
                         variant="caption"
@@ -210,6 +277,50 @@ export default function AdminOrders() {
               </View>
             </View>
           ))
+        )}
+
+        {/* Pagination */}
+        {!loading && total > 0 && (
+          <View style={styles.pagination}>
+            <Pressable
+              style={[styles.pageButton, page === 0 && styles.pageButtonDisabled]}
+              onPress={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+            >
+              <Typography variant="caption" color="secondary">← PREV</Typography>
+            </Pressable>
+            <View style={styles.paginationInfo}>
+              <Typography variant="caption" color="secondary">
+                PAGE {page + 1} / {totalPages} · {total} TOTAL
+              </Typography>
+              <View style={styles.pageSizeSelector}>
+                {PAGE_SIZE_OPTIONS.map((size) => (
+                  <Pressable
+                    key={size}
+                    style={[
+                      styles.pageSizeOption,
+                      pageSize === size && styles.pageSizeOptionActive,
+                    ]}
+                    onPress={() => handlePageSizeChange(size)}
+                  >
+                    <Typography
+                      variant="caption"
+                      style={{ color: pageSize === size ? '#000000' : theme.colors.text.secondary }}
+                    >
+                      {size}
+                    </Typography>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+            <Pressable
+              style={[styles.pageButton, page >= totalPages - 1 && styles.pageButtonDisabled]}
+              onPress={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+              disabled={page >= totalPages - 1}
+            >
+              <Typography variant="caption" color="secondary">NEXT →</Typography>
+            </Pressable>
+          </View>
         )}
       </ScrollView>
     </View>
@@ -286,5 +397,78 @@ const styles = StyleSheet.create({
   emptyTitle: {
     marginBottom: theme.spacing.sm,
     letterSpacing: 2,
+  },
+  statusHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing.sm,
+  },
+  statusButtonsUpdating: {
+    opacity: 0.6,
+  },
+  filterRow: {
+    flexDirection: 'row',
+    gap: theme.spacing.sm,
+    paddingVertical: theme.spacing.sm,
+    marginBottom: theme.spacing.lg,
+  },
+  filterChip: {
+    borderWidth: 1,
+    borderColor: theme.colors.surface.border,
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
+  },
+  filterChipActive: {
+    backgroundColor: theme.colors.accent,
+    borderColor: theme.colors.accent,
+  },
+  pagination: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: theme.spacing.xl,
+    marginTop: theme.spacing.lg,
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.surface.border,
+  },
+  pageButton: {
+    paddingVertical: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
+    borderWidth: 1,
+    borderColor: theme.colors.surface.border,
+  },
+  pageButtonDisabled: {
+    opacity: 0.3,
+  },
+  paginationInfo: {
+    alignItems: 'center',
+  },
+  pageSizeSelector: {
+    flexDirection: 'row',
+    gap: theme.spacing.xs,
+    marginTop: theme.spacing.sm,
+  },
+  pageSizeOption: {
+    borderWidth: 1,
+    borderColor: theme.colors.surface.border,
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: theme.spacing.xs,
+  },
+  pageSizeOptionActive: {
+    backgroundColor: theme.colors.accent,
+    borderColor: theme.colors.accent,
+  },
+  paymentBadge: {
+    marginTop: theme.spacing.xs,
+    backgroundColor: theme.colors.accent,
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: theme.spacing.xs,
+    borderRadius: theme.borderRadius.sm,
+  },
+  paymentBadgeText: {
+    color: theme.colors.background.primary,
+    fontWeight: '700',
+    letterSpacing: 1,
   },
 });

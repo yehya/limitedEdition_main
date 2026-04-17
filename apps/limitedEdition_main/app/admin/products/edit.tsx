@@ -3,9 +3,11 @@ import { View, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-na
 import { router, useLocalSearchParams } from 'expo-router';
 import { httpsCallable } from 'firebase/functions';
 import { getFunctions } from 'firebase/functions';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import theme from '../../../theme';
 import ProductForm from '../../../components/admin/ProductForm';
 import { app } from '../../../config/firebase';
+import { storage } from '../../../config/firebase';
 
 const functions = getFunctions(app, 'us-central1');
 
@@ -16,6 +18,8 @@ interface Product {
   price: number;
   image: string;
   sizes: string[];
+  soldOut?: boolean;
+  hidden?: boolean;
 }
 
 export default function EditProduct() {
@@ -27,7 +31,10 @@ export default function EditProduct() {
     price: '',
     image: '',
     sizes: '',
+    soldOut: false,
+    hidden: false,
   });
+  const [fileToUpload, setFileToUpload] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
 
@@ -40,6 +47,7 @@ export default function EditProduct() {
   const fetchProduct = async () => {
     try {
       setFetching(true);
+      setFileToUpload(null);
       const getProductFn = httpsCallable(functions, 'getProductFnV2');
       const result = await getProductFn({ productId });
       const data = result.data as { success: boolean; data: Product };
@@ -51,6 +59,8 @@ export default function EditProduct() {
           price: data.data.price.toString(),
           image: data.data.image,
           sizes: Array.isArray(data.data.sizes) ? data.data.sizes.join(',') : data.data.sizes,
+          soldOut: (data.data as any).soldOut || false,
+          hidden: (data.data as any).hidden || false,
         });
       }
     } catch (error) {
@@ -64,12 +74,24 @@ export default function EditProduct() {
     try {
       setLoading(true);
 
+      let imageUrl = formData.image;
+
+      // Upload new photo if there's a file
+      if (fileToUpload) {
+        const filename = `products/${Date.now()}.${fileToUpload.name.split('.').pop()}`;
+        const storageRef = ref(storage, filename);
+        await uploadBytes(storageRef, fileToUpload);
+        imageUrl = await getDownloadURL(storageRef);
+      }
+
       const productData = {
         name: formData.name,
         description: formData.description,
         price: formData.price,
-        image: formData.image,
+        image: imageUrl,
         sizes: formData.sizes.split(',').map(s => s.trim()),
+        soldOut: formData.soldOut,
+        hidden: formData.hidden,
       };
 
       if (editingProduct) {
@@ -83,9 +105,26 @@ export default function EditProduct() {
       }
 
       router.push('/admin/products');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving product:', error);
-      Alert.alert('Error', 'Failed to save');
+      let errorMessage = 'Failed to save product';
+      
+      // Check for specific Firebase/Cloud Function errors
+      if (error.code === 'functions/permission-denied') {
+        errorMessage = 'You do not have permission to create or edit products';
+      } else if (error.code === 'functions/invalid-argument') {
+        errorMessage = 'Invalid product data. Please check all fields and try again.';
+      } else if (error.code === 'functions/resource-exhausted') {
+        errorMessage = 'Service temporarily unavailable. Please try again later.';
+      } else if (error.code === 'functions/internal') {
+        errorMessage = 'Server error occurred. Please try again.';
+      } else if (error.code === 'storage/unauthorized') {
+        errorMessage = 'You do not have permission to upload images';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      Alert.alert('Error', errorMessage);
     } finally {
       setLoading(false);
     }
@@ -106,6 +145,7 @@ export default function EditProduct() {
             onCancel={() => router.back()}
             submitButtonText={editingProduct ? 'EDIT PRODUCT' : 'ADD PRODUCT'}
             loading={loading}
+            onFileChange={setFileToUpload}
           />
         )}
       </ScrollView>

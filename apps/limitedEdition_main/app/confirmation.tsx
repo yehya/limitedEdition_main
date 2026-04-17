@@ -6,7 +6,8 @@ import { Typography } from '../components/Typography';
 import { Button } from '../components/Button';
 
 export default function ConfirmationScreen() {
-  const { orderId } = useLocalSearchParams();
+  const { orderId, paymentMethod } = useLocalSearchParams<{ orderId?: string; paymentMethod?: string }>();
+  const isInstapay = paymentMethod === 'instapay';
 
   const handleContinue = () => {
     router.replace('/');
@@ -27,13 +28,15 @@ export default function ConfirmationScreen() {
 
         {/* Thank You Message */}
         <Typography variant="body" color="secondary" style={styles.message}>
-          Thank you for your purchase. You will receive a confirmation call within 1-3 days.
+          {isInstapay
+            ? 'Thank you for your purchase. We will verify your InstaPay payment and call you to confirm within 1-3 days.'
+            : 'Thank you for your purchase. You will receive a confirmation call within 1-3 days.'}
         </Typography>
 
         {/* Details */}
         <View style={styles.details}>
           <Typography variant="caption" color="tertiary">
-            Payment Method: Cash on Delivery
+            Payment Method: {isInstapay ? 'InstaPay' : 'Cash on Delivery'}
           </Typography>
           <Typography variant="caption" color="tertiary">
             Estimated Delivery: 1-2 weeks

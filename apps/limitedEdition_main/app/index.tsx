@@ -18,6 +18,8 @@ interface Product {
   price: number;
   image: string;
   sizes: string[];
+  soldOut?: boolean;
+  hidden?: boolean;
 }
 
 export default function Index() {
@@ -34,7 +36,8 @@ export default function Index() {
       const result = await getProductsFn({ limit: 50, offset: 0 });
       const data = result.data as { success: boolean; data: Product[] };
       if (data.success) {
-        setProducts(data.data);
+        const visibleProducts = data.data.filter(p => !p.hidden);
+        setProducts(visibleProducts);
       }
     } catch (error) {
       console.error('Error fetching products:', error);

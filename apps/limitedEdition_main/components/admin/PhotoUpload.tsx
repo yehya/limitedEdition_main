@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Pressable, Image, Alert, ActivityIndicator, Linking, Platform } from 'react-native';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import React, { useRef } from 'react';
+import { View, StyleSheet, Pressable, Image, Alert, Linking, Platform } from 'react-native';
 import { storage } from '../../config/firebase';
 import theme from '../../theme';
 import { Typography } from '../Typography';
@@ -8,10 +7,12 @@ import { Typography } from '../Typography';
 interface PhotoUploadProps {
   imageUrl: string;
   onImageUrlChange: (url: string) => void;
+  onFileChange?: (file: File | null) => void;
 }
 
-export default function PhotoUpload({ imageUrl, onImageUrlChange }: PhotoUploadProps) {
-  const [uploading, setUploading] = useState(false);
+const MAX_FILE_SIZE = 300 * 1024; // 300KB in bytes
+
+export default function PhotoUpload({ imageUrl, onImageUrlChange, onFileChange }: PhotoUploadProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const pickImage = () => {
@@ -28,21 +29,31 @@ export default function PhotoUpload({ imageUrl, onImageUrlChange }: PhotoUploadP
   };
 
   const validateAndUploadImage = async (file: File) => {
+    // Validate file size
+    if (file.size > MAX_FILE_SIZE) {
+      const sizeInKB = Math.round(file.size / 1024);
+      Alert.alert(
+        'File Too Large',
+        `Your photo is ${sizeInKB}KB. Maximum allowed size is 300KB. Please compress your image or choose a smaller file.`
+      );
+      return;
+    }
+
     // Validate image dimensions
     const img = new (window as any).Image();
     const url = URL.createObjectURL(file);
-    
+
     img.onload = async () => {
       URL.revokeObjectURL(url);
-      
+
       const width = img.width;
       const height = img.height;
       const aspectRatio = width / height;
-      
+
       // Allow aspect ratio between 1:1.2 and 1.2:1 (squarish images only)
       const minRatio = 0.83; // 1:1.2
       const maxRatio = 1.2;  // 1.2:1
-      
+
       if (aspectRatio < minRatio || aspectRatio > maxRatio) {
         Alert.alert(
           'Please Use a Square Image',
@@ -50,35 +61,22 @@ export default function PhotoUpload({ imageUrl, onImageUrlChange }: PhotoUploadP
         );
         return;
       }
-      
-      await uploadImage(file);
+
+      // Convert file to base64 for local storage
+      const reader = new FileReader();
+      reader.onload = () => {
+        onImageUrlChange(reader.result as string);
+        onFileChange?.(file);
+      };
+      reader.readAsDataURL(file);
     };
-    
+
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      Alert.alert('Error', 'Failed to load image');
+      Alert.alert('Error', 'Failed to load image. Please try a different file.');
     };
-    
+
     img.src = url;
-  };
-
-  const uploadImage = async (file: File) => {
-    try {
-      setUploading(true);
-
-      const blob = file;
-      const filename = `products/${Date.now()}.${file.name.split('.').pop()}`;
-      const storageRef = ref(storage, filename);
-
-      await uploadBytes(storageRef, blob);
-      const downloadUrl = await getDownloadURL(storageRef);
-
-      onImageUrlChange(downloadUrl);
-    } catch (error) {
-      Alert.alert('Error', 'Failed to upload image');
-    } finally {
-      setUploading(false);
-    }
   };
 
   return (
@@ -100,15 +98,39 @@ export default function PhotoUpload({ imageUrl, onImageUrlChange }: PhotoUploadP
           for a cleaner look
         </Typography>
         <Typography variant="caption" color="secondary" style={styles.infoText}>
-          ⚠️ Please upload square images for best results
+          ⚠️ Max file size: 300KB. Square images only.
         </Typography>
+        <Typography variant="caption" color="secondary" style={styles.infoText}>
+          Need to compress or crop?
+        </Typography>
+        <Pressable onPress={() => Linking.openURL('https://www.iloveimg.com/compress-image')}>
+          <Typography variant="caption" color="accent" style={styles.linkText}>
+            iloveimg.com/compress-image
+          </Typography>
+        </Pressable>
+        <Pressable onPress={() => Linking.openURL('https://www.iloveimg.com/crop-image')}>
+          <Typography variant="caption" color="accent" style={styles.linkText}>
+            iloveimg.com/crop-image
+          </Typography>
+        </Pressable>
+        <Pressable onPress={() => Linking.openURL('https://imagecompressor.com/')}>
+          <Typography variant="caption" color="accent" style={styles.linkText}>
+            imagecompressor.com
+          </Typography>
+        </Pressable>
+        <Pressable onPress={() => Linking.openURL('https://www.freeconvert.com/image-compressor')}>
+          <Typography variant="caption" color="accent" style={styles.linkText}>
+            freeconvert.com/image-compressor
+          </Typography>
+        </Pressable>
+        <Pressable onPress={() => Linking.openURL('https://imageresizer.com/crop-image')}>
+          <Typography variant="caption" color="accent" style={styles.linkText}>
+            imageresizer.com/crop-image
+          </Typography>
+        </Pressable>
       </View>
 
-      {uploading ? (
-        <View style={styles.uploadContainer}>
-          <ActivityIndicator color={theme.colors.accent} />
-        </View>
-      ) : imageUrl ? (
+      {imageUrl ? (
         <View style={styles.previewContainer}>
           <Image source={{ uri: imageUrl }} style={styles.preview} />
           <Pressable style={styles.removeButton} onPress={() => onImageUrlChange('')}>

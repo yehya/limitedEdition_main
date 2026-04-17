@@ -11,12 +11,15 @@ interface ProductFormProps {
     price: string;
     image: string;
     sizes: string;
+    soldOut: boolean;
+    hidden: boolean;
   };
   setFormData: (data: any) => void;
   onSubmit: () => void;
   onCancel: () => void;
   submitButtonText: string;
   loading?: boolean;
+  onFileChange?: (file: File | null) => void;
 }
 
 const MAX_NAME_LENGTH = 50;
@@ -29,6 +32,7 @@ export default function ProductForm({
   onCancel,
   submitButtonText,
   loading = false,
+  onFileChange,
 }: ProductFormProps) {
   const validateForm = (): boolean => {
     if (!formData.name.trim()) {
@@ -96,6 +100,7 @@ export default function ProductForm({
       <PhotoUpload
         imageUrl={formData.image}
         onImageUrlChange={(url) => setFormData({ ...formData, image: url })}
+        onFileChange={onFileChange}
       />
 
       <View style={styles.formField}>
@@ -163,6 +168,26 @@ export default function ProductForm({
         />
       </View>
 
+      <Pressable
+        style={styles.toggleContainer}
+        onPress={() => setFormData({ ...formData, soldOut: !formData.soldOut })}
+      >
+        <View style={styles.toggleTrack}>
+          <View style={[styles.toggleThumb, formData.soldOut && styles.toggleThumbActive]} />
+        </View>
+        <Typography variant="body" style={styles.toggleLabel}>SOLD OUT</Typography>
+      </Pressable>
+
+      <Pressable
+        style={styles.toggleContainer}
+        onPress={() => setFormData({ ...formData, hidden: !formData.hidden })}
+      >
+        <View style={styles.toggleTrack}>
+          <View style={[styles.toggleThumb, formData.hidden && styles.toggleThumbActive]} />
+        </View>
+        <Typography variant="body" style={styles.toggleLabel}>HIDDEN FROM CUSTOMERS</Typography>
+      </Pressable>
+
       <View style={styles.actions}>
         <Pressable style={styles.cancelButton} onPress={onCancel} disabled={loading}>
           <Typography variant="body">CANCEL</Typography>
@@ -226,5 +251,30 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: theme.colors.background.primary,
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: theme.spacing.lg,
+  },
+  toggleTrack: {
+    width: 48,
+    height: 28,
+    backgroundColor: theme.colors.background.secondary,
+    borderRadius: 14,
+    padding: 2,
+  },
+  toggleThumb: {
+    width: 24,
+    height: 24,
+    backgroundColor: theme.colors.text.secondary,
+    borderRadius: 12,
+  },
+  toggleThumbActive: {
+    backgroundColor: theme.colors.accent,
+    transform: [{ translateX: 20 }],
+  },
+  toggleLabel: {
+    marginLeft: theme.spacing.md,
   },
 });

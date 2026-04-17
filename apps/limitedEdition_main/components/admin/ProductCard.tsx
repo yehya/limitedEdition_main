@@ -10,6 +10,8 @@ interface Product {
   price: number;
   image: string;
   sizes: string[];
+  soldOut?: boolean;
+  hidden?: boolean;
 }
 
 interface ProductCardProps {
@@ -26,9 +28,23 @@ export default function ProductCard({ product, onEdit, onDelete, isDeleting = fa
         <Image source={{ uri: product.image }} style={styles.image} />
       </View>
       <View style={styles.cardContent}>
-        <Typography variant="body" style={styles.productName}>
-          {product.name}
-        </Typography>
+        <View style={styles.nameRow}>
+          <Typography variant="body" style={styles.productName}>
+            {product.name}
+          </Typography>
+          <View style={styles.statusBadges}>
+            {product.soldOut && (
+              <View style={styles.statusBadge}>
+                <Typography variant="small" style={styles.statusBadgeText}>SOLD OUT</Typography>
+              </View>
+            )}
+            {product.hidden && (
+              <View style={[styles.statusBadge, styles.hiddenBadge]}>
+                <Typography variant="small" style={styles.statusBadgeText}>HIDDEN</Typography>
+              </View>
+            )}
+          </View>
+        </View>
         <Typography variant="caption" color="secondary" style={styles.productDescription}>
           {product.description}
         </Typography>
@@ -81,8 +97,34 @@ const styles = StyleSheet.create({
   cardContent: {
     marginBottom: theme.spacing.md,
   },
-  productName: {
+  nameRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     marginBottom: theme.spacing.xs,
+  },
+  productName: {
+    flex: 1,
+    marginRight: theme.spacing.sm,
+  },
+  statusBadges: {
+    flexDirection: 'row',
+    gap: theme.spacing.xs,
+  },
+  statusBadge: {
+    backgroundColor: theme.colors.accent,
+    paddingHorizontal: theme.spacing.xs,
+    paddingVertical: 2,
+    borderRadius: theme.borderRadius.sm,
+  },
+  hiddenBadge: {
+    backgroundColor: theme.colors.text.secondary,
+  },
+  statusBadgeText: {
+    color: theme.colors.background.primary,
+    fontWeight: '700',
+    fontSize: 10,
+    letterSpacing: 0.5,
   },
   productDescription: {
     marginBottom: theme.spacing.xs,

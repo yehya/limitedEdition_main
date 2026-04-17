@@ -8,6 +8,8 @@ export interface Product {
   price: number;
   image: string;
   sizes: string[];
+  soldOut?: boolean;
+  hidden?: boolean;
 }
 
 export interface CartItem extends Product {

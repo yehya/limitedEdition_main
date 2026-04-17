@@ -12,7 +12,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onPress }) =>
   return (
     <Pressable style={styles.card} onPress={onPress}>
       <View style={styles.imageContainer}>
-        <Image source={product.image} style={styles.image} resizeMode="contain" />
+        <Image
+          source={product.image}
+          style={[styles.image, product.soldOut && styles.imageSoldOut]}
+          resizeMode="contain"
+        />
+        {product.soldOut && (
+          <View style={styles.soldOutOverlay}>
+            <Text style={styles.soldOutText}>SOLD OUT</Text>
+          </View>
+        )}
       </View>
       <View style={styles.info}>
         <Text style={styles.name}>{product.name}</Text>
@@ -53,5 +62,26 @@ const styles = StyleSheet.create({
     fontSize: theme.typography.fontSize.caption,
     fontWeight: '400',
     color: theme.colors.text.secondary,
+  },
+  imageSoldOut: {
+    opacity: 0.3,
+  },
+  soldOutOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  soldOutText: {
+    color: theme.colors.accent,
+    fontSize: theme.typography.fontSize.h3,
+    fontWeight: '700',
+    letterSpacing: 4,
+    transform: [{ rotate: '-15deg' }],
+    textAlign: 'center',
   },
 });

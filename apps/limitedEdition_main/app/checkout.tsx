@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, ActivityIndicator, Alert, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { httpsCallable } from 'firebase/functions';
@@ -20,6 +20,8 @@ export default function CheckoutScreen() {
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [governorate, setGovernorate] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'instapay'>('cod');
+  const [paymentSettings, setPaymentSettings] = useState<{ instapayPhone: string; instapayHandle: string } | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [loading, setLoading] = useState(false);
   const { clearCart, getCartTotal, cart } = useCart();
@@ -27,7 +29,21 @@ export default function CheckoutScreen() {
   // Load form data from AsyncStorage on mount
   useEffect(() => {
     loadFormData();
+    fetchPaymentSettings();
   }, []);
+
+  const fetchPaymentSettings = async () => {
+    try {
+      const fn = httpsCallable(functions, 'getPaymentSettingsFnV2');
+      const result = await fn({});
+      const data = result.data as { success: boolean; data: { instapayPhone: string; instapayHandle: string } };
+      if (data.success) {
+        setPaymentSettings(data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching payment settings:', error);
+    }
+  };
 
   const loadFormData = async () => {
     try {
@@ -118,6 +134,7 @@ export default function CheckoutScreen() {
         items: cart,
         customerInfo,
         total: getCartTotal(),
+        paymentMethod,
       };
 
       const createOrderFn = httpsCallable(functions, 'createOrderFnV2');
@@ -136,7 +153,7 @@ export default function CheckoutScreen() {
 
         clearCart();
         Alert.alert('Success', 'Your order has been placed successfully!');
-        router.push({ pathname: '/confirmation', params: { orderId: data.orderId } });
+        router.push({ pathname: '/confirmation', params: { orderId: data.orderId, paymentMethod } });
       } else {
         throw new Error('Failed to create order');
       }
@@ -242,12 +259,54 @@ export default function CheckoutScreen() {
             PAYMENT METHOD
           </Typography>
 
-          <View style={styles.paymentMethod}>
+          <Pressable
+            style={[
+              styles.paymentOption,
+              paymentMethod === 'cod' && styles.paymentOptionActive,
+            ]}
+            onPress={() => setPaymentMethod('cod')}
+          >
             <Typography variant="body">CASH ON DELIVERY</Typography>
             <Typography variant="caption" color="secondary">
               Pay when you receive your order
             </Typography>
-          </View>
+          </Pressable>
+
+          <Pressable
+            style={[
+              styles.paymentOption,
+              paymentMethod === 'instapay' && styles.paymentOptionActive,
+            ]}
+            onPress={() => setPaymentMethod('instapay')}
+          >
+            <Typography variant="body">INSTAPAY</Typography>
+            <Typography variant="caption" color="secondary">
+              Pay via InstaPay before placing the order
+            </Typography>
+          </Pressable>
+
+          {paymentMethod === 'instapay' && (
+            <View style={styles.instapayBox}>
+              <Typography variant="caption" color="secondary" style={styles.instapayEyebrow}>
+                SEND PAYMENT TO
+              </Typography>
+              <View style={styles.instapayRow}>
+                <Typography variant="caption" color="secondary">PHONE</Typography>
+                <Typography variant="body" style={styles.instapayValue}>
+                  {paymentSettings?.instapayPhone || '...'}
+                </Typography>
+              </View>
+              <View style={styles.instapayRow}>
+                <Typography variant="caption" color="secondary">HANDLE</Typography>
+                <Typography variant="body" style={styles.instapayValue}>
+                  {paymentSettings?.instapayHandle || '...'}
+                </Typography>
+              </View>
+              <Typography variant="caption" color="secondary" style={styles.instapayHint}>
+                Send EGP {getCartTotal()} via InstaPay, then place your order. We will confirm your payment within 1-3 days.
+              </Typography>
+            </View>
+          )}
         </View>
 
         {/* Place Order Button */}
@@ -285,11 +344,42 @@ const styles = StyleSheet.create({
   sectionLabel: {
     marginBottom: theme.spacing.md,
   },
-  paymentMethod: {
+  paymentOption: {
     backgroundColor: theme.colors.background.secondary,
     padding: theme.spacing.md,
     borderWidth: 1,
+    borderColor: theme.colors.surface.border,
+    marginBottom: theme.spacing.sm,
+  },
+  paymentOptionActive: {
     borderColor: theme.colors.accent,
+    backgroundColor: theme.colors.background.primary,
+  },
+  instapayBox: {
+    backgroundColor: theme.colors.background.secondary,
+    padding: theme.spacing.lg,
+    borderLeftWidth: 2,
+    borderLeftColor: theme.colors.accent,
+    marginTop: theme.spacing.sm,
+  },
+  instapayEyebrow: {
+    letterSpacing: 2,
+    marginBottom: theme.spacing.md,
+  },
+  instapayRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: theme.spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.surface.border,
+  },
+  instapayValue: {
+    fontWeight: '600',
+  },
+  instapayHint: {
+    marginTop: theme.spacing.md,
+    lineHeight: 20,
   },
   summaryItem: {
     flexDirection: 'row',
