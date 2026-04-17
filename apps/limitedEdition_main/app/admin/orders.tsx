@@ -35,23 +35,28 @@ export default function AdminOrders() {
   const { user } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!user) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && !user) {
       router.replace('/admin');
       return;
     }
-  }, [user]);
+  }, [user, mounted]);
 
   useEffect(() => {
-    if (user) {
+    if (mounted && user) {
       fetchOrders();
     }
-  }, [user]);
+  }, [user, mounted]);
 
   const fetchOrders = async () => {
     try {
-      const getOrdersFn = httpsCallable(functions, 'getOrdersFn');
+      const getOrdersFn = httpsCallable(functions, 'getOrdersFnV2');
       const result = await getOrdersFn({ limit: 50, offset: 0 });
       const data = result.data as { success: boolean; data: Order[] };
       if (data.success) {
@@ -66,12 +71,40 @@ export default function AdminOrders() {
 
   const formatDate = (timestamp: any) => {
     if (!timestamp) return 'N/A';
-    return new Date(timestamp.toDate()).toLocaleString();
+    try {
+      let date: Date;
+      // Handle Firebase Timestamp with toDate method
+      if (timestamp.toDate && typeof timestamp.toDate === 'function') {
+        date = timestamp.toDate();
+      } 
+      // Handle Firebase Timestamp with seconds/nanoseconds
+      else if (timestamp.seconds !== undefined) {
+        date = new Date(timestamp.seconds * 1000);
+      }
+      // Handle string timestamps
+      else if (typeof timestamp === 'string') {
+        date = new Date(timestamp);
+      }
+      // Handle regular Date objects
+      else {
+        date = new Date(timestamp);
+      }
+      
+      // Check if date is valid
+      if (isNaN(date.getTime())) {
+        return 'N/A';
+      }
+      
+      return date.toLocaleString();
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return 'N/A';
+    }
   };
 
-  const updateOrderStatus = async (orderId: string, newStatus: string) => {
+  const updateStatus = async (orderId: string, newStatus: string) => {
     try {
-      const updateOrderStatusFn = httpsCallable(functions, 'updateOrderStatusFn');
+      const updateOrderStatusFn = httpsCallable(functions, 'updateOrderStatusFnV2');
       await updateOrderStatusFn({ orderId, status: newStatus });
       fetchOrders();
     } catch (error) {
@@ -89,7 +122,9 @@ export default function AdminOrders() {
         <Typography variant="h2" style={styles.title}>ORDERS</Typography>
 
         {loading ? (
-          <Typography variant="body">Loading...</Typography>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator color={theme.colors.accent} />
+          </View>
         ) : orders.length === 0 ? (
           <Typography variant="body" color="secondary">No orders</Typography>
         ) : (
@@ -137,11 +172,11 @@ export default function AdminOrders() {
                         styles.statusButton,
                         order.status === status && styles.statusButtonActive,
                       ]}
-                      onPress={() => updateOrderStatus(order.id, status)}
+                      onPress={() => updateStatus(order.id, status)}
                     >
                       <Typography
                         variant="caption"
-                        color={order.status === status ? 'primary' : 'secondary'}
+                        style={{ color: order.status === status ? '#000000' : theme.colors.text.secondary }}
                       >
                         {status.toUpperCase()}
                       </Typography>
@@ -213,5 +248,9 @@ const styles = StyleSheet.create({
   statusButtonActive: {
     backgroundColor: theme.colors.accent,
     borderColor: theme.colors.accent,
+  },
+  loadingContainer: {
+    alignItems: 'center',
+    paddingVertical: theme.spacing.xl,
   },
 });

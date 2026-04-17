@@ -1,5 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfigs = {
   production: {
@@ -36,5 +37,6 @@ const firebaseConfig = firebaseConfigs[env as keyof typeof firebaseConfigs] || f
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+const storage = getStorage(app);
 
-export { app, analytics, firebaseConfig };
+export { app, analytics, firebaseConfig, storage };

@@ -30,7 +30,7 @@ export default function Index() {
 
   const fetchProducts = async () => {
     try {
-      const getProductsFn = httpsCallable(functions, 'getProductsFn');
+      const getProductsFn = httpsCallable(functions, 'getProductsFnV2');
       const result = await getProductsFn({ limit: 50, offset: 0 });
       const data = result.data as { success: boolean; data: Product[] };
       if (data.success) {

@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { onCall } from 'firebase-functions/v2/https';
 import { createOrder } from './functions/createOrder';
 import { getOrder } from './functions/getOrder';
 import { getProducts } from './functions/getProducts';
@@ -14,14 +14,14 @@ import { checkAdminStatus } from './functions/checkAdminStatus';
 
 admin.initializeApp();
 
-export const createOrderFn = functions.https.onCall(createOrder);
-export const getOrderFn = functions.https.onCall(getOrder);
-export const getProductsFn = functions.https.onCall(getProducts);
-export const getProductFn = functions.https.onCall(getProduct);
-export const updateProductFn = functions.https.onCall(updateProduct);
-export const deleteProductFn = functions.https.onCall(deleteProduct);
-export const updateOrderStatusFn = functions.https.onCall(updateOrderStatus);
-export const getOrdersFn = functions.https.onCall(getOrders);
-export const getProductsAdminFn = functions.https.onCall(getProductsAdmin);
-export const createProductFn = functions.https.onCall(createProduct);
-export const checkAdminStatusFn = functions.https.onCall(checkAdminStatus);
+export const createOrderFnV2 = onCall(createOrder);
+export const getOrderFnV2 = onCall(getOrder);
+export const getProductsFnV2 = onCall(getProducts);
+export const getProductFnV2 = onCall(getProduct);
+export const updateProductFnV2 = onCall(updateProduct);
+export const deleteProductFnV2 = onCall(deleteProduct);
+export const updateOrderStatusFnV2 = onCall(updateOrderStatus);
+export const getOrdersFnV2 = onCall(getOrders);
+export const getProductsAdminFnV2 = onCall(getProductsAdmin);
+export const createProductFnV2 = onCall(createProduct);
+export const checkAdminStatusFnV2 = onCall(checkAdminStatus);

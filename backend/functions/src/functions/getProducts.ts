@@ -1,14 +1,11 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { HttpsError } from 'firebase-functions/v2/https';
 
-export const getProducts = async (
-  data: any,
-  context: functions.https.CallableContext
-) => {
+export const getProducts = async (request: any) => {
   const db = admin.firestore();
 
   try {
-    const { limit = 50, offset = 0 } = data;
+    const { limit = 50, offset = 0 } = request.data;
 
     const productsRef = db.collection('products');
     const snapshot = await productsRef
@@ -28,7 +25,7 @@ export const getProducts = async (
     };
   } catch (error: any) {
     console.error('Error getting products:', error);
-    throw new functions.https.HttpsError(
+    throw new HttpsError(
       'internal',
       error.message || 'Failed to get products'
     );

@@ -24,7 +24,7 @@ export default function AdminDashboard() {
   const checkAdminStatus = async () => {
     setCheckingAdmin(true);
     try {
-      const checkAdminStatusFn = httpsCallable(functions, 'checkAdminStatusFn');
+      const checkAdminStatusFn = httpsCallable(functions, 'checkAdminStatusFnV2');
       const result = await checkAdminStatusFn();
       const data = result.data as { success: boolean; isAdmin: boolean };
       setIsAdminUser(data.isAdmin);

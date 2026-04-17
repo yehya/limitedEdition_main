@@ -1,37 +1,29 @@
-import * as functions from 'firebase-functions';
-import { Container } from '../di/Container';
+import * as admin from 'firebase-admin';
+import { HttpsError } from 'firebase-functions/v2/https';
 
-export const createOrder = async (
-  data: any,
-  context: functions.https.CallableContext
-) => {
+export const createOrder = async (request: any) => {
+  const db = admin.firestore();
+
   try {
-    const { items, customerInfo, total } = data;
+    const { items, customerInfo, total } = request.data;
 
-    if (!items || !customerInfo || !total) {
-      throw new functions.https.HttpsError(
-        'invalid-argument',
-        'Missing required fields'
-      );
-    }
-
-    const container = Container.getInstance();
-    const orderService = container.getOrderService();
-
-    const result = await orderService.createOrder({
+    const order = {
       items,
       customerInfo,
       total,
       status: 'pending',
-    });
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+
+    const orderRef = await db.collection('orders').add(order);
 
     return {
       success: true,
-      data: result,
+      orderId: orderRef.id,
     };
   } catch (error: any) {
     console.error('Error creating order:', error);
-    throw new functions.https.HttpsError(
+    throw new HttpsError(
       'internal',
       error.message || 'Failed to create order'
     );

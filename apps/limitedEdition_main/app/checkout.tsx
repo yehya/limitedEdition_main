@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import { httpsCallable } from 'firebase/functions';
+import { getFunctions } from 'firebase/functions';
 import theme from '../theme';
 import { Typography } from '../components/Typography';
 import { Button } from '../components/Button';
 import XButton from '../components/XButton';
 import FormInput from '../components/FormInput';
 import { useCart } from '../contexts/CartContext';
+import { app } from '../config/firebase';
+
+const functions = getFunctions(app, 'us-central1');
 
 export default function CheckoutScreen() {
   const [name, setName] = useState('');
@@ -16,6 +21,7 @@ export default function CheckoutScreen() {
   const [city, setCity] = useState('');
   const [governorate, setGovernorate] = useState('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [loading, setLoading] = useState(false);
   const { clearCart, getCartTotal, cart } = useCart();
 
   // Load form data from AsyncStorage on mount
@@ -97,21 +103,49 @@ export default function CheckoutScreen() {
       return;
     }
 
-    // Clear saved form data after successful order
     try {
-      await AsyncStorage.multiRemove([
-        'checkout_name',
-        'checkout_phone',
-        'checkout_address',
-        'checkout_city',
-        'checkout_governorate',
-      ]);
-    } catch (error) {
-      console.error('Error clearing form data:', error);
-    }
+      setLoading(true);
 
-    clearCart();
-    router.push('/confirmation');
+      const customerInfo = {
+        name,
+        phone,
+        address,
+        city,
+        governorate,
+      };
+
+      const orderData = {
+        items: cart,
+        customerInfo,
+        total: getCartTotal(),
+      };
+
+      const createOrderFn = httpsCallable(functions, 'createOrderFnV2');
+      const result = await createOrderFn(orderData);
+      const data = result.data as { success: boolean; orderId: string };
+
+      if (data.success) {
+        // Clear saved form data after successful order
+        await AsyncStorage.multiRemove([
+          'checkout_name',
+          'checkout_phone',
+          'checkout_address',
+          'checkout_city',
+          'checkout_governorate',
+        ]);
+
+        clearCart();
+        Alert.alert('Success', 'Your order has been placed successfully!');
+        router.push('/confirmation');
+      } else {
+        throw new Error('Failed to create order');
+      }
+    } catch (error) {
+      console.error('Error placing order:', error);
+      Alert.alert('Error', 'Failed to place order. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -221,7 +255,13 @@ export default function CheckoutScreen() {
           <Button
             title="PLACE ORDER"
             onPress={handlePlaceOrder}
+            disabled={loading}
           />
+          {loading && (
+            <View style={styles.loadingOverlay}>
+              <ActivityIndicator color={theme.colors.background.primary} />
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -273,5 +313,17 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingBottom: theme.spacing.xxl,
+    position: 'relative',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: theme.borderRadius.md,
   },
 });

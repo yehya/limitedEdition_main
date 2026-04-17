@@ -34,7 +34,7 @@ export default function ConfirmationScreen() {
             Payment Method: Cash on Delivery
           </Typography>
           <Typography variant="caption" color="tertiary">
-            Estimated Delivery: 2-3 business days
+            Estimated Delivery: 1-2 weeks
           </Typography>
         </View>
 

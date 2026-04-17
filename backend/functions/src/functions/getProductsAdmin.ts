@@ -1,32 +1,28 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { HttpsError } from 'firebase-functions/v2/https';
 import { isAdmin } from '../config/admin';
 
-export const getProductsAdmin = async (
-  data: any,
-  context: functions.https.CallableContext
-) => {
+export const getProductsAdmin = async (request: any) => {
   const db = admin.firestore();
 
   try {
-    // Verify user is authenticated
-    if (!context.auth) {
-      throw new functions.https.HttpsError(
+    // Verify user is authenticated and is admin
+    if (!request.auth) {
+      throw new HttpsError(
         'unauthenticated',
         'User must be authenticated'
       );
     }
 
-    // Verify user is an admin
-    const email = context.auth.token.email;
-    if (!email || !isAdmin(email)) {
-      throw new functions.https.HttpsError(
+    const email = request.auth.token.email;
+    if (!isAdmin(email || '')) {
+      throw new HttpsError(
         'permission-denied',
-        'User is not authorized as an admin'
+        'User must be an admin'
       );
     }
 
-    const { limit = 50, offset = 0 } = data;
+    const { limit = 50, offset = 0 } = request.data;
 
     const productsRef = db.collection('products');
     const snapshot = await productsRef
@@ -46,7 +42,7 @@ export const getProductsAdmin = async (
     };
   } catch (error: any) {
     console.error('Error getting products:', error);
-    throw new functions.https.HttpsError(
+    throw new HttpsError(
       'internal',
       error.message || 'Failed to get products'
     );

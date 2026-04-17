@@ -1,32 +1,32 @@
-import * as functions from 'firebase-functions';
-import { Container } from '../di/Container';
+import * as admin from 'firebase-admin';
+import { HttpsError } from 'firebase-functions/v2/https';
 
-export const getProduct = async (
-  data: any,
-  context: functions.https.CallableContext
-) => {
+export const getProduct = async (request: any) => {
+  const db = admin.firestore();
+
   try {
-    const { productId } = data;
+    const { productId } = request.data;
 
-    if (!productId) {
-      throw new functions.https.HttpsError(
-        'invalid-argument',
-        'Missing productId'
+    const productRef = db.collection('products').doc(productId);
+    const doc = await productRef.get();
+
+    if (!doc.exists) {
+      throw new HttpsError(
+        'not-found',
+        'Product not found'
       );
     }
 
-    const container = Container.getInstance();
-    const productService = container.getProductService();
-
-    const product = await productService.getProduct(productId);
-
     return {
       success: true,
-      data: product,
+      data: {
+        id: doc.id,
+        ...doc.data(),
+      },
     };
   } catch (error: any) {
     console.error('Error getting product:', error);
-    throw new functions.https.HttpsError(
+    throw new HttpsError(
       'internal',
       error.message || 'Failed to get product'
     );

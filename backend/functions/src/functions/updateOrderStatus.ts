@@ -1,42 +1,38 @@
-import * as functions from 'firebase-functions';
-import { Container } from '../di/Container';
+import * as admin from 'firebase-admin';
+import { HttpsError } from 'firebase-functions/v2/https';
 import { isAdmin } from '../config/admin';
 
-export const updateOrderStatus = async (
-  data: any,
-  context: functions.https.CallableContext
-) => {
+export const updateOrderStatus = async (request: any) => {
+  const db = admin.firestore();
+
   try {
     // Verify user is authenticated
-    if (!context.auth) {
-      throw new functions.https.HttpsError(
+    if (!request.auth) {
+      throw new HttpsError(
         'unauthenticated',
         'User must be authenticated'
       );
     }
 
     // Verify user is an admin
-    const email = context.auth.token.email;
+    const email = request.auth.token.email;
     if (!email || !isAdmin(email)) {
-      throw new functions.https.HttpsError(
+      throw new HttpsError(
         'permission-denied',
         'User is not authorized as an admin'
       );
     }
 
-    const { orderId, status } = data;
+    const { orderId, status } = request.data;
 
     if (!orderId || !status) {
-      throw new functions.https.HttpsError(
+      throw new HttpsError(
         'invalid-argument',
         'Missing orderId or status'
       );
     }
 
-    const container = Container.getInstance();
-    const orderService = container.getOrderService();
-
-    await orderService.updateOrderStatus(orderId, status);
+    await db.collection('orders').doc(orderId).update({ status });
 
     return {
       success: true,
@@ -44,7 +40,7 @@ export const updateOrderStatus = async (
     };
   } catch (error: any) {
     console.error('Error updating order status:', error);
-    throw new functions.https.HttpsError(
+    throw new HttpsError(
       'internal',
       error.message || 'Failed to update order status'
     );

@@ -1,21 +1,54 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Image, useWindowDimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ScrollView, Image, useWindowDimensions, Alert, ActivityIndicator } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
+import { httpsCallable } from 'firebase/functions';
+import { getFunctions } from 'firebase/functions';
 import theme from '../../theme';
 import { Typography } from '../../components/Typography';
 import { Button } from '../../components/Button';
 import XButton from '../../components/XButton';
 import SizeOption from '../../components/SizeOption';
-import { mockProducts } from '../../mockData';
 import { useCart } from '../../contexts/CartContext';
+import { app } from '../../config/firebase';
+
+const functions = getFunctions(app, 'us-central1');
 
 export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams();
-  const product = mockProducts.find((p) => p.id === id);
+  const [product, setProduct] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [addingToCart, setAddingToCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const { addToCart } = useCart();
   const { width } = useWindowDimensions();
   const isDesktop = width > 768;
+
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
+
+  const fetchProduct = async () => {
+    try {
+      const getProductFn = httpsCallable(functions, 'getProductFnV2');
+      const result = await getProductFn({ productId: id });
+      const data = result.data as { success: boolean; data: any };
+      if (data.success) {
+        setProduct(data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching product:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Typography variant="body">Loading...</Typography>
+      </View>
+    );
+  }
 
   if (!product) {
     return (
@@ -27,8 +60,13 @@ export default function ProductDetailScreen() {
 
   const handleAddToCart = () => {
     if (!selectedSize) return;
+    setAddingToCart(true);
     addToCart(product, selectedSize);
-    router.push('/cart');
+    setTimeout(() => {
+      setAddingToCart(false);
+      Alert.alert('Success', 'Item added to cart');
+      router.push('/cart');
+    }, 300);
   };
 
   return (
@@ -72,8 +110,13 @@ export default function ProductDetailScreen() {
             <Button
               title="ADD TO CART"
               onPress={handleAddToCart}
-              disabled={!selectedSize}
+              disabled={!selectedSize || addingToCart}
             />
+            {addingToCart && (
+              <View style={styles.loadingOverlay}>
+                <ActivityIndicator color={theme.colors.background.primary} />
+              </View>
+            )}
           </View>
           </View>
         </View>
@@ -150,5 +193,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: theme.spacing.md,
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: theme.borderRadius.md,
   },
 });

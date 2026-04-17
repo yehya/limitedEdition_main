@@ -1,21 +1,18 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { HttpsError } from 'firebase-functions/v2/https';
 import { isAdmin } from '../config/admin';
 
-export const checkAdminStatus = async (
-  data: any,
-  context: functions.https.CallableContext
-) => {
+export const checkAdminStatus = async (request: any) => {
   try {
     // Verify user is authenticated
-    if (!context.auth) {
-      throw new functions.https.HttpsError(
+    if (!request.auth) {
+      throw new HttpsError(
         'unauthenticated',
         'User must be authenticated'
       );
     }
 
-    const email = context.auth.token.email;
+    const email = request.auth.token.email;
     const isAdminUser = isAdmin(email || '');
 
     return {
@@ -25,7 +22,7 @@ export const checkAdminStatus = async (
     };
   } catch (error: any) {
     console.error('Error checking admin status:', error);
-    throw new functions.https.HttpsError(
+    throw new HttpsError(
       'internal',
       error.message || 'Failed to check admin status'
     );
