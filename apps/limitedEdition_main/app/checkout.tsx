@@ -136,7 +136,7 @@ export default function CheckoutScreen() {
 
         clearCart();
         Alert.alert('Success', 'Your order has been placed successfully!');
-        router.push('/confirmation');
+        router.push({ pathname: '/confirmation', params: { orderId: data.orderId } });
       } else {
         throw new Error('Failed to create order');
       }

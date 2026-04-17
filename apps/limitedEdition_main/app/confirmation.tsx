@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import theme from '../theme';
 import { Typography } from '../components/Typography';
 import { Button } from '../components/Button';
 
 export default function ConfirmationScreen() {
+  const { orderId } = useLocalSearchParams();
+
   const handleContinue = () => {
     router.replace('/');
   };
@@ -20,7 +22,7 @@ export default function ConfirmationScreen() {
 
         {/* Order Number */}
         <Typography variant="body" color="secondary" style={styles.orderNumber}>
-          Order #LE-2024-001
+          Order #{orderId}
         </Typography>
 
         {/* Thank You Message */}

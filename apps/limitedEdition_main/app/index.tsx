@@ -48,41 +48,40 @@ export default function Index() {
       colors={[theme.colors.background.secondary, theme.colors.background.primary]}
       style={styles.container}
     >
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Logo */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={require('./assets/limited_edition_logo_cropped.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
+      {loading ? (
+        <View style={styles.center}>
+          <ActivityIndicator color={theme.colors.accent} />
         </View>
-
-        {/* Products Grid */}
-        {loading ? (
-          <View style={styles.center}>
-            <ActivityIndicator color={theme.colors.accent} />
-          </View>
-        ) : products.length === 0 ? (
+      ) : products.length === 0 ? (
+        <View style={styles.center}>
           <Typography variant="body" color="secondary">No products found</Typography>
-        ) : (
-          <FlatList
-            data={products}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            renderItem={({ item }) => (
-              <View style={styles.gridItem}>
-                <ProductCard
-                  product={item}
-                  onPress={() => router.push(`/product/${item.id}`)}
-                />
-              </View>
-            )}
-            scrollEnabled={false}
-            columnWrapperStyle={styles.row}
-          />
-        )}
-      </ScrollView>
+        </View>
+      ) : (
+        <FlatList
+          data={products}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          renderItem={({ item }) => (
+            <View style={styles.gridItem}>
+              <ProductCard
+                product={item}
+                onPress={() => router.push(`/product/${item.id}`)}
+              />
+            </View>
+          )}
+          ListHeaderComponent={
+            <View style={styles.logoContainer}>
+              <Image
+                source={require('./assets/limited_edition_logo_cropped.png')}
+                style={styles.logo}
+                resizeMode="contain"
+              />
+            </View>
+          }
+          contentContainerStyle={styles.scrollContent}
+          columnWrapperStyle={styles.row}
+        />
+      )}
     </LinearGradient>
   );
 }

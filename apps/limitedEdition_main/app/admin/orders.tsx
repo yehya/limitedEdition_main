@@ -58,8 +58,13 @@ export default function AdminOrders() {
     try {
       const getOrdersFn = httpsCallable(functions, 'getOrdersFnV2');
       const result = await getOrdersFn({ limit: 50, offset: 0 });
+      console.log('Raw result:', result);
       const data = result.data as { success: boolean; data: Order[] };
+      console.log('Parsed data:', data);
       if (data.success) {
+        console.log('Orders data received:', JSON.stringify(data.data, null, 2));
+        console.log('First order createdAt:', data.data[0]?.createdAt, 'Type:', typeof data.data[0]?.createdAt);
+        console.log('First order keys:', data.data[0] ? Object.keys(data.data[0]) : 'No orders');
         setOrders(data.data);
       }
     } catch (error) {
@@ -70,35 +75,51 @@ export default function AdminOrders() {
   };
 
   const formatDate = (timestamp: any) => {
-    if (!timestamp) return 'N/A';
+    if (!timestamp) return '';
     try {
       let date: Date;
+      // Handle serialized Firebase timestamp from Cloud Functions
+      if (timestamp._seconds !== undefined) {
+        date = new Date(timestamp._seconds * 1000);
+      }
       // Handle Firebase Timestamp with toDate method
-      if (timestamp.toDate && typeof timestamp.toDate === 'function') {
+      else if (timestamp.toDate && typeof timestamp.toDate === 'function') {
         date = timestamp.toDate();
       } 
-      // Handle Firebase Timestamp with seconds/nanoseconds
+      // Handle Firebase Timestamp with seconds/nanoseconds (without underscore)
       else if (timestamp.seconds !== undefined) {
         date = new Date(timestamp.seconds * 1000);
       }
-      // Handle string timestamps
+      // Handle string timestamps (ISO strings)
       else if (typeof timestamp === 'string') {
         date = new Date(timestamp);
       }
       // Handle regular Date objects
-      else {
+      else if (timestamp instanceof Date) {
+        date = timestamp;
+      }
+      // Handle numeric timestamps (milliseconds)
+      else if (typeof timestamp === 'number') {
         date = new Date(timestamp);
       }
-      
-      // Check if date is valid
-      if (isNaN(date.getTime())) {
-        return 'N/A';
+      else {
+        return '';
       }
       
-      return date.toLocaleString();
+      if (isNaN(date.getTime())) {
+        return '';
+      }
+      
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
     } catch (error) {
-      console.error('Error formatting date:', error);
-      return 'N/A';
+      console.error('Error formatting date:', error, timestamp);
+      return '';
     }
   };
 
