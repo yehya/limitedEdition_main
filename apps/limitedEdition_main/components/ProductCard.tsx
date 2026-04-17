@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text.secondary,
   },
   imageSoldOut: {
-    opacity: 0.3,
+    opacity: 0.6,
   },
   soldOutOverlay: {
     position: 'absolute',
