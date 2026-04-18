@@ -34,7 +34,8 @@ interface Order {
 
 export default function AdminOrders() {
   const { user } = useAuth();
-  const [allOrders, setAllOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
@@ -45,14 +46,7 @@ export default function AdminOrders() {
   const PAGE_SIZE_OPTIONS = [10, 20, 50, 100];
   const STATUSES = ['all', 'pending', 'processing', 'shipped', 'delivered', 'cancelled'];
 
-  // Derived: filtered and paginated orders
-  const filteredOrders =
-    statusFilter === 'all'
-      ? allOrders
-      : allOrders.filter((o) => o.status === statusFilter);
-  const total = filteredOrders.length;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
-  const orders = filteredOrders.slice(page * pageSize, (page + 1) * pageSize);
 
   useEffect(() => {
     setMounted(true);
@@ -69,16 +63,21 @@ export default function AdminOrders() {
     if (mounted && user) {
       fetchOrders();
     }
-  }, [user, mounted]);
+  }, [user, mounted, statusFilter, page, pageSize]);
 
   const fetchOrders = async () => {
     setLoading(true);
     try {
       const getOrdersFn = httpsCallable(functions, 'getOrdersFnV2');
-      const result = await getOrdersFn({ limit: 500, offset: 0 });
-      const data = result.data as { success: boolean; data: Order[] };
+      const result = await getOrdersFn({
+        limit: pageSize,
+        offset: page * pageSize,
+        status: statusFilter === 'all' ? undefined : statusFilter,
+      });
+      const data = result.data as { success: boolean; data: Order[]; total: number };
       if (data.success) {
-        setAllOrders(data.data);
+        setOrders(data.data);
+        setTotal(data.total || 0);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -147,19 +146,13 @@ export default function AdminOrders() {
   };
 
   const updateStatus = async (orderId: string, newStatus: string) => {
-    const previousOrders = allOrders;
-    // Optimistic update
-    setAllOrders((prev) =>
-      prev.map((o) => (o.id === orderId ? { ...o, status: newStatus } : o))
-    );
     setUpdatingOrderId(orderId);
     try {
       const updateOrderStatusFn = httpsCallable(functions, 'updateOrderStatusFnV2');
       await updateOrderStatusFn({ orderId, status: newStatus });
+      fetchOrders();
     } catch (error) {
       console.error('Error updating order status:', error);
-      // Revert on failure
-      setAllOrders(previousOrders);
     } finally {
       setUpdatingOrderId(null);
     }
@@ -178,17 +171,13 @@ export default function AdminOrders() {
           text: 'Delete',
           style: 'destructive',
           onPress: async () => {
-            const previousOrders = allOrders;
-            // Optimistic update - remove order immediately
-            setAllOrders((prev) => prev.filter((o) => o.id !== orderId));
             setDeletingOrderId(orderId);
             try {
               const deleteOrderFn = httpsCallable(functions, 'deleteOrderFnV2');
               await deleteOrderFn({ orderId });
+              fetchOrders();
             } catch (error) {
               console.error('Error deleting order:', error);
-              // Revert on failure
-              setAllOrders(previousOrders);
             } finally {
               setDeletingOrderId(null);
             }
