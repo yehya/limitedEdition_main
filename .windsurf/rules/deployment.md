@@ -12,18 +12,20 @@ trigger: always_on
 
 ✅ **USE BLOCKING COMMANDS** - Always use blocking terminal commands (wait for completion), never background commands
 
+✅ **ALWAYS SPECIFY PROJECT NAME** - Always include `--project PROJECT_NAME` in deployment commands
+
 ## DEPLOYMENT COMMANDS
 
 ### Single Function Deployment
 ```bash
-firebase deploy --only functions:functionName
+firebase deploy --only functions:functionName --project PROJECT_NAME
 ```
 
 ### Examples
 ```bash
-firebase deploy --only functions:deleteOrderFnV2
-firebase deploy --only functions:updateOrderStatusFnV2
-firebase deploy --only functions:createProductFnV2
+firebase deploy --only functions:deleteOrderFnV2 --project PROJECT_NAME
+firebase deploy --only functions:updateOrderStatusFnV2 --project PROJECT_NAME
+firebase deploy --only functions:createProductFnV2 --project PROJECT_NAME
 ```
 
 ## TERMINAL COMMAND RULES
@@ -37,7 +39,7 @@ firebase deploy --only functions:createProductFnV2
 ```javascript
 bash({
   Cwd: '/path/to/backend',
-  CommandLine: 'firebase deploy --only functions:deleteOrderFnV2',
+  CommandLine: 'firebase deploy --only functions:deleteOrderFnV2 --project PROJECT_NAME',
   Background: false, // Block until complete
   SafeToAutoRun: false, // Require user approval
 })
