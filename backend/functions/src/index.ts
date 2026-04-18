@@ -13,6 +13,7 @@ import { createProduct } from './functions/createProduct';
 import { checkAdminStatus } from './functions/checkAdminStatus';
 import { getPaymentSettings } from './functions/getPaymentSettings';
 import { updatePaymentSettings } from './functions/updatePaymentSettings';
+import { deleteOrder } from './functions/deleteOrder';
 
 admin.initializeApp();
 
@@ -29,3 +30,4 @@ export const createProductFnV2 = onCall(createProduct);
 export const checkAdminStatusFnV2 = onCall(checkAdminStatus);
 export const getPaymentSettingsFnV2 = onCall(getPaymentSettings);
 export const updatePaymentSettingsFnV2 = onCall(updatePaymentSettings);
+export const deleteOrderFnV2 = onCall(deleteOrder);

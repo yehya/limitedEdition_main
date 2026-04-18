@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable, ActivityIndicator, Alert } from 'react-native';
 import { router } from 'expo-router';
 import { httpsCallable } from 'firebase/functions';
 import { getFunctions } from 'firebase/functions';
@@ -38,6 +38,7 @@ export default function AdminOrders() {
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
   const [updatingOrderId, setUpdatingOrderId] = useState<string | null>(null);
+  const [deletingOrderId, setDeletingOrderId] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
@@ -164,6 +165,39 @@ export default function AdminOrders() {
     }
   };
 
+  const deleteOrder = async (orderId: string) => {
+    Alert.alert(
+      'Delete Order',
+      'Are you sure you want to delete this order? This action cannot be undone.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            const previousOrders = allOrders;
+            // Optimistic update - remove order immediately
+            setAllOrders((prev) => prev.filter((o) => o.id !== orderId));
+            setDeletingOrderId(orderId);
+            try {
+              const deleteOrderFn = httpsCallable(functions, 'deleteOrderFnV2');
+              await deleteOrderFn({ orderId });
+            } catch (error) {
+              console.error('Error deleting order:', error);
+              // Revert on failure
+              setAllOrders(previousOrders);
+            } finally {
+              setDeletingOrderId(null);
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -250,9 +284,22 @@ export default function AdminOrders() {
               <View style={styles.statusSection}>
                 <View style={styles.statusHeader}>
                   <Typography variant="caption" color="secondary">STATUS</Typography>
-                  {updatingOrderId === order.id && (
-                    <ActivityIndicator size="small" color={theme.colors.accent} />
-                  )}
+                  <View style={styles.headerActions}>
+                    {updatingOrderId === order.id && (
+                      <ActivityIndicator size="small" color={theme.colors.accent} style={{ marginRight: theme.spacing.sm }} />
+                    )}
+                    <Pressable
+                      onPress={() => deleteOrder(order.id)}
+                      disabled={deletingOrderId === order.id}
+                      style={styles.deleteButton}
+                    >
+                      {deletingOrderId === order.id ? (
+                        <ActivityIndicator size="small" color={theme.colors.semantic.error} />
+                      ) : (
+                        <Typography variant="caption" style={styles.deleteButtonText}>DELETE</Typography>
+                      )}
+                    </Pressable>
+                  </View>
                 </View>
                 <View style={[styles.statusButtons, updatingOrderId === order.id && styles.statusButtonsUpdating]}>
                   {['pending', 'processing', 'shipped', 'delivered', 'cancelled'].map((status) => (
@@ -403,6 +450,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: theme.spacing.sm,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  deleteButton: {
+    paddingHorizontal: theme.spacing.sm,
+    paddingVertical: theme.spacing.xs,
+    borderWidth: 1,
+    borderColor: theme.colors.text.secondary,
+    borderRadius: theme.borderRadius.sm,
+  },
+  deleteButtonText: {
+    color: theme.colors.text.secondary,
+    fontWeight: '600',
   },
   statusButtonsUpdating: {
     opacity: 0.6,
