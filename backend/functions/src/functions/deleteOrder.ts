@@ -1,23 +1,23 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { HttpsError } from 'firebase-functions/v2/https';
 import { isAdmin } from '../config/admin';
 
-const db = admin.firestore();
+export const deleteOrderFn = async (request: any) => {
+  const db = admin.firestore();
 
-export const deleteOrderFn = functions.https.onCall(async (data, context) => {
-  if (!context.auth) {
-    throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated');
+  if (!request.auth) {
+    throw new HttpsError('unauthenticated', 'User must be authenticated');
   }
 
-  const email = context.auth.token.email;
-  if (!isAdmin(email)) {
-    throw new functions.https.HttpsError('permission-denied', 'User is not an admin');
+  const email = request.auth.token.email;
+  if (!email || !isAdmin(email)) {
+    throw new HttpsError('permission-denied', 'User is not an admin');
   }
 
-  const { orderId } = data;
+  const { orderId } = request.data;
 
   if (!orderId) {
-    throw new functions.https.HttpsError('invalid-argument', 'Order ID is required');
+    throw new HttpsError('invalid-argument', 'Order ID is required');
   }
 
   try {
@@ -25,7 +25,7 @@ export const deleteOrderFn = functions.https.onCall(async (data, context) => {
     const orderDoc = await orderRef.get();
 
     if (!orderDoc.exists) {
-      throw new functions.https.HttpsError('not-found', 'Order not found');
+      throw new HttpsError('not-found', 'Order not found');
     }
 
     await orderRef.delete();
@@ -33,6 +33,6 @@ export const deleteOrderFn = functions.https.onCall(async (data, context) => {
     return { success: true };
   } catch (error) {
     console.error('Error deleting order:', error);
-    throw new functions.https.HttpsError('internal', 'Error deleting order');
+    throw new HttpsError('internal', 'Error deleting order');
   }
-});
+};

@@ -12,7 +12,6 @@ const ADMIN_EMAILS = [
 
 export const checkAdminStatus = async (request: any) => {
   try {
-    // Verify user is authenticated
     if (!request.auth) {
       throw new HttpsError(
         'unauthenticated',
