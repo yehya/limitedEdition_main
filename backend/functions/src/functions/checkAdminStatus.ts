@@ -2,6 +2,14 @@ import * as admin from 'firebase-admin';
 import { HttpsError } from 'firebase-functions/v2/https';
 import { isAdmin } from '../config/admin';
 
+const ADMIN_EMAILS = [
+  'yehyaawad.lp@gmail.com',
+  'awaadhabiba@gmail.com',
+  'yomaxer9@gmail.com',
+  'fidelkibou@gmail.com',
+  'testadmin@example.com'
+];
+
 export const checkAdminStatus = async (request: any) => {
   try {
     // Verify user is authenticated
@@ -13,10 +21,7 @@ export const checkAdminStatus = async (request: any) => {
     }
 
     const email = request.auth.token.email;
-    console.log('Checking admin status for email:', email);
-    console.log('Email lowercase:', email?.toLowerCase());
-    const isAdminUser = isAdmin(email || '');
-    console.log('Is admin result:', isAdminUser);
+    const isAdminUser = ADMIN_EMAILS.includes(email?.toLowerCase() || '');
 
     return {
       success: true,
