@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Pressable, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ScrollView, Pressable, ActivityIndicator, TextInput } from 'react-native';
 import { router } from 'expo-router';
 import { httpsCallable } from 'firebase/functions';
 import { getFunctions } from 'firebase/functions';
@@ -11,9 +11,13 @@ import { app } from '../../config/firebase';
 const functions = getFunctions(app, 'us-central1');
 
 export default function AdminDashboard() {
-  const { user, loading, signInWithGoogle, signOut } = useAuth();
+  const { user, loading, signInWithGoogle, signInWithEmail, signUpWithEmail, signOut } = useAuth();
   const [isAdminUser, setIsAdminUser] = useState<boolean | null>(null);
   const [checkingAdmin, setCheckingAdmin] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [authError, setAuthError] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -33,6 +37,19 @@ export default function AdminDashboard() {
       setIsAdminUser(false);
     } finally {
       setCheckingAdmin(false);
+    }
+  };
+
+  const handleEmailAuth = async () => {
+    setAuthError('');
+    try {
+      if (isSignUp) {
+        await signUpWithEmail(email, password);
+      } else {
+        await signInWithEmail(email, password);
+      }
+    } catch (error: any) {
+      setAuthError(error.message || 'Authentication failed');
     }
   };
 
@@ -56,11 +73,50 @@ export default function AdminDashboard() {
           <Typography variant="h1" style={styles.authTitle}>ADMIN</Typography>
           <View style={styles.accentRule} />
           <Typography variant="body" color="secondary" style={styles.authDescription}>
-            Authorized personnel only. Sign in with your Google account to continue.
+            Authorized personnel only. Sign in to continue.
           </Typography>
 
-          <Pressable style={styles.primaryButton} onPress={signInWithGoogle}>
-            <Typography variant="body" style={styles.primaryButtonText}>SIGN IN WITH GOOGLE</Typography>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor={theme.colors.text.tertiary}
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            autoComplete="email"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor={theme.colors.text.tertiary}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            autoComplete="password"
+          />
+
+          {authError ? (
+            <Typography variant="caption" color="error" style={styles.errorText}>
+              {authError}
+            </Typography>
+          ) : null}
+
+          <Pressable style={styles.primaryButton} onPress={handleEmailAuth}>
+            <Typography variant="body" style={styles.primaryButtonText}>
+              {isSignUp ? 'SIGN UP' : 'SIGN IN'}
+            </Typography>
+          </Pressable>
+
+          <Pressable onPress={() => setIsSignUp(!isSignUp)}>
+            <Typography variant="caption" color="secondary" style={styles.toggleText}>
+              {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
+            </Typography>
+          </Pressable>
+
+          <View style={styles.divider} />
+
+          <Pressable style={styles.secondaryButton} onPress={signInWithGoogle}>
+            <Typography variant="body" style={styles.secondaryButtonText}>SIGN IN WITH GOOGLE</Typography>
           </Pressable>
         </View>
       </View>
@@ -183,6 +239,28 @@ const styles = StyleSheet.create({
   authDescription: {
     marginBottom: theme.spacing.xxl,
     lineHeight: 24,
+  },
+  input: {
+    backgroundColor: theme.colors.background.secondary,
+    borderWidth: 1,
+    borderColor: theme.colors.surface.border,
+    borderRadius: theme.borderRadius.sm,
+    paddingVertical: theme.spacing.md,
+    paddingHorizontal: theme.spacing.lg,
+    marginBottom: theme.spacing.md,
+    color: theme.colors.text.primary,
+  },
+  errorText: {
+    marginBottom: theme.spacing.md,
+  },
+  toggleText: {
+    marginTop: theme.spacing.md,
+    textAlign: 'center',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: theme.colors.surface.border,
+    marginVertical: theme.spacing.xl,
   },
   emailLabel: {
     marginTop: -theme.spacing.md,
