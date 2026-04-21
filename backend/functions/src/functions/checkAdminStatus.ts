@@ -13,7 +13,10 @@ export const checkAdminStatus = async (request: any) => {
     }
 
     const email = request.auth.token.email;
+    console.log('Checking admin status for email:', email);
+    console.log('Email lowercase:', email?.toLowerCase());
     const isAdminUser = isAdmin(email || '');
+    console.log('Is admin result:', isAdminUser);
 
     return {
       success: true,
